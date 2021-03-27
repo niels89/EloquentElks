@@ -1,10 +1,12 @@
-language: node_js
-node_js: 
-    - "stable"
-cache:
-    directories:
-        - node_modules
-script:
-    - yarn --cwd ./eloquent-elks-frontend install
-    - yarn --cwd ./eloquent-elks-frontend test
-    - yarn --cwd ./eloquent-elks-frontend run build 
+jobs:
+    include:
+        language: node_js
+        node_js: 
+            - "stable"
+        cache:
+            directories:
+                - node_modules
+        script:
+            - yarn --cwd ./eloquent-elks-frontend install
+            - yarn --cwd ./eloquent-elks-frontend test
+            - yarn --cwd ./eloquent-elks-frontend run build
