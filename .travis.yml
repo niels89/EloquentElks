@@ -5,5 +5,5 @@ cache:
     directories:
         - node_modules
 script:
-    - yarn test eloquent-elks-frontend
-    - yarn run build eloquent-elks-frontend
+    - yarn --cwd ./eloquent-elks-frontend test
+    - yarn --cwd ./eloquent-elks-frontend run build 
