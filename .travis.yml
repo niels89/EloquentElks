@@ -12,3 +12,11 @@ jobs:
             - yarn --cwd ./eloquent-elks-frontend run build
         after_script:
             - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls
+
+addons:
+    sonarcloud:
+        organization: "eloquent-elks"
+        token: 
+            secure: $eloquent-elks-travis-ci
+script:
+    - sonar-scanner
