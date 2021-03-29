@@ -17,6 +17,6 @@ addons:
     sonarcloud:
         organization: "eloquent-elks"
         token: 
-            secure: $eloquent-elks-travis-ci
+            secure: $eloquent_elks_travis_ci
 script:
     - sonar-scanner
