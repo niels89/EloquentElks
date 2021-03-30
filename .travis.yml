@@ -21,6 +21,8 @@ jobs:
           script:
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api build
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api test
+          after_success:
+            - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api cobertura coveralls
 addons:
     sonarcloud:
         organization: "eloquent-elks"
