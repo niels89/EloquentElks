@@ -16,8 +16,8 @@ jobs:
           jdk:
             - openjdk8
           script:
-            - gradlew -p ./eloquent-elks-poi-api build
-            - gradlew -p ./eloquent-elks-poi-api test --coverage
+            - gradle -p ./eloquent-elks-poi-api build
+            - gradle -p ./eloquent-elks-poi-api test --coverage
 addons:
     sonarcloud:
         organization: "eloquent-elks"
