@@ -1,21 +1,35 @@
 version: '3.8'
 services:
-    mongodb:
+    mongodb_airbnb:
         image: mongo
-        container_name: airbnb-database
-        environment:
-        - PUID=1000
-        - PGID=1000
         volumes:
         - ./eloquent-elks-airbnb-db/mongodb/database:/data/db
         ports:
             - 27017:27017
         restart: unless-stopped
-        build: ./eloquent-elks-airbnb-db/mongodb
-
-    dbseed:
+        
+    dbseed_airbnb:
         build:
             context: ./eloquent-elks-airbnb-db/dbseed
             dockerfile: Dockerfile
         links:
-            - mongodb
+            - mongodb_airbnb
+        depends_on:
+            - mongodb_airbnb
+            
+    mongodb_poi:
+        image: mongo
+        volumes:
+        - ./eloquent-elks-poi-db/mongodb/database:/data/db
+        ports:
+        - 27018:27017
+        restart: unless-stopped
+                
+    dbseed_poi:
+        build:
+            context: ./eloquent-elks-poi-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_poi
+        depends_on:
+            - mongodb_poi
