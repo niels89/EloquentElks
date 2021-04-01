@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/property")
+@RequestMapping("/api/v1")
 public class PropertyController {
 
     private final PropertyService propertyService;
@@ -25,7 +25,7 @@ public class PropertyController {
     }
 
 
-    @GetMapping("/getAllProperty")
+    @GetMapping("/airbnb")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<PropertyFetchDTO> getProperty(){
