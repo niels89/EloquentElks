@@ -14,13 +14,26 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit tests for @see{@link eloquentelks.poi.api.controller.PoiController}
+ */
 @ExtendWith(MockitoExtension.class)
 public class PoiControllerTests {
+
+    /**
+     * Stub of @see{@link eloquentelks.poi.api.service.IPoiService}
+     */
     @Mock
     private IPoiService poiServiceMock;
 
+    /**
+     * List of @see{@link eloquentelks.poi.api.model.PoiGetDto} used by the @see{@link eloquentelks.poi.api.service.IPoiService} stub
+     */
     private static List<PoiGetDto> poiList;
 
+    /**
+     * Initialization of the @see{@link eloquentelks.poi.api.service.IPoiService} stub
+     */
     @BeforeAll
     public static void setUp(){
         PoiGetDto poi1 = new PoiGetDto();
@@ -36,15 +49,17 @@ public class PoiControllerTests {
         poiList.add(new PoiGetDto());
     }
 
+    /**
+     * Tests the retrieval of Point of Interests via the HTTP GET endpoint
+     */
     @Test
-    public void testGetPoi(){
+    public void testGetAllPoi(){
         // arrange
         when(poiServiceMock.getAllPois()).thenReturn(poiList);
         PoiController controller = new PoiController(poiServiceMock);
 
         // act
         List<PoiGetDto> result = controller.getAllPoi();
-
 
         // assert
         assertEquals(2, result.size());

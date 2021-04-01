@@ -1,43 +1,33 @@
-package eloquentelks.poi.api.service;
+package eloquentelks.poi.api.repository;
 
 import com.mapbox.geojson.Feature;
-import eloquentelks.poi.api.model.PoiGetDto;
-import eloquentelks.poi.api.repository.FeatureRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mockito;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for @see {@link eloquentelks.poi.api.service.PoiService}
+ * Unit tests for @see{@link eloquentelks.poi.api.repository.FeatureRepository}
  */
-@ExtendWith(MockitoExtension.class)
-public class PoiServiceTests {
+public class FeatureRepositoryTest {
 
     /**
-     * Stub of a @see{@link eloquentelks.poi.api.repository.FeatureRepository}
+     * List of features as strings to be returned by @see{@link org.springframework.data.mongodb.core.MongoTemplate}
      */
-    @Mock
-    private FeatureRepository poiRepository;
+    private static List<String> featureList;
 
     /**
-     * Features list that is used by the FeatureRepository stub
-     * */
-    private static List<Feature> features;
-
-    /**
-     * Sets up two features that are returned by the FeatureRepository stub
+     * Initializes two features that are returned by the MongoTemplate stub
      */
     @BeforeAll
     public static void setUp(){
-        Feature f1 = Feature.fromJson("{\n" +
+        String featureJson1 = "{\n" +
                 "\t  \"type\": \"Feature\",\n" +
                 "\t  \"properties\": {\n" +
                 "\t\t\"@id\": \"node/8533468096\",\n" +
@@ -52,9 +42,9 @@ public class PoiServiceTests {
                 "\t\t]\n" +
                 "\t  },\n" +
                 "\t  \"id\": \"node/8533468096\"\n" +
-                "\t}");
+                "\t}";
 
-        Feature f2 = Feature.fromJson("{\n" +
+        String featureJson2 = "{\n" +
                 "\t  \"type\": \"Feature\",\n" +
                 "\t  \"properties\": {\n" +
                 "\t\t\"@id\": \"node/8541462092\",\n" +
@@ -70,26 +60,24 @@ public class PoiServiceTests {
                 "\t\t]\n" +
                 "\t  },\n" +
                 "\t  \"id\": \"node/8541462092\"\n" +
-                "\t}");
-
-        features = new ArrayList<>();
-        features.add(f1);
-        features.add(f2);
+                "\t}";
+        featureList = Arrays.asList(featureJson1, featureJson2);
     }
 
     /**
-     * Tests if the PoiService is able to return all PoIs stored on the database
+     * Checks if @see {@link eloquentelks.poi.api.repository.FeatureRepository} returns the correct amount of features in the database
      */
     @Test
-    public void testGetAllPois(){
+    public void testGetFeatures(){
         // arrange
-        when(poiRepository.getFeatures()).thenReturn(features);
-        IPoiService service = new PoiService(poiRepository);
+        MongoTemplate mongoTemplate = Mockito.mock(MongoTemplate.class);
+        when(mongoTemplate.findAll(String.class, "feature")).thenReturn(featureList);
+        IFeatureRepository featureRepository = new FeatureRepository(mongoTemplate);
 
         // act
-        List<PoiGetDto> pois = service.getAllPois();
+        List<Feature> features = featureRepository.getFeatures();
 
         // assert
-        assertEquals(2, pois.size());
+        assertEquals(2, features.size());
     }
 }
