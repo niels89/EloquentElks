@@ -8,6 +8,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class PoiGetDto {
+    private String name;
+    private String type;
     private double longitude;
     private double latitude;
+
 }

@@ -14,12 +14,14 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+	google()
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.projectlombok:lombok:1.18.16'
+	implementation 'com.mapbox.mapboxsdk:mapbox-sdk-geojson:5.8.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mockito:mockito-inline'
 	testImplementation 'org.mockito:mockito-junit-jupiter'

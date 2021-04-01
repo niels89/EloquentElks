@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +24,7 @@ public class PoiControllerTests {
     private static List<PoiGetDto> poiList;
 
     @BeforeAll
-    public static void SetUp(){
+    public static void setUp(){
         PoiGetDto poi1 = new PoiGetDto();
         poi1.setLatitude(42.1d);
         poi1.setLongitude(1.323d);
@@ -34,13 +33,13 @@ public class PoiControllerTests {
         poi2.setLatitude(-25.49d);
         poi2.setLongitude(173.82d);
 
-        poiList = new ArrayList<PoiGetDto>();
+        poiList = new ArrayList<>();
         poiList.add(new PoiGetDto());
         poiList.add(new PoiGetDto());
     }
 
     @Test
-    public void TestGetPoi(){
+    public void testGetPoi(){
         // arrange
         when(poiServiceMock.getAllPois()).thenReturn(poiList);
         PoiController controller = new PoiController(poiServiceMock);
