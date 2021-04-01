@@ -1,6 +1,7 @@
 package eloquentelks.poi.api.service;
 
 import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
 import eloquentelks.poi.api.model.PoiGetDto;
 import eloquentelks.poi.api.repository.FeatureRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -83,11 +84,11 @@ public class PoiServiceTests {
     @Test
     public void testGetAllPois(){
         // arrange
-        when(poiRepository.getFeatures()).thenReturn(features);
+        when(poiRepository.getFeatures(Point.fromLngLat(40.6804506, -73.9475876), 500)).thenReturn(features);
         IPoiService service = new PoiService(poiRepository);
 
         // act
-        List<PoiGetDto> pois = service.getAllPois();
+        List<PoiGetDto> pois = service.getAllPois(40.6804506, -73.9475876);
 
         // assert
         assertEquals(2, pois.size());

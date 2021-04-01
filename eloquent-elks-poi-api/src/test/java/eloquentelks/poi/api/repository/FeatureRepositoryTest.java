@@ -1,9 +1,15 @@
 package eloquentelks.poi.api.repository;
 
 import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Arrays;
@@ -15,7 +21,14 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for @see{@link eloquentelks.poi.api.repository.FeatureRepository}
  */
+@ExtendWith(MockitoExtension.class)
 public class FeatureRepositoryTest {
+
+    /**
+     * Stub of @see{@link org.springframework.data.mongodb.core.MongoTemplate}
+     */
+    @Mock
+    private MongoTemplate mongoTemplate;
 
     /**
      * List of features as strings to be returned by @see{@link org.springframework.data.mongodb.core.MongoTemplate}
@@ -70,7 +83,6 @@ public class FeatureRepositoryTest {
     @Test
     public void testGetFeatures(){
         // arrange
-        MongoTemplate mongoTemplate = Mockito.mock(MongoTemplate.class);
         when(mongoTemplate.findAll(String.class, "feature")).thenReturn(featureList);
         IFeatureRepository featureRepository = new FeatureRepository(mongoTemplate);
 
@@ -79,5 +91,27 @@ public class FeatureRepositoryTest {
 
         // assert
         assertEquals(2, features.size());
+    }
+
+    /**
+     * Checks if @see {@link eloquentelks.poi.api.repository.FeatureRepository} considers the radius for returning the relevant features
+     */
+    @ParameterizedTest(name="{0}: radius={1} expectedCount={2}")
+    @CsvSource({
+            "insideRadius, 16000, 2",
+            "outsideRadius, 11000, 1"
+    })
+    public void testGetFeaturesRadius(String caption, double radius, int expectedCount){
+        // arrange
+        when(mongoTemplate.findAll(String.class, "feature")).thenReturn(featureList);
+        IFeatureRepository featureRepository = new FeatureRepository(mongoTemplate);
+        Feature f1 = Feature.fromJson(featureList.get(0));
+        Point center = (Point)f1.geometry();
+
+        // act
+        List<Feature> features = featureRepository.getFeatures(center, radius);
+
+        // assert
+        assertEquals(expectedCount, features.size());
     }
 }

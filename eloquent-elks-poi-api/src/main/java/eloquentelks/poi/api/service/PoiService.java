@@ -1,6 +1,7 @@
 package eloquentelks.poi.api.service;
 
 import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
 import eloquentelks.poi.api.mapping.PoiMapper;
 import eloquentelks.poi.api.model.PoiGetDto;
 import eloquentelks.poi.api.repository.FeatureRepository;
@@ -35,8 +36,8 @@ public class PoiService implements IPoiService {
      * @inheritDoc
      */
     @Override
-    public List<PoiGetDto> getAllPois() {
-        List<Feature> features = poiRepository.getFeatures();
+    public List<PoiGetDto> getAllPois(double longitude, double latitude) {
+        List<Feature> features = poiRepository.getFeatures(Point.fromLngLat(longitude, latitude), 500);
 
         return PoiMapper.mapToDto(features);
     }

@@ -55,11 +55,11 @@ public class PoiControllerTests {
     @Test
     public void testGetAllPoi(){
         // arrange
-        when(poiServiceMock.getAllPois()).thenReturn(poiList);
+        when(poiServiceMock.getAllPois(1.323d, 42.1d)).thenReturn(poiList);
         PoiController controller = new PoiController(poiServiceMock);
 
         // act
-        List<PoiGetDto> result = controller.getAllPoi();
+        List<PoiGetDto> result = controller.getAllPoi(1.323d, 42.1d);
 
         // assert
         assertEquals(2, result.size());

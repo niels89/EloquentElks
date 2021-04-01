@@ -1,6 +1,9 @@
 package eloquentelks.poi.api.repository;
 
 import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
+import com.mapbox.turf.TurfConstants;
+import com.mapbox.turf.TurfMeasurement;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,5 +48,23 @@ public class FeatureRepository implements IFeatureRepository{
         });
 
         return features;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public List<Feature> getFeatures(Point center, double radius) {
+        List<Feature> allFeatures = getFeatures();
+        List<Feature> featuresInRadius = new ArrayList<>();
+
+        allFeatures.forEach(feature -> {
+            double distance = TurfMeasurement.distance(center, (Point)feature.geometry(), TurfConstants.UNIT_METRES);
+            if(distance <= radius){
+                featuresInRadius.add(feature);
+            }
+        });
+
+        return featuresInRadius;
     }
 }
