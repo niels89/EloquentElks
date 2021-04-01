@@ -1,56 +1,50 @@
 package com.airbnb.eloquentelksbackend.controller;
 
+import com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTO;
 import com.airbnb.eloquentelksbackend.entity.Property;
 import com.airbnb.eloquentelksbackend.service.PropertyService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-import static org.hamcrest.Matchers.*;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
-@WebMvcTest(PropertyController.class)
-//@SpringBootTest(classes = EloquentElksBackendApplication.class)
+@ExtendWith(MockitoExtension.class)
 public class PropertyControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
+    @Mock
     private PropertyService propertyService;
 
-    @Test
-    public void getAllPropertyTest() throws Exception{
-
+    @BeforeEach
+    public void setUp(){
         Property testProperty = new Property();
         testProperty.setName("Test Property");
         testProperty.setLatitude(47.376888);
         testProperty.setLongitude(8.541694);
         testProperty.setRoomType("test type");
 
-        List<Property> allProperty = Collections.singletonList(testProperty);
-        given(propertyService.getAllProperties()).willReturn(allProperty);
-
-        MockHttpServletRequestBuilder getRequest = get("/api/v1/airbnb").contentType(MediaType.APPLICATION_JSON);
-        mockMvc.perform(getRequest).andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].latitude", is(testProperty.getLatitude())))
-                .andExpect(jsonPath("$[0].longitude", is(testProperty.getLongitude())))
-                .andExpect(jsonPath("$[0].roomType", is(testProperty.getRoomType())));
+        when(propertyService.getAllProperties()).thenReturn(Arrays.asList(testProperty));
     }
 
+    @Test
+    public void getAllPropertyTest() {
+        // arrange
+        PropertyController controller = new PropertyController(propertyService);
 
+        // act
+        List<PropertyFetchDTO> properties = controller.getProperty();
+        PropertyFetchDTO dto = properties.get(0);
+
+        // assert
+        assertEquals(47.376888, dto.getLatitude());
+        assertEquals(8.541694, dto.getLongitude());
+        assertEquals("Test Property", dto.getName());
+        assertEquals("test type", dto.getRoomType());
+    }
 }
