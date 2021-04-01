@@ -1,21 +1,33 @@
 jobs:
     include:
-        language: node_js
-        node_js: 
+        - language: node_js
+          node_js: 
             - "stable"
-        cache:
+          cache:
             directories:
                 - node_modules
-        script:
+          script:
             - yarn --cwd ./eloquent-elks-frontend install
             - yarn --cwd ./eloquent-elks-frontend test -- --coverage
             - yarn --cwd ./eloquent-elks-frontend run build
-        after_script:
-            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls
-
+          after_script:
+            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls     
+        - language: java
+          install: skip
+          os: linux
+          dist: trusty
+          jdk: 
+            - openjdk12
+          script:
+            - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api build
+            - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api test
+          after_success:
+            - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api jacocoTestReport coveralls
 addons:
     sonarcloud:
         organization: "eloquent-elks"
         token: $eloquent_elks_travis_ci
 script:
     - sonar-scanner
+notifications:
+  webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN

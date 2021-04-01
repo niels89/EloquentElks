@@ -3,7 +3,7 @@ services:
     mongodb_airbnb:
         image: mongo
         volumes:
-        - ./eloquent-elks-airbnb-db/mongodb/database:/data/db
+            - ./eloquent-elks-airbnb-db/mongodb/database:/data/db
         ports:
             - 27017:27017
         restart: unless-stopped
@@ -20,10 +20,11 @@ services:
     mongodb_poi:
         image: mongo
         volumes:
-        - ./eloquent-elks-poi-db/mongodb/database:/data/db
+            - ./eloquent-elks-poi-db/mongodb/database:/data/db
         ports:
-        - 27018:27017
+            - 27018:27017
         restart: unless-stopped
+        hostname: mongodb_poi
                 
     dbseed_poi:
         build:
@@ -33,3 +34,17 @@ services:
             - mongodb_poi
         depends_on:
             - mongodb_poi
+            
+    poi-api:
+        build:
+            context: eloquent-elks-poi-api
+            dockerfile: Dockerfile
+        ports: 
+            - 1337:8080
+        depends_on:
+            - mongodb_poi
+        environment:
+           - SPRING_DATA_MONGODB_HOST=mongodb_poi
+           - SPRING_DATA_MONGODB_PORT=27017
+           - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
+        hostname: poi-api
