@@ -7,6 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+/**
+ * Main entry point to start the application
+ */
 @EnableMongoRepositories(basePackageClasses = {FeatureRepository.class})
 @SpringBootApplication
 public class Application {

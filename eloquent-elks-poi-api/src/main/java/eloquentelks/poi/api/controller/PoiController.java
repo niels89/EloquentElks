@@ -13,21 +13,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Rest controller which serves Points of Interest
+ */
 @RestController
 public class PoiController {
 
+    /**
+     * Service that provides the Points of Interests from the database
+     */
     private final IPoiService poiService;
+
+    /**
+     * Logger
+     */
     private final Logger log = LoggerFactory.getLogger(PoiController.class);
 
+    /**
+     * @param poiService Service that provides the Points of Interests from the database
+     */
     @Autowired
     public PoiController(IPoiService poiService){
         this.poiService = poiService;
     }
 
+    /**
+     * Returns all points of interest
+     * @return A list of points of interest in New York city
+     */
     @GetMapping("poi")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<PoiGetDto> getPoi(){
+    public List<PoiGetDto> getAllPoi(){
         List<PoiGetDto> poiList = poiService.getAllPois();
 
         return poiList;

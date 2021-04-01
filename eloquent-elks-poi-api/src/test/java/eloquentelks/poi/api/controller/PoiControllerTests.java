@@ -2,9 +2,7 @@ package eloquentelks.poi.api.controller;
 
 import eloquentelks.poi.api.model.PoiGetDto;
 import eloquentelks.poi.api.service.IPoiService;
-import eloquentelks.poi.api.service.PoiService;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -45,7 +43,7 @@ public class PoiControllerTests {
         PoiController controller = new PoiController(poiServiceMock);
 
         // act
-        List<PoiGetDto> result = controller.getPoi();
+        List<PoiGetDto> result = controller.getAllPoi();
 
 
         // assert
