@@ -1,0 +1,1 @@
+mongoimport --host airbnb-database --db eloquent-elks --collection airbnbs --type json --file /airbnb.json --jsonArray
