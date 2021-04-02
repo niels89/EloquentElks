@@ -13,7 +13,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-@Document(collection = "Property")
+@Document(collection = "airbnbs")
 public class Property{
 
     private String id;
