@@ -2,9 +2,10 @@ package eloquentelks.poi.api.repository;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
-import com.mapbox.turf.TurfConstants;
-import com.mapbox.turf.TurfMeasurement;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -15,6 +16,11 @@ import java.util.List;
  */
 @Repository
 public class FeatureRepository implements IFeatureRepository{
+
+    /**
+     * Key for the GeoJson distance query
+     */
+    private final String QUERY_KEY = "geometry";
 
     /**
      * Data access component
@@ -39,13 +45,9 @@ public class FeatureRepository implements IFeatureRepository{
      */
     @Override
     public List<Feature> getFeatures() {
-        List<Feature> features = new ArrayList<>();
-
         List<String> documents = mongoTemplate.findAll(String.class, FEATURE_COLLECTION);
 
-        documents.forEach(document -> {
-            features.add(Feature.fromJson(document));
-        });
+        List<Feature> features = convert(documents);
 
         return features;
     }
@@ -54,17 +56,28 @@ public class FeatureRepository implements IFeatureRepository{
      * @inheritDoc
      */
     @Override
-    public List<Feature> getFeatures(Point center, double radius) {
-        List<Feature> allFeatures = getFeatures();
-        List<Feature> featuresInRadius = new ArrayList<>();
+    public List<Feature> getFeatures(Point center, double radius){
+        Criteria criteria = Criteria.where(QUERY_KEY).nearSphere(new GeoJsonPoint(center.longitude(), center.latitude())).maxDistance(radius);
 
-        allFeatures.forEach(feature -> {
-            double distance = TurfMeasurement.distance(center, (Point)feature.geometry(), TurfConstants.UNIT_METRES);
-            if(distance <= radius){
-                featuresInRadius.add(feature);
-            }
-        });
+        Query query = new Query(criteria);
 
-        return featuresInRadius;
+        List<String> documents = mongoTemplate.find(query, String.class, FEATURE_COLLECTION);
+
+        List<Feature> features = convert(documents);
+
+        return features;
+    }
+
+    /**
+     * Converts JSON documents to @see{@link com.mapbox.geojson.Feature}
+     * @param documents List of JSON strings from the database
+     * @return List of GeoJson Features
+     */
+    private List<Feature> convert(List<String> documents){
+        List<Feature> features = new ArrayList<>();
+
+        documents.forEach(document -> features.add(Feature.fromJson(document)));
+
+        return features;
     }
 }
