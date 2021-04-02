@@ -1,7 +1,7 @@
 version: '3.8'
 services:
     mongodb:
-        image: mongo
+        image: mongo:latest
         container_name: airbnb-database
         environment:
         - PUID=1000
@@ -19,3 +19,12 @@ services:
             dockerfile: Dockerfile
         links:
             - mongodb
+
+    springboot-mongodb:
+      image: springboot-mongodb:1.0
+      container_name: springboot-mongodb
+      ports:
+        - 8080:8080
+      links:
+        - mongodb
+
