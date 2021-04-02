@@ -1,0 +1,75 @@
+{
+  "swagger": "2.0",
+  "info" : {
+    "version" : "0.0.0",
+    "title" : "Web Service API"
+  },
+  "basePath" : "",
+  "schemes" : [],
+  "tags" : [
+    {
+      "name" : "PoiController"
+      ,
+      "description" : "Rest controller which serves Points of Interest."
+    }
+  ],
+  "definitions" : {
+    "PoiGetDto" : {
+      "type" : "object",
+      "title" : "PoiGetDto",
+      "example" : { },
+      "description" : "Represents a Point of Interest"
+    }
+    ,
+    "xml_ns0_poiGetDto" : {
+      "type" : "object",
+      "title" : "poiGetDto",
+      "allOf" : [
+        {
+        }
+      ],
+      "description" : "Represents a Point of Interest"
+    }
+  },
+  "paths": {
+    "\/api/v1/poi" : {
+      "get" : {
+        "tags" : [ "PoiController" ],
+        "description" : "Returns all points of interest",
+        "operationId" : "getAllPoi",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [
+          {
+            "name" : "latitude",
+            "in" : "query",
+            "required" : true,
+            "type" : "number",
+            "description" : "Geographical latitude of the center"
+          },
+          {
+            "name" : "longitude",
+            "in" : "query",
+            "required" : true,
+            "type" : "number",
+            "description" : "Geographical longitude of the center"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/PoiGetDto"
+}
+            },
+            "examples" : {
+              "application/json" : [ { } ]
+            },
+            "description" : ""
+          }
+        }
+      }
+    }
+  }
+}

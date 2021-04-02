@@ -4,6 +4,7 @@ plugins {
 	id 'jacoco'
 	id 'com.github.kt3k.coveralls' version '2.11.0'
 	id 'java'
+	id "com.webcohesion.enunciate" version "2.13.3"
 }
 
 
@@ -15,6 +16,9 @@ sourceCompatibility = '11'
 repositories {
 	mavenCentral()
 	google()
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
 }
 
 dependencies {
@@ -26,7 +30,21 @@ dependencies {
 	testImplementation 'org.mockito:mockito-inline'
 	testImplementation 'org.mockito:mockito-junit-jupiter'
 	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'javax.xml.ws:jaxws-api:2.3.1'
+	compileOnly 'javax.jws:javax.jws-api:1.1'
+	compileOnly 'javax.xml.bind:jaxb-api:2.3.1'
 	annotationProcessor 'org.projectlombok:lombok'
+}
+
+apply plugin: "com.webcohesion.enunciate"
+
+tasks.enunciate {
+	File enunciateDistDir = file("src/main/resources/static/docs")
+	doFirst {
+		enunciateDistDir.deleteDir()
+		enunciateDistDir.mkdirs()
+	}
+	export("docs", enunciateDistDir)
 }
 
 jacocoTestReport{

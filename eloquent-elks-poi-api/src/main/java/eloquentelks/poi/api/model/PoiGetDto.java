@@ -11,6 +11,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class PoiGetDto {
+    /**
+     * Name of the point of interest
+     */
     private String name;
     private String type;
     private double longitude;
