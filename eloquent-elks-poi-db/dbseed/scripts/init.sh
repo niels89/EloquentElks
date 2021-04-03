@@ -1,0 +1,1 @@
+mongoimport --host mongodb_poi --db eloquent-elks --collection pois --type json --file /poi.json --jsonArray

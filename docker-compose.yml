@@ -11,13 +11,14 @@ services:
         ports:
             - 27017:27017
         restart: unless-stopped
-        build: ./eloquent-elks-airbnb-db/mongodb
-
-    dbseed:
+        
+    dbseed_airbnb:
         build:
             context: ./eloquent-elks-airbnb-db/dbseed
             dockerfile: Dockerfile
         links:
+            - mongodb
+        depends_on:
             - mongodb
 
     springboot-mongodb:
@@ -28,3 +29,20 @@ services:
       links:
         - mongodb
 
+            
+    mongodb_poi:
+        image: mongo
+        volumes:
+        - ./eloquent-elks-poi-db/mongodb/database:/data/db
+        ports:
+        - 27018:27017
+        restart: unless-stopped
+                
+    dbseed_poi:
+        build:
+            context: ./eloquent-elks-poi-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_poi
+        depends_on:
+            - mongodb_poi
