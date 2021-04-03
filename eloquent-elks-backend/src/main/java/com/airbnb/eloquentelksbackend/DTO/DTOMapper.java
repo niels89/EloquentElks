@@ -18,5 +18,5 @@ public interface DTOMapper {
     @Mapping(source = "roomType", target="roomType")
     PropertyFetchDTO convertPropertyToPropertyFetchDTO(Property property);
 
-    List<PropertyFetchDTO> map(List<Property> employees);
+    List<PropertyFetchDTO> map(List<Property> propertyList);
 }
