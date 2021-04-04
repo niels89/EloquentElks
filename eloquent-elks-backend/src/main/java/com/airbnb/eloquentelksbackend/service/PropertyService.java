@@ -1,7 +1,7 @@
 package com.airbnb.eloquentelksbackend.service;
 
 import com.airbnb.eloquentelksbackend.entity.Property;
-import com.airbnb.eloquentelksbackend.repository.PropertyRepository;
+import com.airbnb.eloquentelksbackend.repository.primary.PropertyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

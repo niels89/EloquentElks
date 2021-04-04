@@ -1,7 +1,7 @@
 package com.airbnb.eloquentelksbackend.service;
 
 import com.airbnb.eloquentelksbackend.entity.PoiGetDto;
-import com.airbnb.eloquentelksbackend.repository.FeatureRepository;
+import com.airbnb.eloquentelksbackend.repository.secondary.IFeatureRepository;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
 
@@ -24,10 +24,13 @@ import static org.mockito.Mockito.when;
 public class PoiServiceTests {
 
     /**
-     * Stub of a @see{@link com.airbnb.eloquentelksbackend.repository.FeatureRepository}
+     * Stub of a @see{@link com.airbnb.eloquentelksbackend.repository.secondary.IFeatureRepository}
      */
     @Mock
-    private FeatureRepository poiRepository;
+    private IFeatureRepository poiRepository;
+
+    @Mock
+    private PoiService poiService;
 
     /**
      * Features list that is used by the FeatureRepository stub
@@ -84,12 +87,8 @@ public class PoiServiceTests {
      */
     @Test
     public void testGetAllPois(){
-        // arrange
-        when(poiRepository.getFeatures(Point.fromLngLat(40.6804506, -73.9475876), 500)).thenReturn(features);
-        IPoiService service = new PoiService(poiRepository);
 
-        // act
-        List<PoiGetDto> pois = service.getAllPois(40.6804506, -73.9475876);
+        List<PoiGetDto> pois = poiService.getAllPois(40.6804506, -73.9475876);
 
         // assert
         assertEquals(2, pois.size());
