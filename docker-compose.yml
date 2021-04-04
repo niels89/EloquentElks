@@ -28,14 +28,16 @@ services:
         - 8080:8080
       links:
         - mongodb
+        - mongodb_poi
 
             
     mongodb_poi:
-        image: mongo
+        image: mongo:latest
+        container_name: mongodb_poi
         volumes:
         - ./eloquent-elks-poi-db/mongodb/database:/data/db
         ports:
-        - 27018:27017
+        - 27018:27018
         restart: unless-stopped
                 
     dbseed_poi:

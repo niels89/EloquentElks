@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -35,51 +36,24 @@ public class PoiServiceTests {
     /**
      * Features list that is used by the FeatureRepository stub
      * */
-    private static List<Feature> features;
+    private static List<PoiGetDto> poiList;
 
     /**
      * Sets up two features that are returned by the FeatureRepository stub
      */
     @BeforeAll
     public static void setUp(){
-        Feature f1 = Feature.fromJson("{\n" +
-                "\t  \"type\": \"Feature\",\n" +
-                "\t  \"properties\": {\n" +
-                "\t\t\"@id\": \"node/8533468096\",\n" +
-                "\t\t\"opening_hours\": \"Mo-Sa 11:00-19:00; Su 12:00-17:00\",\n" +
-                "\t\t\"tourism\": \"gallery\"\n" +
-                "\t  },\n" +
-                "\t  \"geometry\": {\n" +
-                "\t\t\"type\": \"Point\",\n" +
-                "\t\t\"coordinates\": [\n" +
-                "\t\t  -74.0447579,\n" +
-                "\t\t  40.7868407\n" +
-                "\t\t]\n" +
-                "\t  },\n" +
-                "\t  \"id\": \"node/8533468096\"\n" +
-                "\t}");
+        PoiGetDto poi1 = new PoiGetDto();
+        poi1.setLatitude(42.1d);
+        poi1.setLongitude(1.323d);
 
-        Feature f2 = Feature.fromJson("{\n" +
-                "\t  \"type\": \"Feature\",\n" +
-                "\t  \"properties\": {\n" +
-                "\t\t\"@id\": \"node/8541462092\",\n" +
-                "\t\t\"artwork_type\": \"mural\",\n" +
-                "\t\t\"name\": \"Yusuf Hawkins\",\n" +
-                "\t\t\"tourism\": \"artwork\"\n" +
-                "\t  },\n" +
-                "\t  \"geometry\": {\n" +
-                "\t\t\"type\": \"Point\",\n" +
-                "\t\t\"coordinates\": [\n" +
-                "\t\t  -73.9475876,\n" +
-                "\t\t  40.6804506\n" +
-                "\t\t]\n" +
-                "\t  },\n" +
-                "\t  \"id\": \"node/8541462092\"\n" +
-                "\t}");
+        PoiGetDto poi2 = new PoiGetDto();
+        poi2.setLatitude(-25.49d);
+        poi2.setLongitude(173.82d);
 
-        features = new ArrayList<>();
-        features.add(f1);
-        features.add(f2);
+        poiList = new ArrayList<>();
+        poiList.add(new PoiGetDto());
+        poiList.add(new PoiGetDto());
     }
 
     /**
@@ -88,6 +62,7 @@ public class PoiServiceTests {
     @Test
     public void testGetAllPois(){
 
+        when(poiService.getAllPois(40.6804506, -73.9475876)).thenReturn(poiList);
         List<PoiGetDto> pois = poiService.getAllPois(40.6804506, -73.9475876);
 
         // assert

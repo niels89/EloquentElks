@@ -2,7 +2,7 @@ package com.airbnb.eloquentelksbackend.controller;
 
 
 import com.airbnb.eloquentelksbackend.entity.PoiGetDto;
-import com.airbnb.eloquentelksbackend.service.IPoiService;
+import com.airbnb.eloquentelksbackend.service.PoiService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ public class PoiControllerTests {
      * Stub of @see{@link com.airbnb.eloquentelksbackend.service.IPoiService}
      */
     @Mock
-    private IPoiService poiServiceMock;
+    private PoiService poiServiceMock;
 
     /**
      * List of @see{@link com.airbnb.eloquentelksbackend.entity.PoiGetDto} used by the @see{@link com.airbnb.eloquentelksbackend.service.IPoiService} stub
