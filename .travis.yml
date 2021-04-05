@@ -28,7 +28,6 @@ jobs:
 addons:
     sonarcloud:
         organization: "eloquent-elks"
-        token: $eloquent_elks_travis_ci
 script:
     - sonar-scanner
 notifications:
