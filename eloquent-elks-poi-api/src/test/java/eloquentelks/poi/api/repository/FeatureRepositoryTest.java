@@ -81,22 +81,6 @@ public class FeatureRepositoryTest {
     }
 
     /**
-     * Checks if @see {@link eloquentelks.poi.api.repository.FeatureRepository} returns the correct amount of features in the database
-     */
-    @Test
-    public void testGetFeatures(){
-        // arrange
-        when(mongoTemplate.findAll(String.class, "feature")).thenReturn(featureList);
-        IFeatureRepository featureRepository = new FeatureRepository(mongoTemplate);
-
-        // act
-        List<Feature> features = featureRepository.getFeatures();
-
-        // assert
-        assertEquals(2, features.size());
-    }
-
-    /**
      * Checks if @see {@link eloquentelks.poi.api.repository.FeatureRepository} considers the radius for returning the relevant features
      */
     @Test

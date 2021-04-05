@@ -44,18 +44,6 @@ public class FeatureRepository implements IFeatureRepository{
      * @inheritDoc
      */
     @Override
-    public List<Feature> getFeatures() {
-        List<String> documents = mongoTemplate.findAll(String.class, FEATURE_COLLECTION);
-
-        List<Feature> features = convert(documents);
-
-        return features;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Override
     public List<Feature> getFeatures(Point center, double radius){
         Criteria criteria = Criteria.where(QUERY_KEY).nearSphere(new GeoJsonPoint(center.longitude(), center.latitude())).maxDistance(radius);
 
