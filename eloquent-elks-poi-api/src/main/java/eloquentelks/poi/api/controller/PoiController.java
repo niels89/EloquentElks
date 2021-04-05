@@ -14,6 +14,7 @@ import java.util.List;
  * Rest controller which serves Points of Interest
  */
 @RestController
+@RequestMapping("/api/v1")
 public class PoiController {
 
     /**
