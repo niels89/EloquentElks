@@ -69,8 +69,8 @@ test {
 	useJUnitPlatform()
 }
 
-sonarqube{
-	properties{
-		property 'sonar.projectKey', 'niels89_EloquentElks'
+sonarqube {
+	properties {
+		property "sonar.projectKey", "eloquent-elks_EloquentElks_POI_API"
 	}
 }
