@@ -104,4 +104,30 @@ class PoiMapperTest {
         assertEquals("museum", poiGetDtos.get(0).getType());
         assertEquals("museum", poiGetDtos.get(1).getType());
     }
+
+    /**
+     * Tests if the latitude of a feature is mapped correctly
+     */
+    @Test
+    public void testMapToDto_latitude(){
+        // act
+        List<PoiGetDto> poiGetDtos = PoiMapper.mapToDto(features);
+
+        //assert
+        assertEquals(40.6637138, poiGetDtos.get(0).getLatitude());
+        assertEquals(40.7521438, poiGetDtos.get(1).getLatitude());
+    }
+
+    /**
+     * Tests if the longitude of a feature is mapped correctly
+     */
+    @Test
+    public void testMapToDto_longitude(){
+        // act
+        List<PoiGetDto> poiGetDtos = PoiMapper.mapToDto(features);
+
+        // assert
+        assertEquals(-74.2084784, poiGetDtos.get(0).getLongitude());
+        assertEquals(-74.0249925, poiGetDtos.get(1).getLongitude());
+    }
 }
