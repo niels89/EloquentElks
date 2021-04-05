@@ -37,7 +37,7 @@ services:
         volumes:
         - ./eloquent-elks-poi-db/mongodb/database:/data/db
         ports:
-        - 27018:27018
+        - 27018:27017
         restart: unless-stopped
                 
     dbseed_poi:
