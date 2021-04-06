@@ -2,11 +2,11 @@ import {getDomain} from "../helpers/getDomain";
 import {getVersion} from "../helpers/getVersion";
 
 /**
- * This is a get request on the airbnb service to get the airbnbs
+ * This is a get request on the POI service to get the pois
  * @returns {list}
  */
-export async function getAirbnbs() {
-    let response = await fetch(`${getDomain(8080)}/api/${getVersion()}/airbnb`, {method: "GET"})
+export async function getPois(lat, lon) {
+    let response = await fetch(`${getDomain(1337)}/api/${getVersion()}/poi?longitude=${lon}&latitude=${lat}`, {method: "GET"})
     if (response.ok) {
         let data = await response.json()
         return data

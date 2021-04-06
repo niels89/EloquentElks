@@ -54,11 +54,6 @@ function App() {
                                 )
 
                                 })}
-                            {/*<Marker position={[40.70, -74.02]}>*/}
-                            {/*    <Popup>*/}
-                            {/*        Write Something here*/}
-                            {/*    </Popup>*/}
-                            {/*</Marker>*/}
                         </MapContainer>
                     </Box>
                 </Box>
