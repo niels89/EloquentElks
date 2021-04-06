@@ -59,3 +59,12 @@ services:
            - SPRING_DATA_MONGODB_PORT=27017
            - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
         hostname: poi-api
+        
+    recommender-api:
+        build:
+            context: eloquent-elks-recommender-api
+            dockerfile: Dockerfile
+        ports: 
+            - 1338:8080
+        hostname: recommender-api
+
