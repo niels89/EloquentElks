@@ -4,11 +4,16 @@ import { Home } from 'grommet-icons';
 import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 import {useEffect, useState} from "react";
 import {getAirbnbs} from "./requests/getAirbnbs";
+import {getPois} from "./requests/getPois";
+import {attractionLeafletIcon} from "./components/icons/attractionLeafletIcon";
 
+import './App.css'
+import {airbnbLeafletIcon} from "./components/icons/airbnbLeafletIcon";
 
 
 function App() {
     const [airbnbs, setAirbnbs] = useState([])
+    const [pois, setPois] = useState([])
 
     useEffect(() => {
         async function fetchData() {
@@ -18,6 +23,13 @@ function App() {
         }
         fetchData().then((data) => setAirbnbs(data))
     }, [])
+
+    const handleAirBnBClick = async event => {
+        const { lat, lng } = event.latlng
+        let pois = await getPois(lat, lng)
+        setPois(pois)
+    }
+
 
     useEffect( () => {
         console.log(airbnbs)
@@ -46,14 +58,32 @@ function App() {
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
                             {airbnbs.map && airbnbs.map((airbnb, index) => { return (
-                                <Marker key={index} position={[airbnb.latitude, airbnb.longitude]}>
+                                <Marker key={index}
+                                        position={[airbnb.latitude, airbnb.longitude]}
+                                        eventHandlers={{click: handleAirBnBClick}}
+                                        icon={airbnbLeafletIcon}
+
+                                >
                                     <Popup>
                                         {airbnb.name}
                                     </Popup>
                                 </Marker>
+                                )}
                                 )
+                            }
+                            {pois.map && pois.map((poi, index) => { return (
+                                    <Marker key={"POI"+index}
+                                            position={[poi.latitude, poi.longitude]}
+                                            icon={attractionLeafletIcon}
+                                    >
 
-                                })}
+                                        <Popup>
+                                            {poi.type}
+                                        </Popup>
+                                    </Marker>
+                                )}
+                            )
+                            }
                         </MapContainer>
                     </Box>
                 </Box>
