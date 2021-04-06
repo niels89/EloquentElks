@@ -16,7 +16,17 @@ services:
             - mongodb_airbnb
         depends_on:
             - mongodb_airbnb
-            
+
+    springboot-mongodb:
+        build:
+            context: eloquent-elks-backend
+            dockerfile: Dockerfile
+        container_name: springboot-mongodb
+        ports:
+            - 8080:8080
+        links:
+            - mongodb_airbnb
+    
     mongodb_poi:
         image: mongo
         volumes:
