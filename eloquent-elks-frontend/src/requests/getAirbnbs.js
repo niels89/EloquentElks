@@ -5,7 +5,7 @@ import {getVersion} from "../helpers/getVersion";
  * This is a get request on ... to get the POIs
  * @returns {list}
  */
-export const getAirbnbs = () => {
+export async function getAirbnbs() {
     fetch(`${getDomain(8080)}/api/${getVersion()}/airbnb`, {method: "GET"})
         .then(response => {
             console.log(response);
