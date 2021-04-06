@@ -2,10 +2,6 @@ version: '3.8'
 services:
     mongodb_airbnb:
         image: mongo
-        container_name: airbnb-database
-        environment:
-        - PUID=1000
-        - PGID=1000
         volumes:
             - ./eloquent-elks-airbnb-db/mongodb/database:/data/db
         ports:
