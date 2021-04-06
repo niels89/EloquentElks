@@ -11,11 +11,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -78,40 +81,20 @@ public class FeatureRepositoryTest {
     }
 
     /**
-     * Checks if @see {@link eloquentelks.poi.api.repository.FeatureRepository} returns the correct amount of features in the database
-     */
-    @Test
-    public void testGetFeatures(){
-        // arrange
-        when(mongoTemplate.findAll(String.class, "feature")).thenReturn(featureList);
-        IFeatureRepository featureRepository = new FeatureRepository(mongoTemplate);
-
-        // act
-        List<Feature> features = featureRepository.getFeatures();
-
-        // assert
-        assertEquals(2, features.size());
-    }
-
-    /**
      * Checks if @see {@link eloquentelks.poi.api.repository.FeatureRepository} considers the radius for returning the relevant features
      */
-    @ParameterizedTest(name="{0}: radius={1} expectedCount={2}")
-    @CsvSource({
-            "insideRadius, 16000, 2",
-            "outsideRadius, 11000, 1"
-    })
-    public void testGetFeaturesRadius(String caption, double radius, int expectedCount){
+    @Test
+    public void testGetFeaturesRadius(){
         // arrange
-        when(mongoTemplate.findAll(String.class, "feature")).thenReturn(featureList);
+        when(mongoTemplate.find(any(Query.class), any(Class.class), anyString())).thenReturn(featureList);
         IFeatureRepository featureRepository = new FeatureRepository(mongoTemplate);
         Feature f1 = Feature.fromJson(featureList.get(0));
         Point center = (Point)f1.geometry();
 
         // act
-        List<Feature> features = featureRepository.getFeatures(center, radius);
+        List<Feature> features = featureRepository.getFeatures(center, 16000);
 
         // assert
-        assertEquals(expectedCount, features.size());
+        assertEquals(2, features.size());
     }
 }

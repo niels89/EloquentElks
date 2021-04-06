@@ -17,6 +17,11 @@ import java.util.List;
 public class PoiService implements IPoiService {
 
     /**
+     * Search radius to look for features
+     */
+    private final double SEARCH_RADIUS = 500.0d;
+
+    /**
      * Database accessor
      */
     private final FeatureRepository poiRepository;
@@ -37,7 +42,7 @@ public class PoiService implements IPoiService {
      */
     @Override
     public List<PoiGetDto> getAllPois(double longitude, double latitude) {
-        List<Feature> features = poiRepository.getFeatures(Point.fromLngLat(longitude, latitude), 500);
+        List<Feature> features = poiRepository.getFeatures(Point.fromLngLat(longitude, latitude), SEARCH_RADIUS);
 
         return PoiMapper.mapToDto(features);
     }

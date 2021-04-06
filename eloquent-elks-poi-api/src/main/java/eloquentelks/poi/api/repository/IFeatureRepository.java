@@ -11,12 +11,6 @@ import java.util.List;
 public interface IFeatureRepository {
 
     /**
-     * Loads GeoJson features from the database
-     * @return List of GeoJson features
-     */
-    List<Feature> getFeatures();
-
-    /**
      * Loads GeoJson features from the database within the radius around the specified center.
      * @param center Center point of the circle
      * @param radius Radius of the circle
