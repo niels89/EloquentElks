@@ -1,12 +1,12 @@
-import react from "react";
 import {getDomain} from "../helpers/getDomain";
+import {getVersion} from "../helpers/getVersion";
 
 /**
  * This is a get request on ... to get the POIs
  * @returns {list}
  */
 export const getAirbnbs = () => {
-    fetch(`${getDomain(8080)}/api/v1/airbnb`, {method: "GET"})
+    fetch(`${getDomain(8080)}/api/${getVersion()}/airbnb`, {method: "GET"})
         .then(response => {
             console.log(response);
             if (response.ok) {
