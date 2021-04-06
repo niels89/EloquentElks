@@ -26,6 +26,11 @@ services:
             - 8080:8080
         links:
             - mongodb_airbnb
+        environment:
+           - SPRING_DATA_MONGODB_HOST=mongodb_airbnb
+           - SPRING_DATA_MONGODB_PORT=27017
+           - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
+           - JVM_OPTS=-Xmx1g -Xms1g -XX:MaxPermSize=1024m
     
     mongodb_poi:
         image: mongo

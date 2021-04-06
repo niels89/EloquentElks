@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -25,12 +26,13 @@ public class PropertyController {
     }
 
 
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/airbnb")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<PropertyFetchDTO> getProperty(){
         List<Property> propertiesList = propertyService.getAllProperties();
-        return DTOMapper.INSTANCE.map(propertiesList);
+        return DTOMapper.INSTANCE.map(propertiesList.stream().limit(100).collect(Collectors.toList()));
     }
 
 

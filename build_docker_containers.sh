@@ -1,3 +1,5 @@
+#!/bin/bash
+
 docker-compose down
 ./clean_up_databases.sh
 

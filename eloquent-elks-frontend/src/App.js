@@ -2,11 +2,28 @@ import {Box, Button, Grommet, Header,} from "grommet";
 import { theme } from './GrommetTheme'
 import { Home } from 'grommet-icons';
 import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+import {useEffect, useState} from "react";
+import {getAirbnbs} from "./requests/getAirbnbs";
 
 
 
 function App() {
-  return (
+    const [airbnbs, setAirbnbs] = useState([])
+
+    useEffect(() => {
+        async function fetchData() {
+            let ab = await getAirbnbs()
+            console.log(typeof ab )
+            return ab;
+        }
+        fetchData().then((data) => setAirbnbs(data))
+    }, [])
+
+    useEffect( () => {
+        console.log(airbnbs)
+    }, [airbnbs])
+
+    return (
     <Grommet theme={theme} full>
         <Box fill>
             <Header background="brand">
@@ -28,11 +45,20 @@ function App() {
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
-                            <Marker position={[40.70, -74.02]}>
-                                <Popup>
-                                    Write Something here
-                                </Popup>
-                            </Marker>
+                            {airbnbs.map && airbnbs.map((airbnb, index) => { return (
+                                <Marker key={index} position={[airbnb.latitude, airbnb.longitude]}>
+                                    <Popup>
+                                        {airbnb.name}
+                                    </Popup>
+                                </Marker>
+                                )
+
+                                })}
+                            {/*<Marker position={[40.70, -74.02]}>*/}
+                            {/*    <Popup>*/}
+                            {/*        Write Something here*/}
+                            {/*    </Popup>*/}
+                            {/*</Marker>*/}
                         </MapContainer>
                     </Box>
                 </Box>
