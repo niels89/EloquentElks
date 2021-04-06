@@ -1,30 +1,65 @@
 version: '3.8'
 services:
-    mongodb:
-        image: mongo:latest
+    mongodb_airbnb:
+        image: mongo
         container_name: airbnb-database
         environment:
         - PUID=1000
         - PGID=1000
         volumes:
-        - ./eloquent-elks-airbnb-db/mongodb/database:/data/db
+            - ./eloquent-elks-airbnb-db/mongodb/database:/data/db
         ports:
             - 27017:27017
         restart: unless-stopped
-        build: ./eloquent-elks-airbnb-db/mongodb
-
-    dbseed:
+        
+    dbseed_airbnb:
         build:
             context: ./eloquent-elks-airbnb-db/dbseed
             dockerfile: Dockerfile
         links:
-            - mongodb
+            - mongodb_airbnb
+        depends_on:
+            - mongodb_airbnb
 
     springboot-mongodb:
-      image: springboot-mongodb:1.0
-      container_name: springboot-mongodb
-      ports:
-        - 8080:8080
-      links:
-        - mongodb
-
+        build:
+            context: eloquent-elks-backend
+            dockerfile: Dockerfile
+        container_name: springboot-mongodb
+        ports:
+            - 8080:8080
+        links:
+            - mongodb_airbnb
+    
+    mongodb_poi:
+        image: mongo
+        volumes:
+            - ./eloquent-elks-poi-db/mongodb/database:/data/db
+            - ./eloquent-elks-poi-db/mongodb/init.js:/docker-entrypoint-initdb.d/init.js
+        ports:
+            - 27018:27017
+        restart: unless-stopped
+        hostname: mongodb_poi
+                
+    dbseed_poi:
+        build:
+            context: ./eloquent-elks-poi-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_poi
+        depends_on:
+            - mongodb_poi
+            
+    poi-api:
+        build:
+            context: eloquent-elks-poi-api
+            dockerfile: Dockerfile
+        ports: 
+            - 1337:8080
+        depends_on:
+            - mongodb_poi
+        environment:
+           - SPRING_DATA_MONGODB_HOST=mongodb_poi
+           - SPRING_DATA_MONGODB_PORT=27017
+           - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
+        hostname: poi-api

@@ -1,1 +1,3 @@
 eloquent-elks-airbnb-db/mongodb/database
+eloquent-elks-poi-db/mongodb/database
+eloquent-elks-poi-api/src/main/resources/static/docs
