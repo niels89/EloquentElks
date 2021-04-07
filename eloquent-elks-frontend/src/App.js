@@ -30,6 +30,10 @@ function App() {
         setPois(pois)
     }
 
+    const handleTileLayerClick = (event) => {
+        console.log(event)
+        setPois([])
+    }
 
     useEffect( () => {
         console.log(airbnbs)
@@ -51,8 +55,12 @@ function App() {
                     sidebar
                 </Box>
                 <Box flex align='center' justify='center'>
-                    <Box fill >
-                        <MapContainer center={[40.70, -74.02]} zoom={13} scrollWheelZoom={true} style={{height: '100%'}}>
+                    <Box fill onClick={handleTileLayerClick}>
+                        <MapContainer center={[40.70, -74.02]}
+                                      zoom={13}
+                                      scrollWheelZoom={true}
+                                      style={{height: '100%'}}
+                        >
                             <TileLayer
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
