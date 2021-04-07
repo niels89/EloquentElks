@@ -1,14 +1,14 @@
 import {Box, Button, Grommet, Header,} from "grommet";
-import { theme } from './GrommetTheme'
-import { Home } from 'grommet-icons';
+import {theme} from './GrommetTheme'
+import {Home} from 'grommet-icons';
 import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 import {useEffect, useState} from "react";
 import {getAirbnbs} from "./requests/getAirbnbs";
 import {getPois} from "./requests/getPois";
 import {attractionLeafletIcon} from "./components/icons/attractionLeafletIcon";
-
-import './App.css'
 import {airbnbLeafletIcon} from "./components/icons/airbnbLeafletIcon";
+import './App.css'
+
 
 
 function App() {
@@ -62,7 +62,6 @@ function App() {
                                         position={[airbnb.latitude, airbnb.longitude]}
                                         eventHandlers={{click: handleAirBnBClick}}
                                         icon={airbnbLeafletIcon}
-
                                 >
                                     <Popup>
                                         {airbnb.name}
