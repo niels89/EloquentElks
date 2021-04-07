@@ -1,6 +1,19 @@
 import React from 'react'
-import {Anchor, Box, Button, Card, CardBody, CardFooter, Collapsible, Heading, Image, Layer, Paragraph} from "grommet";
-import {Favorite, FormDown, FormUp, ShareOption} from "grommet-icons";
+import {
+    Anchor,
+    Box,
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    Collapsible,
+    Heading,
+    Image,
+    Layer,
+    Paragraph,
+    Stack
+} from "grommet";
+import {Close, Favorite, FormDown, FormUp, ShareOption} from "grommet-icons";
 import img from "../resources/mock_nyc_airbnb.jpg"
 
 export const AirBnBInformationLayer = props => {
@@ -37,19 +50,27 @@ export const AirBnBInformationLayer = props => {
                       width="medium"
                 >
                     <CardBody height='small'>
-                        <Image
-                            fill={true}
-                            src={img}
-                            a11yTitle="mock_nyc_image"
-                        />
+                        <Stack>
+                            <Image
+                                fill={true}
+                                src={img}
+                                a11yTitle="mock_nyc_image"
+                            />
+                            <Button icon={<Close color={"white"}/>}
+                                    hoverIndicator
+                                    onClick={() => {props.setShowInformation(false);
+                                                    props.setPois([])
+                                    }}
+                            />
+                        </Stack>
+
                     </CardBody>
                     <Box pad={{horizontal: 'medium'}} responsive={false}>
                         <Heading level="3" margin={{vertical: 'medium'}}>
-                            Bridge
+                            {props.content.name}
                         </Heading>
                         <Paragraph margin={{top: 'none'}}>
-                            A structure carrying a road, path, railroad, or canal across a
-                            river, ravine, road, railroad, or other obstacle.
+                            Here we should write some basic information about the AirBnb, which is probably available in the data.
                         </Paragraph>
                     </Box>
                     <CardFooter>
@@ -62,8 +83,8 @@ export const AirBnBInformationLayer = props => {
                             />
                             <Button icon={<ShareOption color="plain"/>} hoverIndicator/>
                             <Anchor
-                                href="https://www.collinsdictionary.com/us/dictionary/english/bridge"
-                                label="Learn More"
+                                href="https://www.airbnb.ch/"
+                                label="Book Now"
                             />
                         </Box>
                         <ExpandButton onClick={() => setOpen(!open)}/>

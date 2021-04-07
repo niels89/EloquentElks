@@ -1,12 +1,8 @@
-import {Box, Button, Grommet, Header, Layer, Stack} from "grommet";
+import {Box, Button, Grommet, Header} from "grommet";
 import {grommetTheme} from './GrommetTheme'
 import {Home} from 'grommet-icons';
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
-import {createRef, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {getAirbnbs} from "./requests/getAirbnbs";
-import {getPois} from "./requests/getPois";
-import {attractionLeafletIcon} from "./components/icons/attractionLeafletIcon";
-import {airbnbLeafletIcon} from "./components/icons/airbnbLeafletIcon";
 import './App.css'
 import {AirBnBInformationLayer} from "./components/AirBnBInformationLayer";
 import {MainMap} from "./components/MainMap";
@@ -17,6 +13,7 @@ function App() {
     const [airbnbs, setAirbnbs] = useState([])
     const [pois, setPois] = useState([])
     const [showInformation, setShowInformation] = useState(false)
+    const [currentAirBnB, setCurrentAirBnB] = useState({})
 
     useEffect(() => {
         async function fetchData() {
@@ -47,8 +44,13 @@ function App() {
                         sidebar
                     </Box>
                     <Box flex align='center' justify='center' >
-                        <MainMap airbnbs={airbnbs} pois={pois} setPois={setPois} setShowInformation={setShowInformation}/>
-                        {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}/>}
+                        <MainMap airbnbs={airbnbs}
+                                 pois={pois}
+                                 setPois={setPois}
+                                 setShowInformation={setShowInformation}
+                                 setCurrentAirBnB={setCurrentAirBnB}
+                        />
+                        {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation} setPois={setPois} content={currentAirBnB} />}
                     </Box>
                 </Box>
             </Box>

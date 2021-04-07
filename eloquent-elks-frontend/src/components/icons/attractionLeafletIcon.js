@@ -1,5 +1,4 @@
-
-import {divIcon} from "leaflet/dist/leaflet-src.esm";
+import {divIcon} from "leaflet";
 import {renderToStaticMarkup} from "react-dom/server";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArchway, faMapMarker} from '@fortawesome/free-solid-svg-icons'

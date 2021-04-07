@@ -1,15 +1,17 @@
 import {Box} from "grommet";
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+import {MapContainer, Marker, TileLayer} from "react-leaflet";
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
 import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
 
 export const MainMap = props => {
-    const handleAirBnBClick = async event => {
+
+    const handleAirBnBClick = async (event, airbnb) => {
         const { lat, lng } = event.latlng
         let pois = await getPois(lat, lng)
         props.setPois(pois)
         props.setShowInformation(true)
+        props.setCurrentAirBnB(airbnb)
     }
 
     const handleOutsideClick = () => {
@@ -21,7 +23,7 @@ export const MainMap = props => {
             <MapContainer center={[40.70, -74.02]}
                           zoom={13}
                           scrollWheelZoom={true}
-                          style={{height: '100%', "z-index": 0}}
+                          style={{height: '100%', zIndex: 0}}
             >
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -31,12 +33,12 @@ export const MainMap = props => {
                         return (
                             <Marker key={index}
                                     position={[airbnb.latitude, airbnb.longitude]}
-                                    eventHandlers={{click: handleAirBnBClick}}
+                                    eventHandlers={{click: (event) => {handleAirBnBClick(event, airbnb)}}}
                                     icon={airbnbLeafletIcon}
                             >
-                                <Popup>
-                                    {airbnb.name}
-                                </Popup>
+                                {/*<Popup>*/}
+                                {/*    {airbnb.name}*/}
+                                {/*</Popup>*/}
                             </Marker>
                         )
                     }
@@ -48,9 +50,9 @@ export const MainMap = props => {
                                     position={[poi.latitude, poi.longitude]}
                                     icon={attractionLeafletIcon}
                             >
-                                <Popup>
-                                    {poi.type}
-                                </Popup>
+                                {/*<Popup>*/}
+                                {/*    {poi.type}*/}
+                                {/*</Popup>*/}
                             </Marker>
                         )
                     }
