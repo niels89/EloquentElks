@@ -1,5 +1,5 @@
 import {Box} from "grommet";
-import {MapContainer, Marker, TileLayer} from "react-leaflet";
+import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
 import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
@@ -16,6 +16,7 @@ export const MainMap = props => {
         props.setPois(pois)
         props.setShowInformation(true)
         props.setCurrentAirBnB(airbnb)
+        //TODO: Fix zoom such that it doesn't zoom out when zoomed in any further
         map.flyTo(event.latlng, 15)
     }
 
@@ -59,9 +60,9 @@ export const MainMap = props => {
                                     position={[poi.latitude, poi.longitude]}
                                     icon={attractionLeafletIcon}
                             >
-                                {/*<Popup>*/}
-                                {/*    {poi.type}*/}
-                                {/*</Popup>*/}
+                                <Tooltip>
+                                    {poi.type}
+                                </Tooltip>
                             </Marker>
                         )
                     }

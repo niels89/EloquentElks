@@ -67,12 +67,11 @@ export const AirBnBInformationLayer = props => {
 
                     </CardBody>
                     <Box pad={{horizontal: 'medium'}}>
-                        <Heading level="3" margin={{vertical: 'medium'}}>
+                        <Heading level="3" margin={{top: 'medium', bottom: 'small'}}>
                             {props.content.name}
                         </Heading>
                         <Paragraph margin={{top: 'none'}}>
-                            Here we could write some basic information about the AirBnb, which is probably available in
-                            the data (e.g. the price).
+                            Here we could write some basic information about the AirBnb.
                         </Paragraph>
                     </Box>
                     <CardFooter>
@@ -95,7 +94,7 @@ export const AirBnBInformationLayer = props => {
                         <Box pad={{horizontal: 'medium'}}
                              responsive={true}
                         >
-                            <Heading level="4" margin={{vertical: 'medium'}}>
+                            <Heading level="4" margin={{vertical: 'small'}}>
                                 Points of Interest Nearby:
                             </Heading>
                             <Box margin={{bottom: 'medium'}}
@@ -103,7 +102,6 @@ export const AirBnBInformationLayer = props => {
                                  overflow='scroll'>
                                 <List data={props.pois}/>
                             </Box>
-
                         </Box>
                     </Collapsible>
                 </Card>
