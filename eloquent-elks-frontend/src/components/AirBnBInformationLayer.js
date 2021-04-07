@@ -9,7 +9,7 @@ import {
     Collapsible,
     Heading,
     Image,
-    Layer,
+    Layer, List,
     Paragraph,
     Stack
 } from "grommet";
@@ -37,7 +37,7 @@ export const AirBnBInformationLayer = props => {
                onEsc={() => props.setShowInformation(false)}
                modal={false}
                plain={true}
-               margin={{top: '60px', right: 'small'}}
+               margin={{top: '60px', right: 'small', bottom: 'medium'}}
                animation="fadeIn"
         >
             <Box animation={{
@@ -58,19 +58,21 @@ export const AirBnBInformationLayer = props => {
                             />
                             <Button icon={<Close color={"white"}/>}
                                     hoverIndicator
-                                    onClick={() => {props.setShowInformation(false);
-                                                    props.setPois([])
+                                    onClick={() => {
+                                        props.setShowInformation(false);
+                                        props.setPois([])
                                     }}
                             />
                         </Stack>
 
                     </CardBody>
-                    <Box pad={{horizontal: 'medium'}} responsive={false}>
+                    <Box pad={{horizontal: 'medium'}} >
                         <Heading level="3" margin={{vertical: 'medium'}}>
                             {props.content.name}
                         </Heading>
                         <Paragraph margin={{top: 'none'}}>
-                            Here we should write some basic information about the AirBnb, which is probably available in the data.
+                            Here we should write some basic information about the AirBnb, which is probably available in
+                            the data.
                         </Paragraph>
                     </Box>
                     <CardFooter>
@@ -90,12 +92,19 @@ export const AirBnBInformationLayer = props => {
                         <ExpandButton onClick={() => setOpen(!open)}/>
                     </CardFooter>
                     <Collapsible open={open}>
-                        <Paragraph margin="medium" color="dark-3">
-                            The greatest bridge builders of antiquity were the ancient Romans.
-                            The Romans built arch bridges and aqueducts that could stand in
-                            conditions that would damage or destroy earlier designs. Some
-                            stand today.
-                        </Paragraph>
+                        <Box height={{max:"medium"}}
+                             pad={{horizontal: 'medium'}}
+                             responsive={true}
+                        >
+                            <Heading level="4" margin={{vertical: 'medium'}}>
+                                Points of Interest Nearby:
+                            </Heading>
+                            <Box overflow='scroll'>
+                                <List data={props.pois}/>
+                            </Box>
+
+                        </Box>
+
                     </Collapsible>
                 </Card>
             </Box>

@@ -50,7 +50,10 @@ function App() {
                                  setShowInformation={setShowInformation}
                                  setCurrentAirBnB={setCurrentAirBnB}
                         />
-                        {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation} setPois={setPois} content={currentAirBnB} />}
+                        {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}
+                                                                    pois={pois}
+                                                                    setPois={setPois}
+                                                                    content={currentAirBnB} />}
                     </Box>
                 </Box>
             </Box>
