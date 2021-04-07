@@ -15,6 +15,7 @@ const attractionMarkup = renderToStaticMarkup(
 
 
 export const attractionLeafletIcon = divIcon({
-    html: attractionMarkup
+    html: attractionMarkup,
+    iconAnchor: [13, 40]
 })
 

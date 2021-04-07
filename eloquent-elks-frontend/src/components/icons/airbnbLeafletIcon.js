@@ -16,5 +16,6 @@ const attractionMarkup = renderToStaticMarkup(
 
 
 export const airbnbLeafletIcon = divIcon({
-    html: attractionMarkup
+    html: attractionMarkup,
+    iconAnchor: [13, 40]
 })
