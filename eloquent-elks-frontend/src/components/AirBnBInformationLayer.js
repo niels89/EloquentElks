@@ -92,14 +92,15 @@ export const AirBnBInformationLayer = props => {
                         <ExpandButton onClick={() => setOpen(!open)}/>
                     </CardFooter>
                     <Collapsible open={open}>
-                        <Box height={{max: "medium"}}
-                             pad={{horizontal: 'medium'}}
+                        <Box pad={{horizontal: 'medium'}}
                              responsive={true}
                         >
                             <Heading level="4" margin={{vertical: 'medium'}}>
                                 Points of Interest Nearby:
                             </Heading>
-                            <Box margin={{bottom: 'medium'}} overflow='scroll'>
+                            <Box margin={{bottom: 'medium'}}
+                                 height={'small'}
+                                 overflow='scroll'>
                                 <List data={props.pois}/>
                             </Box>
 
