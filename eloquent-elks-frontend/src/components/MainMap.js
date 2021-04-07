@@ -14,9 +14,9 @@ export const MainMap = props => {
         props.setCurrentAirBnB(airbnb)
     }
 
-    const handleOutsideClick = () => {
-        props.setPois([])
-    }
+    // const handleOutsideClick = () => {
+    //     props.setPois([])
+    // }
 
     return (
         <Box fill>
