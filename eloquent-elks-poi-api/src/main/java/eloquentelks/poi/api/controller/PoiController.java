@@ -41,6 +41,7 @@ public class PoiController {
      * @param latitude Geographical latitude of the center
      * @return A list of points of interest in New York city
      */
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("poi")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
