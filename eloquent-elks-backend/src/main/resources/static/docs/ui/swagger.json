@@ -1,0 +1,82 @@
+{
+  "swagger": "2.0",
+  "info" : {
+    "version" : "0.0.0",
+    "title" : "Web Service API"
+  },
+  "basePath" : "",
+  "schemes" : [],
+  "tags" : [
+    {
+      "name" : "EloquentElksBackendApplication"
+    }
+    ,
+    {
+      "name" : "PropertyController"
+      ,
+      "description" : "Rest controller for fetching property."
+    }
+  ],
+  "definitions" : {
+    "PropertyFetchDTO" : {
+      "type" : "object",
+      "title" : "PropertyFetchDTO",
+      "example" : { },
+      "description" : ""
+    }
+    ,
+    "xml_ns0_propertyFetchDTO" : {
+      "type" : "object",
+      "title" : "propertyFetchDTO",
+      "allOf" : [
+        {
+        }
+      ],
+      "description" : ""
+    }
+  },
+  "paths": {
+    "\/" : {
+      "get" : {
+        "tags" : [ "EloquentElksBackendApplication" ],
+        "operationId" : "helloWorld",
+        "produces" : [ "text/plain" ],
+        "parameters" : [
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "string"
+            },
+            "description" : ""
+          }
+        }
+      }
+    },
+    "\/api/v1/airbnb" : {
+      "get" : {
+        "tags" : [ "PropertyController" ],
+        "operationId" : "getProperty",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [
+        ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+"description" : "",
+"type" : "array",
+"items" : {
+  "$ref" : "#/definitions/PropertyFetchDTO"
+}
+            },
+            "examples" : {
+              "application/json" : [ { } ]
+            },
+            "description" : ""
+          }
+        }
+      }
+    }
+  }
+}

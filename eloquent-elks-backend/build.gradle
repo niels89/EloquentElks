@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'jacoco'
 	id 'com.github.kt3k.coveralls' version '2.11.0'
+	id 'com.webcohesion.enunciate' version '2.13.3'
 	id 'org.sonarqube' version '3.1.1'
 }
 
@@ -20,16 +21,39 @@ configurations {
 repositories {
 	jcenter()
 	mavenCentral()
+	google()
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.projectlombok:lombok:1.18.16'
+	implementation 'com.mapbox.mapboxsdk:mapbox-sdk-geojson:5.8.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mockito:mockito-inline'
+	testImplementation 'org.mockito:mockito-junit-jupiter'
+	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'javax.xml.ws:jaxws-api:2.3.1'
+	compileOnly 'javax.jws:javax.jws-api:1.1'
+	compileOnly 'javax.xml.bind:jaxb-api:2.3.1'
+	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+}
+
+
+apply plugin: "com.webcohesion.enunciate"
+
+tasks.enunciate {
+	File enunciateDistDir = file("src/main/resources/static/docs")
+	doFirst {
+		enunciateDistDir.deleteDir()
+		enunciateDistDir.mkdirs()
+	}
+	export("docs", enunciateDistDir)
 }
 
 jacocoTestReport{
@@ -55,7 +79,7 @@ test {
 
 sonarqube {
 	properties {
-		property "sonar.projectKey", "eloquent-elks_EloquentElks_Airbnb_API"
+		property 'sonar.projectKey', 'eloquent-elks_EloquentElks_POI_API'
 		property 'sonar.language', 'java'
 		property 'sonar.sources', 'src/main'
 		property 'sonar.tests', 'src/test'
@@ -64,4 +88,9 @@ sonarqube {
 		property 'sonar.coverage.jacoco.xmlReportPaths', '**/jacocoTestReport.xml'
 		property 'sonar.java.binaries', 'build/classes'
 	}
+}
+
+
+test {
+	useJUnitPlatform()
 }

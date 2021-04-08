@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Date;
 
-
+/**
+ * Contract for the Property
+ */
 
 @Getter
 @Setter

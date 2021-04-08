@@ -20,6 +20,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+/**
+ * Test for PropertyController @see {@link com.airbnb.eloquentelksbackend.controller.PropertyController}
+ */
 @WebMvcTest(PropertyController.class)
 //@SpringBootTest(classes = EloquentElksBackendApplication.class)
 public class PropertyControllerTest {
@@ -27,8 +31,12 @@ public class PropertyControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Stub of ProprertyService @see {@link com.airbnb.eloquentelksbackend.service.PropertyService}
+     */
     @MockBean
     private PropertyService propertyService;
+
 
     @Test
     public void getAllPropertyTest() throws Exception{
