@@ -52,5 +52,10 @@
     "coveralls": "^3.1.0",
     "jest-sonar-reporter": "^2.0.0",
     "sonarqube-scanner": "^2.8.0"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!leaflet)/"
+    ]
   }
 }
