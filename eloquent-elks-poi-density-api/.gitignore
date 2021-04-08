@@ -1,0 +1,10 @@
+__pycache__/
+build
+dist
+downloads
+instance
+.webassets-cache
+.pybuilder/
+target/
+venv
+.idea
