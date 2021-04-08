@@ -10,6 +10,7 @@ jobs:
             - yarn --cwd ./eloquent-elks-frontend install
             - yarn --cwd ./eloquent-elks-frontend test -- --coverage
             - yarn --cwd ./eloquent-elks-frontend run build
+            - yarn --cwd ./eloquent-elks-frontend sonar
           after_script:
             - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls     
         - language: java
@@ -18,6 +19,33 @@ jobs:
           dist: trusty
           jdk: 
             - openjdk12
+          before_cache:
+            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+          cache:
+            directories:
+              - $HOME/.gradle/caches/
+              - $HOME/.gradle/wrapper/
+          script:
+            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend build
+            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend test
+            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend jacocoTestReport
+            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend sonarqube
+          after_success:
+            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend jacocoTestReport coveralls
+        - language: java
+          install: skip
+          os: linux
+          dist: trusty
+          jdk: 
+            - openjdk12
+          before_cache:
+            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+          cache:
+            directories:
+              - $HOME/.gradle/caches/
+              - $HOME/.gradle/wrapper/
           script:
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api build
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api test
@@ -31,6 +59,13 @@ jobs:
           dist: trusty
           jdk: 
             - openjdk12
+          before_cache:
+            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+          cache:
+            directories:
+              - $HOME/.gradle/caches/
+              - $HOME/.gradle/wrapper/
           script:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api build
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api test
