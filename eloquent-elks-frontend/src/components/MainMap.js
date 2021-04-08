@@ -17,6 +17,7 @@ export const MainMap = props => {
         props.setShowInformation(true)
         props.setCurrentAirBnB(airbnb)
         //TODO: Fix zoom such that it doesn't zoom out when zoomed in any further
+        // ()=>{if (map.getZoom() > 15) { return 15} return map.getZoom()}
         map.flyTo(event.latlng, 15)
     }
 
