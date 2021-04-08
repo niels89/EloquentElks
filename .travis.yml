@@ -19,6 +19,13 @@ jobs:
           dist: trusty
           jdk: 
             - openjdk12
+          before_cache:
+            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+          cache:
+            directories:
+              - $HOME/.gradle/caches/
+              - $HOME/.gradle/wrapper/
           script:
             - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend build
             - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend test
@@ -32,6 +39,13 @@ jobs:
           dist: trusty
           jdk: 
             - openjdk12
+          before_cache:
+            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+          cache:
+            directories:
+              - $HOME/.gradle/caches/
+              - $HOME/.gradle/wrapper/
           script:
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api build
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api test
@@ -45,6 +59,13 @@ jobs:
           dist: trusty
           jdk: 
             - openjdk12
+          before_cache:
+            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+          cache:
+            directories:
+              - $HOME/.gradle/caches/
+              - $HOME/.gradle/wrapper/
           script:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api build
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api test
