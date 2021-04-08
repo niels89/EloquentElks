@@ -14,7 +14,7 @@ import java.util.List;
  * Rest controller which serves Points of Interest
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/poi")
 public class PoiController {
 
     /**
@@ -42,12 +42,27 @@ public class PoiController {
      * @return A list of points of interest in New York city
      */
     @CrossOrigin(origins="http://localhost:3000")
-    @GetMapping("poi")
+    @GetMapping("radius")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<PoiGetDto> getAllPoi(@RequestParam("longitude") double longitude,
                                      @RequestParam("latitude") double latitude){
         List<PoiGetDto> poiList = poiService.getAllPois(longitude, latitude);
+
+        return poiList;
+    }
+
+    /**
+     * Returns the points of interest of a specific attraction type
+     * @param attractionType Type of attraction to be returned
+     * @return A list of points of interest in New York city
+     */
+    @CrossOrigin(origins="http://localhost:3000")
+    @GetMapping("attraction")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<PoiGetDto> getPoiByAttractionType(@RequestParam("attractionType") String attractionType){
+        List<PoiGetDto> poiList = poiService.getPoisByAttractionType(attractionType);
 
         return poiList;
     }

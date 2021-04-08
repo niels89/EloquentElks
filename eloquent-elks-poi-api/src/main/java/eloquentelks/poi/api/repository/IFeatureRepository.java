@@ -17,4 +17,11 @@ public interface IFeatureRepository {
      * @return
      */
     List<Feature> getFeatures(Point center, double radius);
+
+    /**
+     * Loads GeoJson features from the database with a specific attraction type.
+     * @param attractionType
+     * @return
+     */
+    List<Feature> getFeatures(String attractionType);
 }

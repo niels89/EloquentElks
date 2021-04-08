@@ -23,7 +23,7 @@ services:
             dockerfile: Dockerfile
         container_name: springboot-mongodb
         ports:
-            - 8080:8080
+            - 1340:8080
         links:
             - mongodb_airbnb
         environment:
@@ -72,4 +72,10 @@ services:
         ports: 
             - 1338:8080
         hostname: recommender-api
+    poi-density-api:
+        build:
+            context: eloquent-elks-poi-density-api
+            dockerfile: Dockerfile
+        ports:
+            - 1339:5000
 
