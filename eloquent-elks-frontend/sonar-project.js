@@ -9,7 +9,7 @@ sonarScanner(
             "sonar.organization": "eloquent-elks",
             "sonar.sources": "src",
             "sonar.tests": "src",
-            "sonar.test.inclusions": "src/*.test.js,src/*Tests.js",
+            "sonar.test.inclusions": "src/*.test.js,src/**/*.test.js",
             "sonar.typescript.lcov.reportPaths": "coverage/lcov.info"
         }
     }
