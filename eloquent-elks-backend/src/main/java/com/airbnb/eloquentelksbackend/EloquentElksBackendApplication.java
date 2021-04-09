@@ -18,11 +18,11 @@ public class EloquentElksBackendApplication {
 		SpringApplication.run(EloquentElksBackendApplication.class, args);
 	}
 
-	@GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public String helloWorld() {
-		return "The application is running.";
-	}
+//	@GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
+//	@ResponseStatus(HttpStatus.OK)
+//	@ResponseBody
+//	public String helloWorld() {
+//		return "The application is running.";
+//	}
 
 }

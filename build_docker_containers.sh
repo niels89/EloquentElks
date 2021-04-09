@@ -15,6 +15,7 @@ rm -rf .eloquent-elks-recommender-api/build/libs/*
 
 #Airbnb API
 rm -rf .eloquent-elks-backend/build/libs/*
+./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend enunciate
 ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend build
 
 docker-compose pull
