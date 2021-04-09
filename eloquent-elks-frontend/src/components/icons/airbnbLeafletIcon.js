@@ -1,4 +1,4 @@
-import {divIcon} from "leaflet/dist/leaflet-src.esm";
+import {divIcon} from "leaflet";
 import {renderToStaticMarkup} from "react-dom/server";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faMapMarker} from '@fortawesome/free-solid-svg-icons'
@@ -16,5 +16,6 @@ const attractionMarkup = renderToStaticMarkup(
 
 
 export const airbnbLeafletIcon = divIcon({
-    html: attractionMarkup
+    html: attractionMarkup,
+    iconAnchor: [13, 40]
 })
