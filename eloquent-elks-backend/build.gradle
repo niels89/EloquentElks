@@ -90,7 +90,6 @@ sonarqube {
 	}
 }
 
-
 test {
 	useJUnitPlatform()
 }
