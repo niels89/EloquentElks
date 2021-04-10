@@ -12,7 +12,7 @@ class PoiDensityService {
       var values = 0;
       for (var j = 0; j < ptFC.features.length; j++) {
         var pt = ptFC.features[j];
-        if (inside(pt, poly)) {
+        if (turf.booleanPointInPolygon(pt, poly)) {
           values++;
         }
       }
@@ -34,14 +34,14 @@ class PoiDensityService {
 
   calculateDensity(pois) {
     let bbox = [-74.60,40.41,-73.07,41.05];
-    let cellSide = 0.500;
+    let cellSide = 1;
     let options = {units: 'kilometers'};
 
     let pointLayer = this.mapPoisToFeatureCollection(pois)
     let gridLayer = turf.hexGrid(bbox, cellSide, options)
 
-    let tagged = turf.tag(pointLayer, gridLayer, '', 'GridID');
-    return gridLayer
+    let counted = this.countPointInPolygons(gridLayer, pointLayer, "poiCount")
+    return counted
   }
 
 

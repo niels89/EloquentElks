@@ -6,12 +6,10 @@ import { getDomain } from '../helpers/getDomain';
  * @returns {list}
  */
 export async function getPoisService(attractionType) {
-  console.log(attractionType)
   let response = await fetch(
     `${getDomain(1337)}/api/v1/poi/attraction?attractionType=${attractionType}`,
     { method: 'GET' }
   );
-  console.log(response)
   if (response.ok) {
     let data = await response.json();
     return data;
