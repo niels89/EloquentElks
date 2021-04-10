@@ -17,6 +17,7 @@ class PoiDensityService {
         }
       }
       poly.properties[outField] = values;
+      poly.properties[id] = i;
     }
 
     return polyFC;
