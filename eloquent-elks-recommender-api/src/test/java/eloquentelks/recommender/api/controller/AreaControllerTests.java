@@ -1,13 +1,16 @@
 package eloquentelks.recommender.api.controller;
 
+import com.mapbox.geojson.FeatureCollection;
+import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
 import eloquentelks.recommender.api.model.AreaPostRequestDto;
-import eloquentelks.recommender.api.model.AreaPostResponseDto;
+import eloquentelks.recommender.api.service.DensityService;
+import eloquentelks.recommender.api.service.IDensityService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 /**
  * Unit tests for @see{@link eloquentelks.recommender.api.controller.AreaController}
@@ -20,15 +23,16 @@ public class AreaControllerTests {
     @Test
     public void testGetArea(){
         // arrange
-        AreaController controller = new AreaController();
+        IDensityService densityService = new DensityService(new FeatureCollectionAccessor());
+        AreaController controller = new AreaController(densityService);
         AreaPostRequestDto requestDto = new AreaPostRequestDto();
-        requestDto.setAttractionType("restaurant");
+        requestDto.setAttractionTypes(List.of("restaurant"));
 
         // act
-        List<AreaPostResponseDto> area = controller.postArea(requestDto);
+        FeatureCollection featureCollection = FeatureCollection.fromJson(controller.postArea(requestDto));
+
 
         // assert
-        assertNotNull(area);
-        assertEquals("Brooklyn", area.get(0).getName());
+        assertEquals(64, featureCollection.features().stream().findFirst().get().properties().get("poiCount").getAsInt());
     }
 }

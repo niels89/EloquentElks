@@ -1,0 +1,157 @@
+package eloquentelks.recommender.api.helper;
+
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_ID;
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Unit tests for @see{@link FeatureCollectionAccessor}
+ */
+public class FeatureCollectionAccessorTests {
+
+    private String featureCollectionJson = "{\n" +
+            "  \"type\": \"FeatureCollection\",\n" +
+            "  \"features\": [\n" +
+            "    {\n" +
+            "      \"type\": \"Feature\",\n" +
+            "      \"properties\": {\n" +
+            "        \"poiCount\": 42,\n" +
+            "        \"id\": 1\n" +
+            "      },\n" +
+            "      \"geometry\": {\n" +
+            "        \"type\": \"Polygon\",\n" +
+            "        \"coordinates\": [\n" +
+            "          [\n" +
+            "            [\n" +
+            "              -74.57080229744054,\n" +
+            "              40.41846628754955\n" +
+            "            ],\n" +
+            "            [\n" +
+            "              -74.57673618693602,\n" +
+            "              40.42625463036081\n" +
+            "            ],\n" +
+            "            [\n" +
+            "              -74.588603965927,\n" +
+            "              40.42625463036081\n" +
+            "            ],\n" +
+            "            [\n" +
+            "              -74.59453785542249,\n" +
+            "              40.41846628754955\n" +
+            "            ],\n" +
+            "            [\n" +
+            "              -74.588603965927,\n" +
+            "              40.41067794473829\n" +
+            "            ],\n" +
+            "            [\n" +
+            "              -74.57673618693602,\n" +
+            "              40.41067794473829\n" +
+            "            ],\n" +
+            "            [\n" +
+            "              -74.57080229744054,\n" +
+            "              40.41846628754955\n" +
+            "            ]\n" +
+            "          ]\n" +
+            "        ]\n" +
+            "      }\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}\n";
+
+    /**
+     * FeatureCollection containing the density data
+     */
+    private FeatureCollection featureCollection;
+
+    /**
+     * Object under test
+     */
+    private IFeatureCollectionAccessor accessor;
+
+    /**
+     * Test initialization
+     */
+    @BeforeEach
+    public void setUp(){
+        // arrange
+        featureCollection = FeatureCollection.fromJson(featureCollectionJson);
+        accessor = new FeatureCollectionAccessor();
+    }
+
+    /**
+     * Tests if the getPoiDensity method works properly
+     */
+    @Test
+    public void testGetPoiDensity(){
+        // act
+        int density = accessor.getDensity(featureCollection, 1);
+
+        // assert
+        assertEquals(42, density);
+    }
+
+    /**
+     * Tests that the getPoiDensity method throws an exception if the
+     * preconditions are not met
+     */
+    @Test
+    public void testGetPoiDensity_featureNotExisting(){
+        // act, assert
+        assertThrows(IllegalArgumentException.class, () -> accessor.getDensity(featureCollection, 0));
+    }
+
+    /**
+     * Tests if the getFeatureById method works properly
+     */
+    @Test
+    public void testGetFeatureById(){
+        // act
+        Feature feature = accessor.getFeatureById(featureCollection, 1);
+
+        // assert
+        assertEquals(1, feature.properties().get(GEOJSON_FEATURE_PROPERTY_ID).getAsInt());
+    }
+
+    /**
+     * Tests if the getFeatureById method throws an exception if the preconditions
+     * are not met
+     */
+    @Test
+    public void testGetFeatureById_notFound(){
+        // act
+        Feature feature = accessor.getFeatureById(featureCollection, 0);
+
+        // assert
+        assertNull(feature);
+    }
+
+    /**
+     * Tests if the copyFeatureIds method creates a deep copy of the original
+     * collection
+     */
+    @Test
+    public void testCopyFeatureIds(){
+        // act
+        FeatureCollection copy = accessor.copyFeatureIds(featureCollection);
+
+        // assert
+        assertEquals(42, accessor.getDensity(featureCollection, 1));
+        assertEquals(0, accessor.getDensity(copy, 1));
+    }
+
+    /**
+     * Tests if the setDensity method works properly
+     */
+    @Test
+    public void testSetDensity(){
+        // act
+        accessor.setDensity(featureCollection, 1, 244);
+
+        // assert
+        assertEquals(244, accessor.getDensity(featureCollection, 1));
+    }
+
+}
