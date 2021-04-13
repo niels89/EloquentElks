@@ -71,7 +71,12 @@ services:
             dockerfile: Dockerfile
         ports: 
             - 1338:8080
+        environment:
+            - ELOQUENTELKS_POI_DENSITY_API_PROTOCOL=http
+            - ELOQUENTELKS_POI_DENSITY_API_HOST=localhost
+            - ELOQUENTELKS_POI_DENSITY_API_PORT=1339
         hostname: recommender-api
+        
     poi-density-api:
         build:
             context: eloquent-elks-poi-density-api

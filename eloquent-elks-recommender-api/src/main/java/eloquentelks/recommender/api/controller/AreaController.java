@@ -1,6 +1,5 @@
 package eloquentelks.recommender.api.controller;
 
-import com.google.gson.JsonObject;
 import com.mapbox.geojson.FeatureCollection;
 import eloquentelks.recommender.api.model.AreaPostRequestDto;
 import eloquentelks.recommender.api.service.IDensityService;
@@ -37,7 +36,7 @@ public class AreaController {
     @PostMapping("area")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String postArea(AreaPostRequestDto requestDto){
+    public String postArea(@RequestBody AreaPostRequestDto requestDto){
 
         // step 1: load raw densities
         List<FeatureCollection> rawDensities = densityService.getDensities(requestDto.getAttractionTypes());

@@ -2,15 +2,20 @@ package eloquentelks.recommender.api.controller;
 
 import com.mapbox.geojson.FeatureCollection;
 import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
+import eloquentelks.recommender.api.helper.FeatureCollectionFactory;
 import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
 import eloquentelks.recommender.api.model.AreaPostRequestDto;
 import eloquentelks.recommender.api.service.DensityService;
+import eloquentelks.recommender.api.service.IDensityRestService;
 import eloquentelks.recommender.api.service.IDensityService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -24,8 +29,17 @@ public class AreaControllerTests {
     @Test
     public void testPostArea(){
         // arrange
+        IDensityRestService densityRestService = mock(IDensityRestService.class);
+        Map<Integer, Integer> densities1 = Map.of(1, 42, 2, 98, 3, 182);
+        Map<Integer, Integer> densities2 = Map.of(1, 7, 2, 1, 3, 12);
+
+        when(densityRestService.getDensities(any(List.class))).thenReturn( List.of(
+                FeatureCollectionFactory.create(densities1),
+                FeatureCollectionFactory.create(densities2)
+        ));
+
         IFeatureCollectionAccessor accessor = new FeatureCollectionAccessor();
-        IDensityService densityService = new DensityService(new FeatureCollectionAccessor());
+        IDensityService densityService = new DensityService(new FeatureCollectionAccessor(), densityRestService);
         AreaController controller = new AreaController(densityService);
         AreaPostRequestDto requestDto = new AreaPostRequestDto();
         requestDto.setAttractionTypes(List.of("restaurant"));

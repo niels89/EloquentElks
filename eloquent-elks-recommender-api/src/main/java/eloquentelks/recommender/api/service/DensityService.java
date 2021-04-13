@@ -3,13 +3,11 @@ package eloquentelks.recommender.api.service;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
-import eloquentelks.recommender.api.helper.FeatureCollectionFactory;
 import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -19,10 +17,12 @@ import java.util.Optional;
 public class DensityService implements IDensityService {
 
     private final IFeatureCollectionAccessor featureCollectionAccessor;
+    private IDensityRestService densityRestService;
 
     @Autowired
-    public DensityService(FeatureCollectionAccessor helper){
+    public DensityService(FeatureCollectionAccessor helper, IDensityRestService densityRestService){
         this.featureCollectionAccessor = helper;
+        this.densityRestService = densityRestService;
     }
 
     /**
@@ -30,13 +30,7 @@ public class DensityService implements IDensityService {
      */
     @Override
     public List<FeatureCollection> getDensities(List<String> attractionTypes) {
-        Map<Integer, Integer> densities1 = Map.of(1, 42, 2, 98, 3, 182);
-        Map<Integer, Integer> densities2 = Map.of(1, 7, 2, 1, 3, 12);
-
-        return List.of(
-                FeatureCollectionFactory.create(densities1),
-                FeatureCollectionFactory.create(densities2)
-        );
+        return densityRestService.getDensities(attractionTypes);
     }
 
     /**
