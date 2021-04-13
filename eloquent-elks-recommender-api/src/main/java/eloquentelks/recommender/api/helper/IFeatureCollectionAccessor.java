@@ -10,12 +10,20 @@ import com.mapbox.geojson.FeatureCollection;
 public interface IFeatureCollectionAccessor {
 
     /**
+     * Reads the poiCount property from a Feature in a FeatureCollection
+     * @param collection The FeatureCollection to be searched
+     * @param id Id of the desired Feature
+     * @return Density value (poiCount)
+     */
+    double getDensity(FeatureCollection collection, int id);
+
+    /**
      * Reads the poiCount property from a Feature
      * @param collection The FeatureCollection to be searched
      * @param id Id of the desired Feature
      * @return Density value (poiCount)
      */
-    int getDensity(FeatureCollection collection, int id);
+    double getDensity(Feature feature);
 
     /**
      * Sets the poiCount attribute of a feature with the specified id property value
@@ -24,6 +32,13 @@ public interface IFeatureCollectionAccessor {
      * @param density PoiCount to be stored
      */
     void setDensity(FeatureCollection collection, int id, double density);
+
+    /**
+     * Returns the id property of a Feature
+     * @param feature The Feature in which id one is interested
+     * @return The value of the id property
+     */
+    int getId(Feature feature);
 
     /**
      * Finds a Feature with the specified id property from a FeatureCollection
@@ -45,12 +60,12 @@ public interface IFeatureCollectionAccessor {
      * @param collection The FeatureCollection to be investigated
      * @return Minimum poiCount value
      */
-    int getMinDensity(FeatureCollection collection);
+    double getMinDensity(FeatureCollection collection);
 
     /**
      * Returns the maximum poiCount value of a FeatureCollection
      * @param collection The FeatureCollection to be investigated
      * @return Maximum poiCount value
      */
-    int getMaxDensity(FeatureCollection collection);
+    double getMaxDensity(FeatureCollection collection);
 }

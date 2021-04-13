@@ -41,10 +41,19 @@ public class FeatureCollectionAccessorTests {
     @Test
     public void testGetPoiDensity(){
         // act
-        int density = accessor.getDensity(featureCollection, 1);
+        double density = accessor.getDensity(featureCollection, 1);
 
         // assert
         assertEquals(42, density);
+    }
+
+    /**
+     * Tests if the getPoidensity method throws an execption if null is passed for a Feature
+     */
+    @Test
+    public void testGetPoiDensity_nullFeature(){
+        // act, assert
+        assertThrows(IllegalArgumentException.class, () -> accessor.getDensity(null));
     }
 
     /**

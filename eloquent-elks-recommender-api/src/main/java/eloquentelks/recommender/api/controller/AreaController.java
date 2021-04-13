@@ -48,6 +48,9 @@ public class AreaController {
         // step 3: combine normalized densities into a single FeatureCollection
         FeatureCollection aggregatedDensities = densityService.aggregateDensities(normalizedDensities);
 
-        return aggregatedDensities.toJson();
+        // step 4: normalize the aggregated FeatureCollection
+        FeatureCollection finalDensities = densityService.normalizeDensity(aggregatedDensities);
+
+        return finalDensities.toJson();
     }
 }

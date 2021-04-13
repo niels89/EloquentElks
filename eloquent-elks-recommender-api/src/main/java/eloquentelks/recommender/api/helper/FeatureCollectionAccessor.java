@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_ID;
 import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_POICOUNT;
 
 /**
@@ -20,16 +21,25 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
      * @inheritDoc
      */
     @Override
-    public int getDensity(FeatureCollection collection, int id){
+    public double getDensity(FeatureCollection collection, int id){
         Feature feature = getFeatureById(collection, id);
 
         if(feature == null){
             throw new IllegalArgumentException("Feature with id " + id + " does not exist in the FeatureCollection");
         }
 
+        return getDensity(feature);
+    }
+
+    @Override
+    public double getDensity(Feature feature) {
+        if(feature == null){
+            throw new IllegalArgumentException("Feature must not be null");
+        }
+
         JsonObject properties = feature.properties();
 
-        return properties.get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+        return properties.get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble();
     }
 
     /**
@@ -64,11 +74,11 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
      * @inheritDoc
      */
     @Override
-    public int getMinDensity(FeatureCollection collection) {
-        int minDensity = Integer.MAX_VALUE;
+    public double getMinDensity(FeatureCollection collection) {
+        double minDensity = Double.MAX_VALUE;
 
         for (Feature f : collection.features()) {
-            int density = f.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+            double density = f.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble();
             minDensity = Math.min(minDensity, density);
         }
 
@@ -79,11 +89,11 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
      * @inheritDoc
      */
     @Override
-    public int getMaxDensity(FeatureCollection collection) {
-        int maxDensity = Integer.MIN_VALUE;
+    public double getMaxDensity(FeatureCollection collection) {
+        double maxDensity = Double.MIN_VALUE;
 
         for (Feature f : collection.features()) {
-            int density = f.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+            double density = f.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble();
             maxDensity = Math.max(maxDensity, density);
         }
 
@@ -93,11 +103,20 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
     /**
      * @inheritDoc
      */
+    @Override
     public void setDensity(FeatureCollection collection, int id, double density){
         Feature feature = getFeatureById(collection, id);
 
         feature.properties().remove(GEOJSON_FEATURE_PROPERTY_POICOUNT);
 
         feature.properties().add(GEOJSON_FEATURE_PROPERTY_POICOUNT, new JsonPrimitive(density));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public int getId(Feature feature) {
+        return feature.properties().get(GEOJSON_FEATURE_PROPERTY_ID).getAsInt();
     }
 }

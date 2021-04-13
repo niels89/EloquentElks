@@ -25,6 +25,13 @@ public interface IDensityService {
     List<FeatureCollection> normalizeDensities(List<FeatureCollection> featureCollections);
 
     /**
+     * Normalize all densities of a single FeatureCollection.
+     * @param featureCollection A single FeatureCollection with densities
+     * @return A list of GeoJSON FeatureCollections with normalized densities
+     */
+    FeatureCollection normalizeDensity(FeatureCollection featureCollection);
+
+    /**
      * Combines the poi counts of the specified FeatureCollections into a single aggregated FeatureCollection
      * @param featureCollections Contains a FeatureCollection per attraction type
      * @return A single aggregated GeoJSON FeatureCollection with combined densities

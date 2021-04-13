@@ -50,11 +50,9 @@ public class DensityServiceTests {
     {
         // act
         List<FeatureCollection> densities = densityService.getDensities(List.of("museum"));
-        Optional<Feature> feature = densities.stream().findFirst().get().features().stream().findFirst();
-        int poiCount = feature.get().properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
-
+        double density = accessor.getDensity(densities.get(0), 1);
         // assert
-        assertEquals(42, poiCount);
+        assertEquals(42, density);
     }
 
     /**
@@ -76,6 +74,21 @@ public class DensityServiceTests {
         assertEquals(0.5454545454545454, accessor.getFeatureById(resultingCollections.get(1), 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
         assertEquals(0, accessor.getFeatureById(resultingCollections.get(1), 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
         assertEquals(1, accessor.getFeatureById(resultingCollections.get(1), 3).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+    }
+
+    @Test
+    public void testNormalizeDensity(){
+        // arrange
+        FeatureCollection featureCollection = FeatureCollectionFactory.create(Map.of(1, 42, 2, 98, 3, 182));
+
+        // act
+        FeatureCollection normalizedCollection = densityService.normalizeDensity(featureCollection);
+
+        // assert
+        assertEquals(0, accessor.getFeatureById(normalizedCollection, 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.4, accessor.getFeatureById(normalizedCollection, 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(1, accessor.getFeatureById(normalizedCollection, 3).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+
     }
 
     /**

@@ -8,13 +8,9 @@ import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_ID;
-import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_POICOUNT;
 
 /**
  * Density service, currently returning a static GeoJson, will be replaced with real API call to density-api.
@@ -34,8 +30,9 @@ public class DensityService implements IDensityService {
      */
     @Override
     public List<FeatureCollection> getDensities(List<String> attractionTypes) {
-        Map<Integer, Integer> densities1 = Map.of(1, 42);
-        Map<Integer, Integer> densities2 = Map.of(1, 22);
+        Map<Integer, Integer> densities1 = Map.of(1, 42, 2, 98, 3, 182);
+        Map<Integer, Integer> densities2 = Map.of(1, 7, 2, 1, 3, 12);
+
         return List.of(
                 FeatureCollectionFactory.create(densities1),
                 FeatureCollectionFactory.create(densities2)
@@ -48,13 +45,23 @@ public class DensityService implements IDensityService {
     @Override
     public List<FeatureCollection> normalizeDensities(List<FeatureCollection> featureCollections) {
         for (FeatureCollection collection: featureCollections) {
-            int minDensity = featureCollectionAccessor.getMinDensity(collection);
-            int maxDensity = featureCollectionAccessor.getMaxDensity(collection);
-
-            normalize(collection, minDensity, maxDensity);
+            normalizeDensity(collection);
         }
 
         return featureCollections;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public FeatureCollection normalizeDensity(FeatureCollection featureCollection) {
+        double minDensity = featureCollectionAccessor.getMinDensity(featureCollection);
+        double maxDensity = featureCollectionAccessor.getMaxDensity(featureCollection);
+
+        normalize(featureCollection, minDensity, maxDensity);
+
+        return featureCollection;
     }
 
     /**
@@ -89,8 +96,9 @@ public class DensityService implements IDensityService {
      */
     private void normalize(FeatureCollection collection, double minDensity, double maxDensity){
         for (Feature feature: collection.features()) {
-            int id = feature.properties().get(GEOJSON_FEATURE_PROPERTY_ID).getAsInt();
-            int poiCount = feature.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+            int id = featureCollectionAccessor.getId(feature);
+
+            double poiCount = featureCollectionAccessor.getDensity(feature);
 
             double density = (poiCount - minDensity)/(maxDensity - minDensity);
 
@@ -105,9 +113,9 @@ public class DensityService implements IDensityService {
      * @param densitySetter Lambda expression to set the density in the FeatureCollection
      */
     private void aggregateDensity(List<FeatureCollection> featureCollections, Feature countingFeature, DensitySetter densitySetter) {
-        int id = countingFeature.properties().get(GEOJSON_FEATURE_PROPERTY_ID).getAsInt();
+        int id = featureCollectionAccessor.getId(countingFeature);
 
-        double density = countingFeature.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble();
+        double density = featureCollectionAccessor.getDensity(countingFeature);
 
         for(FeatureCollection featureCollection: featureCollections) {
                 density += featureCollectionAccessor.getDensity(featureCollection, id);
