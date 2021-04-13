@@ -31,8 +31,7 @@ public class AreaControllerTests {
         // act
         FeatureCollection featureCollection = FeatureCollection.fromJson(controller.postArea(requestDto));
 
-
         // assert
-        assertEquals(64, featureCollection.features().stream().findFirst().get().properties().get("poiCount").getAsInt());
+        assertEquals(0, featureCollection.features().stream().findFirst().get().properties().get("poiCount").getAsInt());
     }
 }

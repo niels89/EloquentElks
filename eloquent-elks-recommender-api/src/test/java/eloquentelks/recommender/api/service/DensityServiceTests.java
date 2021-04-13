@@ -2,13 +2,18 @@ package eloquentelks.recommender.api.service;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
+import eloquentelks.recommender.api.Constants;
 import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
+import eloquentelks.recommender.api.helper.FeatureCollectionFactory;
+import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_POICOUNT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -17,58 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class DensityServiceTests {
 
-    private String featureCollectionJson = "{\n" +
-            "  \"type\": \"FeatureCollection\",\n" +
-            "  \"features\": [\n" +
-            "    {\n" +
-            "      \"type\": \"Feature\",\n" +
-            "      \"properties\": {\n" +
-            "        \"poiCount\": 42,\n" +
-            "        \"id\": 1\n" +
-            "      },\n" +
-            "      \"geometry\": {\n" +
-            "        \"type\": \"Polygon\",\n" +
-            "        \"coordinates\": [\n" +
-            "          [\n" +
-            "            [\n" +
-            "              -74.57080229744054,\n" +
-            "              40.41846628754955\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57673618693602,\n" +
-            "              40.42625463036081\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.588603965927,\n" +
-            "              40.42625463036081\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.59453785542249,\n" +
-            "              40.41846628754955\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.588603965927,\n" +
-            "              40.41067794473829\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57673618693602,\n" +
-            "              40.41067794473829\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57080229744054,\n" +
-            "              40.41846628754955\n" +
-            "            ]\n" +
-            "          ]\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}\n";
-
     /**
      * Object under test
      */
     private IDensityService densityService;
+
+    /**
+     * Helper to access the FeatureCollections
+     */
+    private IFeatureCollectionAccessor accessor;
 
     /**
      * Test initialization
@@ -77,6 +39,7 @@ public class DensityServiceTests {
     public void setUp(){
         // arrange
         densityService = new DensityService(new FeatureCollectionAccessor());
+        accessor = new FeatureCollectionAccessor();
     }
 
     /**
@@ -88,7 +51,7 @@ public class DensityServiceTests {
         // act
         List<FeatureCollection> densities = densityService.getDensities(List.of("museum"));
         Optional<Feature> feature = densities.stream().findFirst().get().features().stream().findFirst();
-        int poiCount = feature.get().properties().get("poiCount").getAsInt();
+        int poiCount = feature.get().properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
 
         // assert
         assertEquals(42, poiCount);
@@ -100,13 +63,19 @@ public class DensityServiceTests {
     @Test
     public void testNormalizeDensities(){
         // arrange
-        FeatureCollection featureCollection = FeatureCollection.fromJson(featureCollectionJson);
+        FeatureCollection featureCollection1 = FeatureCollectionFactory.create(Map.of(1, 42, 2, 98, 3, 182));
+        FeatureCollection featureCollection2 = FeatureCollectionFactory.create(Map.of(1, 7, 2, 1, 3, 12));
 
         // act
-        List<FeatureCollection> resultingCollection = densityService.normalizeDensities(List.of(featureCollection, featureCollection));
+        List<FeatureCollection> resultingCollections = densityService.normalizeDensities(List.of(featureCollection1, featureCollection2));
 
         // assert
-        assertEquals(42, resultingCollection.get(0).features().get(0).properties().get("poiCount").getAsInt());
+        assertEquals(0, accessor.getFeatureById(resultingCollections.get(0), 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.4, accessor.getFeatureById(resultingCollections.get(0), 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(1, accessor.getFeatureById(resultingCollections.get(0), 3).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.5454545454545454, accessor.getFeatureById(resultingCollections.get(1), 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0, accessor.getFeatureById(resultingCollections.get(1), 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(1, accessor.getFeatureById(resultingCollections.get(1), 3).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
     }
 
     /**
@@ -115,13 +84,13 @@ public class DensityServiceTests {
     @Test
     public void testAggregateDensities(){
         // arrange
-        FeatureCollection featureCollection = FeatureCollection.fromJson(featureCollectionJson);
+        FeatureCollection featureCollection = FeatureCollectionFactory.create(Map.of(1, 42));
 
         // act
         FeatureCollection resultingCollection = densityService.aggregateDensities(List.of(featureCollection, featureCollection));
 
         // assert
-        assertEquals(84, resultingCollection.features().get(0).properties().get("poiCount").getAsInt());
+        assertEquals(84, resultingCollection.features().get(0).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt());
     }
 
     /**

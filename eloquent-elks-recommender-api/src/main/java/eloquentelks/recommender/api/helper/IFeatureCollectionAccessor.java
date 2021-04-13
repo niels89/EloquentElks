@@ -23,7 +23,7 @@ public interface IFeatureCollectionAccessor {
      * @param id Identifier of the Feature (properties)
      * @param density PoiCount to be stored
      */
-    void setDensity(FeatureCollection collection, int id, int density);
+    void setDensity(FeatureCollection collection, int id, double density);
 
     /**
      * Finds a Feature with the specified id property from a FeatureCollection
@@ -35,10 +35,22 @@ public interface IFeatureCollectionAccessor {
 
     /**
      * Copies the specified feature collection and resets the poiCount property
-     * @param featureCollection Original FeatureCollection
+     * @param collection Original FeatureCollection
      * @return A copy of the original FeatureCollection with poiCount reset to 0
      */
-    FeatureCollection copyFeatureIds(FeatureCollection featureCollection);
+    FeatureCollection copyFeatureIds(FeatureCollection collection);
 
+    /**
+     * Returns the minimum poiCount value of a FeatureCollection
+     * @param collection The FeatureCollection to be investigated
+     * @return Minimum poiCount value
+     */
+    int getMinDensity(FeatureCollection collection);
 
+    /**
+     * Returns the maximum poiCount value of a FeatureCollection
+     * @param collection The FeatureCollection to be investigated
+     * @return Maximum poiCount value
+     */
+    int getMaxDensity(FeatureCollection collection);
 }

@@ -19,6 +19,7 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
     /**
      * @inheritDoc
      */
+    @Override
     public int getDensity(FeatureCollection collection, int id){
         Feature feature = getFeatureById(collection, id);
 
@@ -34,6 +35,7 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
     /**
      * @inheritDoc
      */
+    @Override
     public Feature getFeatureById(FeatureCollection collection, int id){
         Optional<Feature> feature = collection.features().stream().filter(f -> f.properties().get("id").getAsInt() == id).findFirst();
 
@@ -47,6 +49,7 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
     /**
      * @inheritDoc
      */
+    @Override
     public FeatureCollection copyFeatureIds(FeatureCollection featureCollection){
         FeatureCollection collection = FeatureCollection.fromJson(featureCollection.toJson());
 
@@ -60,7 +63,37 @@ public class FeatureCollectionAccessor implements IFeatureCollectionAccessor {
     /**
      * @inheritDoc
      */
-    public void setDensity(FeatureCollection collection, int id, int density){
+    @Override
+    public int getMinDensity(FeatureCollection collection) {
+        int minDensity = Integer.MAX_VALUE;
+
+        for (Feature f : collection.features()) {
+            int density = f.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+            minDensity = Math.min(minDensity, density);
+        }
+
+        return minDensity;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public int getMaxDensity(FeatureCollection collection) {
+        int maxDensity = Integer.MIN_VALUE;
+
+        for (Feature f : collection.features()) {
+            int density = f.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+            maxDensity = Math.max(maxDensity, density);
+        }
+
+        return maxDensity;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void setDensity(FeatureCollection collection, int id, double density){
         Feature feature = getFeatureById(collection, id);
 
         feature.properties().remove(GEOJSON_FEATURE_PROPERTY_POICOUNT);

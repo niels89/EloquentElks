@@ -5,6 +5,8 @@ import com.mapbox.geojson.FeatureCollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_ID;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,54 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for @see{@link FeatureCollectionAccessor}
  */
 public class FeatureCollectionAccessorTests {
-
-    private String featureCollectionJson = "{\n" +
-            "  \"type\": \"FeatureCollection\",\n" +
-            "  \"features\": [\n" +
-            "    {\n" +
-            "      \"type\": \"Feature\",\n" +
-            "      \"properties\": {\n" +
-            "        \"poiCount\": 42,\n" +
-            "        \"id\": 1\n" +
-            "      },\n" +
-            "      \"geometry\": {\n" +
-            "        \"type\": \"Polygon\",\n" +
-            "        \"coordinates\": [\n" +
-            "          [\n" +
-            "            [\n" +
-            "              -74.57080229744054,\n" +
-            "              40.41846628754955\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57673618693602,\n" +
-            "              40.42625463036081\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.588603965927,\n" +
-            "              40.42625463036081\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.59453785542249,\n" +
-            "              40.41846628754955\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.588603965927,\n" +
-            "              40.41067794473829\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57673618693602,\n" +
-            "              40.41067794473829\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57080229744054,\n" +
-            "              40.41846628754955\n" +
-            "            ]\n" +
-            "          ]\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}\n";
 
     /**
      * FeatureCollection containing the density data
@@ -77,7 +31,7 @@ public class FeatureCollectionAccessorTests {
     @BeforeEach
     public void setUp(){
         // arrange
-        featureCollection = FeatureCollection.fromJson(featureCollectionJson);
+        featureCollection = FeatureCollectionFactory.create(Map.of(1, 42));
         accessor = new FeatureCollectionAccessor();
     }
 

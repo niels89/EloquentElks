@@ -10,6 +10,7 @@ import java.util.List;
 public interface IDensityService {
     /**
      * Retrieves the result of the density calculation
+     * Density calculation from @see{@url https://stats.stackexchange.com/questions/70801/how-to-normalize-data-to-0-1-range}
      * @param attractionTypes List of attraction types according to the GeoJSON feature properties.
      * @return A GeoJson FeatureCollection with density property
      */

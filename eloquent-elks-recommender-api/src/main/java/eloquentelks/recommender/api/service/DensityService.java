@@ -3,11 +3,15 @@ package eloquentelks.recommender.api.service;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
+import eloquentelks.recommender.api.helper.FeatureCollectionFactory;
 import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_ID;
 import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_POICOUNT;
@@ -20,101 +24,6 @@ public class DensityService implements IDensityService {
 
     private final IFeatureCollectionAccessor featureCollectionAccessor;
 
-    private String featureCollectionJson1 = "{\n" +
-            "  \"type\": \"FeatureCollection\",\n" +
-            "  \"features\": [\n" +
-            "    {\n" +
-            "      \"type\": \"Feature\",\n" +
-            "      \"properties\": {\n" +
-            "        \"poiCount\": 42,\n" +
-            "        \"id\": 0\n" +
-            "      },\n" +
-            "      \"geometry\": {\n" +
-            "        \"type\": \"Polygon\",\n" +
-            "        \"coordinates\": [\n" +
-            "          [\n" +
-            "            [\n" +
-            "              -74.57080229744054,\n" +
-            "              40.41846628754955\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57673618693602,\n" +
-            "              40.42625463036081\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.588603965927,\n" +
-            "              40.42625463036081\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.59453785542249,\n" +
-            "              40.41846628754955\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.588603965927,\n" +
-            "              40.41067794473829\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57673618693602,\n" +
-            "              40.41067794473829\n" +
-            "            ],\n" +
-            "            [\n" +
-            "              -74.57080229744054,\n" +
-            "              40.41846628754955\n" +
-            "            ]\n" +
-            "          ]\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}\n";
-    private String featureCollectionJson2 = "{\n" +
-             "  \"type\": \"FeatureCollection\",\n" +
-             "  \"features\": [\n" +
-             "    {\n" +
-             "      \"type\": \"Feature\",\n" +
-             "      \"properties\": {\n" +
-             "        \"poiCount\": 22,\n" +
-             "        \"id\": 0\n" +
-             "      },\n" +
-             "      \"geometry\": {\n" +
-             "        \"type\": \"Polygon\",\n" +
-             "        \"coordinates\": [\n" +
-             "          [\n" +
-             "            [\n" +
-             "              -74.57080229744054,\n" +
-             "              40.41846628754955\n" +
-             "            ],\n" +
-             "            [\n" +
-             "              -74.57673618693602,\n" +
-             "              40.42625463036081\n" +
-             "            ],\n" +
-             "            [\n" +
-             "              -74.588603965927,\n" +
-             "              40.42625463036081\n" +
-             "            ],\n" +
-             "            [\n" +
-             "              -74.59453785542249,\n" +
-             "              40.41846628754955\n" +
-             "            ],\n" +
-             "            [\n" +
-             "              -74.588603965927,\n" +
-             "              40.41067794473829\n" +
-             "            ],\n" +
-             "            [\n" +
-             "              -74.57673618693602,\n" +
-             "              40.41067794473829\n" +
-             "            ],\n" +
-             "            [\n" +
-             "              -74.57080229744054,\n" +
-             "              40.41846628754955\n" +
-             "            ]\n" +
-             "          ]\n" +
-             "        ]\n" +
-             "      }\n" +
-             "    }\n" +
-             "  ]\n" +
-             "}";
-
     @Autowired
     public DensityService(FeatureCollectionAccessor helper){
         this.featureCollectionAccessor = helper;
@@ -125,7 +34,12 @@ public class DensityService implements IDensityService {
      */
     @Override
     public List<FeatureCollection> getDensities(List<String> attractionTypes) {
-        return List.of(FeatureCollection.fromJson(featureCollectionJson1), FeatureCollection.fromJson(featureCollectionJson2));
+        Map<Integer, Integer> densities1 = Map.of(1, 42);
+        Map<Integer, Integer> densities2 = Map.of(1, 22);
+        return List.of(
+                FeatureCollectionFactory.create(densities1),
+                FeatureCollectionFactory.create(densities2)
+        );
     }
 
     /**
@@ -133,6 +47,13 @@ public class DensityService implements IDensityService {
      */
     @Override
     public List<FeatureCollection> normalizeDensities(List<FeatureCollection> featureCollections) {
+        for (FeatureCollection collection: featureCollections) {
+            int minDensity = featureCollectionAccessor.getMinDensity(collection);
+            int maxDensity = featureCollectionAccessor.getMaxDensity(collection);
+
+            normalize(collection, minDensity, maxDensity);
+        }
+
         return featureCollections;
     }
 
@@ -142,16 +63,39 @@ public class DensityService implements IDensityService {
     @Override
     public FeatureCollection aggregateDensities(List<FeatureCollection> featureCollections) {
         if(featureCollections.size() == 0){
-            throw new IllegalArgumentException("featureCollection must not be an empty list");
+            throw new IllegalArgumentException("featureCollections must not be an empty list");
         }
 
-        FeatureCollection combinedFeatures = featureCollectionAccessor.copyFeatureIds(featureCollections.stream().findFirst().get());
+        Optional<FeatureCollection> first = featureCollections.stream().findFirst();
+        if(!first.isPresent()){
+            throw new IllegalArgumentException("featureCollections must contain at least one FeatureCollection");
+        }
+
+        FeatureCollection combinedFeatures = featureCollectionAccessor.copyFeatureIds(first.get());
 
         for (Feature countingFeature : combinedFeatures.features()) {
             aggregateDensity(featureCollections, countingFeature, (id, density) -> featureCollectionAccessor.setDensity(combinedFeatures, id, density));
         }
 
         return combinedFeatures;
+    }
+
+    /**
+     * Normalizes the poiCounts inside a collection to values between 0 and 1
+     * Density calculation from @see{@url https://stats.stackexchange.com/questions/70801/how-to-normalize-data-to-0-1-range}
+     * @param collection FeatureCollection to be processed
+     * @param minDensity Minimum poiCount value
+     * @param maxDensity Maximum poiCount value
+     */
+    private void normalize(FeatureCollection collection, double minDensity, double maxDensity){
+        for (Feature feature: collection.features()) {
+            int id = feature.properties().get(GEOJSON_FEATURE_PROPERTY_ID).getAsInt();
+            int poiCount = feature.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+
+            double density = (poiCount - minDensity)/(maxDensity - minDensity);
+
+            featureCollectionAccessor.setDensity(collection, id, density);
+        }
     }
 
     /**
@@ -163,7 +107,7 @@ public class DensityService implements IDensityService {
     private void aggregateDensity(List<FeatureCollection> featureCollections, Feature countingFeature, DensitySetter densitySetter) {
         int id = countingFeature.properties().get(GEOJSON_FEATURE_PROPERTY_ID).getAsInt();
 
-        int density = countingFeature.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsInt();
+        double density = countingFeature.properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble();
 
         for(FeatureCollection featureCollection: featureCollections) {
                 density += featureCollectionAccessor.getDensity(featureCollection, id);
@@ -177,6 +121,6 @@ public class DensityService implements IDensityService {
      */
     @FunctionalInterface
     private interface DensitySetter{
-        void set(int id, int density);
+        void set(int id, double density);
     }
 }
