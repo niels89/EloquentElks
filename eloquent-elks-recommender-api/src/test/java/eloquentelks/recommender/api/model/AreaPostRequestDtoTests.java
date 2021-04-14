@@ -2,6 +2,8 @@ package eloquentelks.recommender.api.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -18,9 +20,9 @@ public class AreaPostRequestDtoTests {
         AreaPostRequestDto requestDto = new AreaPostRequestDto();
 
         // act
-        requestDto.setAttractionType("museum");
+        requestDto.setAttractionTypes(List.of("museum"));
 
         // assert
-        assertEquals("museum", requestDto.getAttractionType());
+        assertEquals("museum", requestDto.getAttractionTypes().get(0));
     }
 }

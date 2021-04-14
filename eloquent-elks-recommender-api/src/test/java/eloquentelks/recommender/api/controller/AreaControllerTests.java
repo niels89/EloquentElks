@@ -1,13 +1,22 @@
 package eloquentelks.recommender.api.controller;
 
+import com.mapbox.geojson.FeatureCollection;
+import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
+import eloquentelks.recommender.api.helper.FeatureCollectionFactory;
+import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
 import eloquentelks.recommender.api.model.AreaPostRequestDto;
-import eloquentelks.recommender.api.model.AreaPostResponseDto;
+import eloquentelks.recommender.api.service.DensityService;
+import eloquentelks.recommender.api.service.IDensityRestService;
+import eloquentelks.recommender.api.service.IDensityService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 
 /**
  * Unit tests for @see{@link eloquentelks.recommender.api.controller.AreaController}
@@ -18,17 +27,29 @@ public class AreaControllerTests {
      * Tests if the @see{@link eloquentelks.recommender.api.controller.AreaController} returns an area recommendation
      */
     @Test
-    public void testGetArea(){
+    public void testPostArea(){
         // arrange
-        AreaController controller = new AreaController();
+        IDensityRestService densityRestService = mock(IDensityRestService.class);
+        Map<Integer, Integer> densities1 = Map.of(1, 42, 2, 98, 3, 182);
+        Map<Integer, Integer> densities2 = Map.of(1, 7, 2, 1, 3, 12);
+
+        when(densityRestService.getDensities(any(List.class))).thenReturn( List.of(
+                FeatureCollectionFactory.create(densities1),
+                FeatureCollectionFactory.create(densities2)
+        ));
+
+        IFeatureCollectionAccessor accessor = new FeatureCollectionAccessor();
+        IDensityService densityService = new DensityService(new FeatureCollectionAccessor(), densityRestService);
+        AreaController controller = new AreaController(densityService);
         AreaPostRequestDto requestDto = new AreaPostRequestDto();
-        requestDto.setAttractionType("restaurant");
+        requestDto.setAttractionTypes(List.of("restaurant"));
 
         // act
-        List<AreaPostResponseDto> area = controller.postArea(requestDto);
+        FeatureCollection featureCollection = FeatureCollection.fromJson(controller.postArea(requestDto));
 
         // assert
-        assertNotNull(area);
-        assertEquals("Brooklyn", area.get(0).getName());
+        assertEquals(0.09090909090909087, accessor.getDensity(featureCollection, 1));
+        assertEquals(0, accessor.getDensity(featureCollection, 2));
+        assertEquals(1, accessor.getDensity(featureCollection, 3));
     }
 }
