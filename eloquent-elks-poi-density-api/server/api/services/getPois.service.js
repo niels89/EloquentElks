@@ -14,7 +14,7 @@ export async function getPoisService(attractionType) {
     let data = await response.json();
     return data;
   } else {
-    console.log(response.status + ": " + response.statusText);
+    console.log(response.status + ': ' + response.statusText);
     return;
   }
 }
