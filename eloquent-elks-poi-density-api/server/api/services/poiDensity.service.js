@@ -1,7 +1,10 @@
 import * as turf from '@turf/turf';
-import { getPoisService } from './getPois.service';
 
-class PoiDensityService {
+export class PoiDensityService {
+  constructor(getPois) {
+    this.getPois = getPois;
+  }
+
   // Function from https://github.com/turf-junkyard/turf-count/blob/master/index.js
   // The junkyard from turf should not be use anymore we copied the function from there and take responsibility.
   countPointInPolygons(polyFC, ptFC, outField) {
@@ -16,7 +19,7 @@ class PoiDensityService {
         }
       }
       poly.properties[outField] = values;
-      poly.properties[id] = i;
+      poly.properties['id'] = i;
     }
 
     return polyFC;
@@ -46,9 +49,7 @@ class PoiDensityService {
   }
 
   async byType(attractionType) {
-    let pois = await getPoisService(attractionType);
+    let pois = await this.getPois(attractionType);
     return this.calculateDensity(pois);
   }
 }
-
-export default new PoiDensityService();
