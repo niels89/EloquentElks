@@ -7,5 +7,7 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 RUN npm install
 
-CMD ["npm", "run", "compile"]
+ENV PORT=3001
+EXPOSE 3001
+
 CMD [ "npm", "start" ]

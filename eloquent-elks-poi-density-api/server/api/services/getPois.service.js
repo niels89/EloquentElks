@@ -7,7 +7,7 @@ import { getDomain } from '../helpers/getDomain';
  */
 export async function getPoisService(attractionType) {
   let response = await fetch(
-    `${getDomain(1337)}/api/v1/poi/attraction?attractionType=${attractionType}`,
+    `${getDomain()}/api/v1/poi/attraction?attractionType=${attractionType}`,
     { method: 'GET' }
   );
   if (response.ok) {

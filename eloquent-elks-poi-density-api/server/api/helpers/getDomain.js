@@ -5,11 +5,10 @@ import { isProduction } from './isProduction';
  * Otherwise, the link localhost:8080 will be returned (Spring server default port)
  * @returns {string}
  */
-export const getDomain = (port) => {
-  const prodUrl = 'http://localhost:' + port;
-  let devUrl = 'http://localhost:' + port;
-  if (isProduction()) {
-    return prodUrl;
-  }
-  return devUrl;
+export const getDomain = () => {
+  const protocol = process.env.ELOQUENTELKS_POI_API_PROTOCOL;
+  const host = process.env.ELOQUENTELKS_POI_API_HOST;
+  const port = process.env.ELOQUENTELKS_POI_API_PORT;
+
+  return `${protocol}://${host}:${port}`;
 };
