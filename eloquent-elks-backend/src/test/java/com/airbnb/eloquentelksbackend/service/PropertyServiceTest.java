@@ -64,8 +64,8 @@ public class PropertyServiceTest {
 
     @Test
     public void testPropertyService(){
-        Mockito.when(propertyRepository.findAll()).thenReturn(propertyList);
-        List<Property> propertyListReturned = propertyService.getAllProperties();
+        Mockito.when(propertyRepository.findByPriceBetween("0","999")).thenReturn(propertyList);
+        List<Property> propertyListReturned = propertyService.getAllProperties("0","999");
         assertEquals(propertyListReturned.size(),propertyList.size());
     }
 

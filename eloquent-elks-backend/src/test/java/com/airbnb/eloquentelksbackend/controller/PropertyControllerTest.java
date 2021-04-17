@@ -48,7 +48,7 @@ public class PropertyControllerTest {
         testProperty.setRoomType("test type");
 
         List<Property> allProperty = Collections.singletonList(testProperty);
-        given(propertyService.getAllProperties()).willReturn(allProperty);
+        given(propertyService.getAllProperties("1","999")).willReturn(allProperty);
 
         MockHttpServletRequestBuilder getRequest = get("/api/v1/airbnb").contentType(MediaType.APPLICATION_JSON);
         mockMvc.perform(getRequest).andExpect(status().isOk())

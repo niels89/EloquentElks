@@ -18,4 +18,5 @@ public interface PropertyRepository extends MongoRepository<Property, Long> {
      * @return List of Properties @see {@link com.airbnb.eloquentelksbackend.entity.Property}
      */
     List<Property> findAll();
+    List<Property> findByPriceBetween(String min, String max);
 }

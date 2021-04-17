@@ -48,8 +48,8 @@ public class PropertyController {
     @GetMapping("/airbnb")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<PropertyFetchDTO> getProperty(){
-        List<Property> propertiesList = propertyService.getAllProperties();
+    public List<PropertyFetchDTO> getProperty(@RequestParam(defaultValue = "1") String min, @RequestParam(defaultValue = "999") String max){
+        List<Property> propertiesList = propertyService.getAllProperties(min, max);
         return DTOMapper.INSTANCE.map(propertiesList.stream().limit(100).collect(Collectors.toList()));
     }
 
