@@ -1,6 +1,6 @@
 # EloquentElks
 
- - Code Coverage Overall: [![Coverage Status](https://coveralls.io/repos/github/niels89/EloquentElks/badge.svg?branch=feature/ASEP-14-new)](https://coveralls.io/github/niels89/EloquentElks?branch=feature/ASEP-14-new)
+ - Code Coverage Overall: [![Coverage Status](https://coveralls.io/repos/github/niels89/EloquentElks/badge.svg?branch=main)](https://coveralls.io/github/niels89/EloquentElks?branch=main)
  - Quality Gate Frontend: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=eloquent-elks_EloquentElks_Frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=eloquent-elks_EloquentElks_Frontend)
  - Quality Gate AirBnb API:  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=eloquent-elks_EloquentElks_Airbnb_API&metric=alert_status)](https://sonarcloud.io/dashboard?id=eloquent-elks_EloquentElks_Airbnb_API)
  - Quality Gate POI API: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=eloquent-elks_EloquentElks_POI_API&metric=alert_status)](https://sonarcloud.io/dashboard?id=eloquent-elks_EloquentElks_POI_API)
@@ -11,5 +11,5 @@ To build the entire application including all microservices, run the following c
  - Frontend: [README](./eloquent-elks-frontend/README.md)
  - Airbnb API: [README](./eloquent-elks-backend/README.md)
  - POI API: [README](./eloquent-elks-poi-api/README.md)
- - Recommender: [README](./eloquent-elks-recommender-api/README.md)
-
+ - Recommender API: [README](./eloquent-elks-recommender-api/README.md)
+- POI Density API: [README](./eloquent-elks-poi-density-api/README.md)

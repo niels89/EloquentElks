@@ -1,3 +1,4 @@
+
 # eloquent-elks-poi-density-api
 
 API that computes the POI density of POIs of a certain type
@@ -114,6 +115,9 @@ Deploy to CloudFoundry
 ```shell
 cf push eloquent-elks-poi-density-api
 ```
+
+## References
+We used https://github.com/cdimascio/generator-express-no-stress to bootstrap the nodejs express scaffolding.
 
 
    
