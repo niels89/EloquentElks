@@ -16,9 +16,21 @@ import java.util.Optional;
 @Service
 public class DensityService implements IDensityService {
 
+    /**
+     * Helper to access FeatureCollections in a convenient manner
+     */
     private final IFeatureCollectionAccessor featureCollectionAccessor;
+
+    /**
+     * Accesses the POI density REST service
+     */
     private IDensityRestService densityRestService;
 
+    /**
+     * Constructor
+     * @param helper Provides access to FeatureCollections
+     * @param densityRestService Provides access to the POI Density API
+     */
     @Autowired
     public DensityService(FeatureCollectionAccessor helper, IDensityRestService densityRestService){
         this.featureCollectionAccessor = helper;

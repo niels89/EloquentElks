@@ -1,6 +1,7 @@
 package eloquentelks.recommender.api.service;
 
 import com.mapbox.geojson.FeatureCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -38,17 +39,25 @@ public class DensityRestService implements IDensityRestService {
     private final String endpoint = "api/v1/poiDensity";
 
     /**
+     * Rest Template used to access other REST APIs
+     */
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public DensityRestService(RestTemplate restTemplate){
+        this.restTemplate = restTemplate;
+    }
+
+    /**
      * @inheritDoc
      */
     @Override
     public FeatureCollection getDensity(String attractionType) {
-        RestTemplate rest = new RestTemplate();
-
         String url = getPoiDensityEndpoint(attractionType);
 
-        String jsonResult = rest.getForObject(url, String.class);
+        String jsonResult = restTemplate.getForObject(url, String.class);
 
-        return FeatureCollection.fromJson(jsonResult);
+        return FeatureCollection.fromJson(jsonResult != null ? jsonResult : "");
     }
 
     /**
