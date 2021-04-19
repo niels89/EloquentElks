@@ -27,7 +27,9 @@ public interface DTOMapper {
     @Mapping(source = "name", target="name")
     @Mapping(source = "longitude", target="longitude")
     @Mapping(source = "latitude", target="latitude")
-    @Mapping(source = "roomType", target="roomType")
+    @Mapping(source = "room_type", target="roomType")
+    @Mapping(source = "price", target = "price")
+    @Mapping(source = "host_name", target = "hostName")
     PropertyFetchDTO convertPropertyToPropertyFetchDTO(Property property);
 
     /**

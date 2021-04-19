@@ -45,17 +45,17 @@ public class PropertyControllerTest {
         testProperty.setName("Test Property");
         testProperty.setLatitude(47.376888);
         testProperty.setLongitude(8.541694);
-        testProperty.setRoomType("test type");
+        testProperty.setRoom_type("test type");
 
         List<Property> allProperty = Collections.singletonList(testProperty);
-        given(propertyService.getAllProperties()).willReturn(allProperty);
+        given(propertyService.getAllProperties(1,1000)).willReturn(allProperty);
 
-        MockHttpServletRequestBuilder getRequest = get("/api/v1/airbnb").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder getRequest = get("/api/v1/airbnb?min=1&max=1000").contentType(MediaType.APPLICATION_JSON);
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].latitude", is(testProperty.getLatitude())))
                 .andExpect(jsonPath("$[0].longitude", is(testProperty.getLongitude())))
-                .andExpect(jsonPath("$[0].roomType", is(testProperty.getRoomType())));
+                .andExpect(jsonPath("$[0].roomType", is(testProperty.getRoom_type())));
     }
 
 
