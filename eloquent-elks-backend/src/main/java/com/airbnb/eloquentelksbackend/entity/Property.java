@@ -20,19 +20,19 @@ public class Property{
 
     private String id;
     private String name;
-    private Long hostId;
-    private String hostName;
-    private String neigbhourhoodGroup;
+    private int host_id;
+    private String host_name;
+    private String neighbourhood_group;
     private String neighbourhood;
     private double longitude;
     private double latitude;
-    private String roomType;
+    private String room_type;
     private double price;
-    private int minimumNights;
+    private int minimum_nights;
     private int noOfReviews;
     private Date lastReview;
-    private double noOfReviewsPerMonth;
-    private double calculatedHostListingCount;
-    private int availability365;
+    private double number_of_reviews;
+    private double calculated_host_listings_count;
+    private int availability_365;
 
 }

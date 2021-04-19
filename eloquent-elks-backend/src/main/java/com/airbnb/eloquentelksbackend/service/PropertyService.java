@@ -20,7 +20,7 @@ public class PropertyService {
         this.propertyRepository = propertyRepository;
     }
 
-    public List<Property> getAllProperties(String min, String max){
+    public List<Property> getAllProperties(int min, int max){
         List<Property> allEntries = propertyRepository.findByPriceBetween(min,max);
         return allEntries;
     }
