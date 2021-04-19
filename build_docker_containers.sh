@@ -18,6 +18,12 @@ rm -rf .eloquent-elks-backend/build/libs/*
 ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend enunciate
 ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend build
 
+
+# POI Density API
+rm -rf ./eloquent-elks-poi-density-api/dist/*
+npm install --prefix ./eloquent-elks-poi-density-api
+npm run compile --prefix ./eloquent-elks-poi-density-api
+
 docker-compose pull
 docker-compose build
 docker-compose up -d --force-recreate

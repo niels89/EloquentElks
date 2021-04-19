@@ -6,7 +6,7 @@ import {getVersion} from "../helpers/getVersion";
  * @returns {list}
  */
 export async function getAirbnbs() {
-    let response = await fetch(`${getDomain(8080)}/api/${getVersion()}/airbnb`, {method: "GET"})
+    let response = await fetch(`${getDomain(1340)}/api/${getVersion()}/airbnb`, {method: "GET"})
     if (response.ok) {
         let data = await response.json()
         return data

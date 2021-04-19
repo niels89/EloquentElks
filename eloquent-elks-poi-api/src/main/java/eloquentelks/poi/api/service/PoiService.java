@@ -46,4 +46,14 @@ public class PoiService implements IPoiService {
 
         return PoiMapper.mapToDto(features);
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public List<PoiGetDto> getPoisByAttractionType(String attractionType){
+        List<Feature> features = poiRepository.getFeatures(attractionType);
+
+        return PoiMapper.mapToDto(features);
+    }
 }

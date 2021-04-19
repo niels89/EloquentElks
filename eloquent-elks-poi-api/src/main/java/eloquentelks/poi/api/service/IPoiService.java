@@ -15,4 +15,11 @@ public interface IPoiService {
      * @return A list of @see {@link eloquentelks.poi.api.model.PoiGetDto}, which is the structure that is exposed to the clients of the API
      */
     List<PoiGetDto> getAllPois(double longitude, double latitude);
+
+    /**
+     * Loads the Points of Interest of a specific attraction type.
+     * @param attractionType Type of attractions to be returned
+     * @return A list of @see {@link eloquentelks.poi.api.model.PoiGetDto}
+     */
+    List<PoiGetDto> getPoisByAttractionType(String attractionType);
 }

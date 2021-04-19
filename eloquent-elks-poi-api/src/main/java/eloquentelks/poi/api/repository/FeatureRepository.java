@@ -57,6 +57,22 @@ public class FeatureRepository implements IFeatureRepository{
     }
 
     /**
+     * @inheritDoc
+     */
+    @Override
+    public List<Feature> getFeatures(String attractionType){
+        Criteria criteria = Criteria.where("properties.tourism").is(attractionType);
+
+        Query query = new Query(criteria);
+
+        List<String> document = mongoTemplate.find(query, String.class, FEATURE_COLLECTION);
+
+        List<Feature> features = convert(document);
+
+        return features;
+    }
+
+    /**
      * Converts JSON documents to @see{@link com.mapbox.geojson.Feature}
      * @param documents List of JSON strings from the database
      * @return List of GeoJson Features
