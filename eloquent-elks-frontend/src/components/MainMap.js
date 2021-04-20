@@ -3,12 +3,16 @@ import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
 import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getAirbnbs} from "../requests/getAirbnbs";
+import {getRecommendationLayer} from "../requests/getRecommendationLayer";
+import {GeoJSON} from "leaflet/dist/leaflet-src.esm";
 
 
 
 export const MainMap = props => {
     const [map, setMap] = useState([])
+    const [recommendationLayer, setRecommendationLayer] = useState(null)
 
     const handleAirBnBClick = async (event, airbnb) => {
         const { lat, lng } = event.latlng
@@ -21,9 +25,14 @@ export const MainMap = props => {
         map.flyTo(event.latlng, 15)
     }
 
-    // const handleOutsideClick = () => {
-    //     props.setPois([])
-    // }
+    useEffect(() => {
+        async function fetchData() {
+            let RL = await getRecommendationLayer([])
+            console.log(RL)
+            return RL;
+        }
+        fetchData().then((data) => setRecommendationLayer(data))
+    }, [])
 
 
     return (
@@ -69,6 +78,7 @@ export const MainMap = props => {
                     }
                 )
                 }
+                {!recommendationLayer ? null : (<GeoJSON data={recommendationLayer}/>) }
             </MapContainer>
         </Box>
     )

@@ -33,6 +33,7 @@ public class AreaController {
      * @param requestDto Specifies the type of tourist attractions the user is interested in
      * @return An GeoJSON FeatureCollection containing the density values as properties
      */
+    @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("area")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
