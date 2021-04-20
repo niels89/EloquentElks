@@ -15,7 +15,7 @@ public class PropertyFetchDTOTest {
         testProperty.setLatitude(47.376888);
         testProperty.setRoom_type("testRoomType");
         testProperty.setName("testName");
-        testProperty.setAvailability_365(120);
+        testProperty.setAvailability(120);
         testProperty.setHost_name("testHostName");
         testProperty.setPrice(300);
         testProperty.setNeighbourhood_group("testNeighborhhodGroup");

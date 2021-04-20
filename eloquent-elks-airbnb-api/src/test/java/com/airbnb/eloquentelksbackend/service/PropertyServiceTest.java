@@ -1,5 +1,6 @@
 package com.airbnb.eloquentelksbackend.service;
 
+import com.airbnb.eloquentelksbackend.entity.BoundingBox;
 import com.airbnb.eloquentelksbackend.entity.Property;
 import com.airbnb.eloquentelksbackend.repository.PropertyRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,7 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +66,11 @@ public class PropertyServiceTest {
 
     @Test
     public void testPropertyService(){
-        Mockito.when(propertyRepository.findByPriceBetween(0,999)).thenReturn(propertyList);
-        List<Property> propertyListReturned = propertyService.getAllProperties(0,999);
+        BoundingBox bbox = new BoundingBox(40.92842013954254, -73.68572896669198, 40.47050851839848, -74.29541147644714);
+        Mockito.when(propertyRepository.findInBoundingBox(bbox.getNorth(), bbox.getEast(),
+                bbox.getSouth(), bbox.getWest(), 0,999)).thenReturn(propertyList);
+
+        List<Property> propertyListReturned = propertyService.getAllProperties(bbox,0,999);
         assertEquals(propertyListReturned.size(),propertyList.size());
     }
 

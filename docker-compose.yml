@@ -17,11 +17,10 @@ services:
         depends_on:
             - mongodb_airbnb
 
-    springboot-mongodb:
+    airbnb_api:
         build:
-            context: eloquent-elks-backend
+            context: eloquent-elks-airbnb-api
             dockerfile: Dockerfile
-        container_name: springboot-mongodb
         ports:
             - 1340:8080
         links:
@@ -31,6 +30,7 @@ services:
            - SPRING_DATA_MONGODB_PORT=27017
            - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
            - JVM_OPTS=-Xmx1g -Xms1g -XX:MaxPermSize=1024m
+        hostname: airbnb-api
     
     mongodb_poi:
         image: mongo
