@@ -1,5 +1,6 @@
 package com.airbnb.eloquentelksbackend.service;
 
+import com.airbnb.eloquentelksbackend.entity.BoundingBox;
 import com.airbnb.eloquentelksbackend.entity.Property;
 import com.airbnb.eloquentelksbackend.repository.PropertyRepository;
 import org.slf4j.Logger;
@@ -20,9 +21,9 @@ public class PropertyService {
         this.propertyRepository = propertyRepository;
     }
 
-    public List<Property> getAllProperties(int min, int max){
-        List<Property> allEntries = propertyRepository.findByPriceBetween(min,max);
+    public List<Property> getAllProperties(BoundingBox boundingBox, int min, int max){
+        List<Property> allEntries = propertyRepository.findInBoundingBox(boundingBox.getNorth(), boundingBox.getEast(),
+                boundingBox.getSouth(), boundingBox.getWest(), min, max);
         return allEntries;
     }
-
 }

@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.sql.Date;
 
@@ -33,6 +34,6 @@ public class Property{
     private Date lastReview;
     private double number_of_reviews;
     private double calculated_host_listings_count;
-    private int availability_365;
-
+    @Field("availability_365")
+    private int availability;
 }
