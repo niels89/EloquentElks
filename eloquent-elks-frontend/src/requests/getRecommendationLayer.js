@@ -6,16 +6,15 @@ import {getVersion} from "../helpers/getVersion";
  * @returns {list}
  */
 export async function getRecommendationLayer(attractionTypes) {
-    let response = await fetch(`${getDomain(1337)}/api/${getVersion()}/recommendation/area`,
+    let response = await fetch(`${getDomain(1338)}/api/${getVersion()}/recommendation/area`,
         {method: 'POST',
-            body: {'attractionTypes': ['museum', 'attraction']},
+            body: JSON.stringify({"attractionTypes": ["museum"]}),
             headers: {'Content-Type': 'application/json'}
         })
     if (response.ok) {
-        let data = await response.json()
-        return data
+        return await response.json()
     } else {
-        console.log(response.error())
+        console.log(response.error)
         alert('Something went wrong. Contact the developers')
     }
 }

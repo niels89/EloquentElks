@@ -1,18 +1,37 @@
 import {Box} from "grommet";
-import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
+import {MapContainer, Marker, TileLayer, Tooltip, GeoJSON} from "react-leaflet";
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
 import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
-import {useEffect, useState} from "react";
-import {getAirbnbs} from "../requests/getAirbnbs";
-import {getRecommendationLayer} from "../requests/getRecommendationLayer";
-import {GeoJSON} from "leaflet/dist/leaflet-src.esm";
+import {useState} from "react";
 
 
 
 export const MainMap = props => {
     const [map, setMap] = useState([])
-    const [recommendationLayer, setRecommendationLayer] = useState(null)
+
+
+    const getColor = (d) => {
+        // Color palette from https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
+        let palette = ['#edf8e9','#bae4b3','#74c476','#31a354','#006d2c']
+        let i
+        for (i = 1; i <= palette.length; i++) {
+            // values of the property are between 0 and 1
+            if (d < i * (1.0 - (-1.0)) / palette.length) {
+                return palette[i - 1]
+            }
+        }
+    };
+
+    const geoJsonStyle = (feature) => {
+        return {
+            stroke: false,
+            // the fillColor is adapted depending on the poiCount
+            fillColor: getColor(feature.properties.poiCount),
+            fillOpacity: 0.5
+        };
+    };
+
 
     const handleAirBnBClick = async (event, airbnb) => {
         const { lat, lng } = event.latlng
@@ -24,15 +43,6 @@ export const MainMap = props => {
         // ()=>{if (map.getZoom() > 15) { return 15} return map.getZoom()}
         map.flyTo(event.latlng, 15)
     }
-
-    useEffect(() => {
-        async function fetchData() {
-            let RL = await getRecommendationLayer([])
-            console.log(RL)
-            return RL;
-        }
-        fetchData().then((data) => setRecommendationLayer(data))
-    }, [])
 
 
     return (
@@ -49,6 +59,7 @@ export const MainMap = props => {
                     subdomains='abcd'
                     maxZoom={19}
                 />
+                {props.recommendation ? <GeoJSON data={props.recommendation} style={geoJsonStyle}/> : null}
                 {props.airbnbs.map && props.airbnbs.map((airbnb, index) => {
                         return (
                             <Marker key={index}
@@ -78,7 +89,6 @@ export const MainMap = props => {
                     }
                 )
                 }
-                {!recommendationLayer ? null : (<GeoJSON data={recommendationLayer}/>) }
             </MapContainer>
         </Box>
     )
