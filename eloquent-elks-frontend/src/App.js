@@ -52,8 +52,8 @@ function App() {
     return (
         <Grommet theme={grommetTheme} full>
             <Box fill>
-                <Header background='brand'>
-                    <Button icon={<Home/>} hoverIndicator/>
+                <Header background='linear-gradient(to right, #228BE6, #69AEEA)'>
+                    <Button icon={<Home color='light-1'/>} hoverIndicator/>
                 </Header>
                 <Box direction='row' flex>
                     <Box width='medium'

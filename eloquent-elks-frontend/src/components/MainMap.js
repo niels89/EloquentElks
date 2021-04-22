@@ -13,7 +13,7 @@ export const MainMap = props => {
 
     const getColor = (d) => {
         // Color palette from https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
-        let palette = ['#edf8e9','#bae4b3','#74c476','#31a354','#006d2c']
+        let palette = ['#fcbba1','#fc9272','#fb6a4a','#de2d26','#a50f15']
         let i
         for (i = 1; i <= palette.length; i++) {
             // values of the property are between 0 and 1
