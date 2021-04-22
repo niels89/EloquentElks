@@ -1,5 +1,6 @@
 package eloquentelks.recommender.api.service;
 
+import com.google.gson.JsonPrimitive;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
@@ -7,6 +8,7 @@ import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +67,7 @@ public class DensityService implements IDensityService {
         double minDensity = featureCollectionAccessor.getMinDensity(featureCollection);
         double maxDensity = featureCollectionAccessor.getMaxDensity(featureCollection);
 
-        normalize(featureCollection, minDensity, maxDensity);
+        normalize(featureCollection, 0, maxDensity);
 
         return featureCollection;
     }
@@ -79,16 +81,28 @@ public class DensityService implements IDensityService {
             throw new IllegalArgumentException("featureCollections must not be an empty list");
         }
 
-        Optional<FeatureCollection> first = featureCollections.stream().findFirst();
-        if(!first.isPresent()){
-            throw new IllegalArgumentException("featureCollections must contain at least one FeatureCollection");
-        }
+        FeatureCollection combinedFeatures = FeatureCollection.fromFeatures(new ArrayList<>());
 
-        FeatureCollection combinedFeatures = featureCollectionAccessor.copyFeatureIds(first.get());
+        List<Integer> ids = new ArrayList<>();
+        featureCollections.stream().forEach(collection -> collection.features().forEach(feature -> {
+            int featureId = featureCollectionAccessor.getId(feature);
 
-        for (Feature countingFeature : combinedFeatures.features()) {
-            aggregateDensity(featureCollections, countingFeature, (id, density) -> featureCollectionAccessor.setDensity(combinedFeatures, id, density));
-        }
+            if(!ids.contains(featureId)){
+                Feature emptyFeature = Feature.fromGeometry(feature.geometry());
+                emptyFeature.properties().add("id", new JsonPrimitive(featureId));
+                emptyFeature.properties().add("poiCount", new JsonPrimitive(feature.properties().get("poiCount").getAsDouble()));
+                combinedFeatures.features().add(emptyFeature);
+                ids.add(featureId);
+            } else{
+                double existingDensity = featureCollectionAccessor.getDensity(combinedFeatures, featureId);
+                double currentDensity = featureCollectionAccessor.getDensity(collection, featureId);
+                featureCollectionAccessor.setDensity(combinedFeatures, featureId, existingDensity + currentDensity);
+            }
+        }));
+
+//        for (Feature countingFeature : combinedFeatures.features()) {
+//            aggregateDensity(featureCollections, countingFeature, (id, density) -> featureCollectionAccessor.setDensity(combinedFeatures, id, density));
+//        }
 
         return combinedFeatures;
     }
