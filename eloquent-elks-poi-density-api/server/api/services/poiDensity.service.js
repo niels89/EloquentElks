@@ -39,8 +39,8 @@ export class PoiDensityService {
   }
 
   calculateDensity(pois) {
-    let bbox = [-74.6, 40.41, -73.07, 41.05];
-    let cellSide = 0.5;
+    let bbox = [-74.6, 40.41, -73.71, 40.95];
+    let cellSide = 0.25;
     let options = { units: 'kilometers' };
 
     let pointLayer = this.mapPoisToFeatureCollection(pois);
