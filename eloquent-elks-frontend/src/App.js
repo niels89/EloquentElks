@@ -6,6 +6,7 @@ import {getAirbnbs} from "./requests/getAirbnbs";
 import './App.css'
 import {AirBnBInformationLayer} from "./components/AirBnBInformationLayer";
 import {MainMap} from "./components/MainMap";
+import PriceRange from './components/PriceRange'
 
 
 
@@ -14,10 +15,13 @@ function App() {
     const [pois, setPois] = useState([])
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
+    const initialRange = [0, 100]
+    const [rangeInit] = useState(initialRange);
+
 
     useEffect(() => {
         async function fetchData() {
-            let ab = await getAirbnbs()
+            let ab = await getAirbnbs(rangeInit)
             console.log(typeof ab )
             return ab;
         }
@@ -27,6 +31,11 @@ function App() {
     useEffect( () => {
         console.log(airbnbs)
     }, [airbnbs])
+
+    const modifyRange = async(tempRange) => {
+        console.log("temp range is ",tempRange)
+        await getAirbnbs(tempRange).then((data) => setAirbnbs(data))
+    }
 
     return (
         <Grommet theme={grommetTheme} full>
@@ -41,6 +50,7 @@ function App() {
                          align='center'
                          justify='center'
                     >
+                        <PriceRange label="Apply Price Filter" onChange = {modifyRange}/>
                         sidebar
                     </Box>
                     <Box flex align='center' justify='center' >
