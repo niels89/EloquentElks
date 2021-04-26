@@ -12,4 +12,6 @@ public class PropertyFetchDTO {
     private double longitude;
     private double latitude;
     private String roomType;
+    private double price;
+    private String hostName;
 }

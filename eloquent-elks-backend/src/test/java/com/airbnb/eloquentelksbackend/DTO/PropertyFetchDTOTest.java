@@ -13,16 +13,16 @@ public class PropertyFetchDTOTest {
         testProperty.setId("testId");
         testProperty.setLongitude(8.541694);
         testProperty.setLatitude(47.376888);
-        testProperty.setRoomType("testRoomType");
+        testProperty.setRoom_type("testRoomType");
         testProperty.setName("testName");
-        testProperty.setAvailability365(120);
-        testProperty.setHostName("testHostName");
+        testProperty.setAvailability_365(120);
+        testProperty.setHost_name("testHostName");
         testProperty.setPrice(300);
-        testProperty.setNeigbhourhoodGroup("testNeighborhhodGroup");
+        testProperty.setNeighbourhood_group("testNeighborhhodGroup");
 
         PropertyFetchDTO propertyFetchDTO = DTOMapper.INSTANCE.convertPropertyToPropertyFetchDTO(testProperty);
         assertEquals(propertyFetchDTO.getName(), testProperty.getName());
-        assertEquals(propertyFetchDTO.getRoomType(), testProperty.getRoomType());
+        assertEquals(propertyFetchDTO.getRoomType(), testProperty.getRoom_type());
         assertEquals(propertyFetchDTO.getLatitude(),testProperty.getLatitude());
         assertEquals(propertyFetchDTO.getLongitude(),testProperty.getLongitude());
     }
