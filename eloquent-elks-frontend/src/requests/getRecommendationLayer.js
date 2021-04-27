@@ -8,7 +8,7 @@ import {getVersion} from "../helpers/getVersion";
 export async function getRecommendationLayer(attractionTypes) {
     let response = await fetch(`${getDomain(1338)}/api/${getVersion()}/recommendation/area`,
         {method: 'POST',
-            body: JSON.stringify({"attractionTypes": ["museum", "attraction"]}),
+            body: JSON.stringify({"attractionTypes": ["salon"]}),
             headers: {'Content-Type': 'application/json'}
         })
     if (response.ok) {
