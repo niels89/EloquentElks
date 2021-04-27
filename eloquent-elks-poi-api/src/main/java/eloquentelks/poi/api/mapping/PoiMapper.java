@@ -60,7 +60,11 @@ public class PoiMapper {
         JsonElement element = feature.properties().get(name);
 
         if(element == null){
-            return null;
+            return "N/A";
+        }
+
+        if(element.isJsonNull()) {
+            return "N/A";
         }
 
         return element.getAsString();
