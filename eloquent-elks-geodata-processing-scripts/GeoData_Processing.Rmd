@@ -35,7 +35,8 @@ amenities_clean <- amenities %>%
   mutate_if(is.character, str_replace_all, pattern = "arts_centre", replacement = "art_centre") %>% 
   mutate_if(is.character, str_replace_all, pattern = "food_court", replacement = "restaurant") %>% 
   mutate_if(is.character, str_replace_all, pattern = "_", replacement = " ") %>% 
-  rename(tourism = amenity)
+  rename(tourism = amenity) %>% 
+  rename("@id" = "id")
 ```
 
 
