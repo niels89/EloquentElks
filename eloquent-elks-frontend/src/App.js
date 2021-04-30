@@ -1,4 +1,4 @@
-import {Box, Button, Grommet, Header, Spinner} from "grommet";
+import {Box, Button, Grommet, Header} from "grommet";
 import {grommetTheme} from './GrommetTheme'
 import {Home} from 'grommet-icons';
 import {useEffect, useState} from "react";
@@ -6,20 +6,9 @@ import {getAirbnbs} from "./requests/getAirbnbs";
 import './App.css'
 import {AirBnBInformationLayer} from "./components/AirBnBInformationLayer";
 import {MainMap} from "./components/MainMap";
-import {getRecommendationLayer} from "./requests/getRecommendationLayer";
+import {AttractionTypeSelection} from "./components/AttractionTypeSelection";
 
-const reduceGeoJson = (data) => {
-    let newFeatures = []
-    console.log(data.features)
-    data.features.forEach(feature => {
-        if (feature.properties.poiCount > 0) {
-            newFeatures.push(feature)
-        }
-    })
-    console.log(newFeatures)
-    data.features = newFeatures
-    return data
-}
+
 
 function App() {
     const [airbnbs, setAirbnbs] = useState([])
@@ -27,7 +16,7 @@ function App() {
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
     const [recommendationLayer, setRecommendationLayer] = useState(null)
-    const [fetchingRecommendation, setFetchingRecommendation] = useState(false)
+
 
     // Loading the AirBnB Data
     useEffect(() => {
@@ -38,16 +27,7 @@ function App() {
     }, [])
 
 
-    //Loading the recommendationLayer
-    useEffect(() => {
-        async function fetchData() {
-            return getRecommendationLayer([]);
-        }
-        setFetchingRecommendation(true)
-        fetchData().then((data) => {
-            setRecommendationLayer(reduceGeoJson(data));
-            setFetchingRecommendation(false)
-    })}, [])
+
 
     return (
         <Grommet theme={grommetTheme} full>
@@ -62,8 +42,7 @@ function App() {
                          align='center'
                          justify='center'
                     >
-                        {fetchingRecommendation ? <Spinner/> : null}
-                        sidebar
+                        <AttractionTypeSelection setRecommendationLayer = {setRecommendationLayer}/>
                     </Box>
                     <Box flex align='center' justify='center' >
                         <MainMap airbnbs={airbnbs}
