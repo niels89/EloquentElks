@@ -1,20 +1,41 @@
 import {getDomain} from "../helpers/getDomain";
 import {getVersion} from "../helpers/getVersion";
 
+class PromiseWithCancel extends Promise {
+    cancel() {
+    };
+}
+
+
+function isAbortError(error) {
+    return error && error.name === "AbortError";
+}
+
+
 /**
  * This is a get request on the POI service to get the pois
  * @returns {list}
  */
-export async function getRecommendationLayer(attractionTypes) {
-    let response = await fetch(`${getDomain(1338)}/api/${getVersion()}/recommendation/area`,
-        {method: 'POST',
-            body: JSON.stringify({"attractionTypes": ["restaurant"]}),
-            headers: {'Content-Type': 'application/json'}
-        })
-    if (response.ok) {
-        return await response.json()
-    } else {
-        console.log(response.error)
-        alert('Something went wrong. Contact the developers')
-    }
+export async function getRecommendationLayer(attractionTypes, signal) {
+    let promise = new PromiseWithCancel(async resolve => {
+        try {
+            const response = await fetch(`${getDomain(1338)}/api/${getVersion()}/recommendation/area`,
+                {method: 'POST',
+                    body: JSON.stringify({"attractionTypes": attractionTypes}),
+                    headers: {'Content-Type': 'application/json'},
+                    signal,
+                })
+
+            const data = await response.json()
+            resolve(data);
+        } catch (ex){
+            if (isAbortError(ex)) {
+                console.log(ex.message);
+            } else {
+                console.log(ex.message)
+                alert('Something went wrong. Contact the developers')
+            }
+        }
+    })
+    return promise;
 }

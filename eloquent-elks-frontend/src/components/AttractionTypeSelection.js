@@ -20,18 +20,30 @@ const reduceGeoJson = (data) => {
 
 export const AttractionTypeSelection = props => {
     const [value, setValue] = React.useState([]);
-    const [fetchingRecommendation, setFetchingRecommendation] = useState(false)
+    const [fetchingRecommendation, setFetchingRecommendation] = useState(false);
+    const [abortController, setAbortController] = useState()
 
     // Loading the recommendationLayer
-    async function fetchData() {
+    const onLoadRecommendation = () => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+        setAbortController(controller)
         setFetchingRecommendation(true)
-        let recommendationLayer = await getRecommendationLayer(value);
-        props.setRecommendationLayer(reduceGeoJson(recommendationLayer));
+        const req = getRecommendationLayer(value, signal);
+        req.then(data => {
+            props.setRecommendationLayer(reduceGeoJson(data))
+            setFetchingRecommendation(false)
+        });
     }
+
 
     const onClose = () => {
         setFetchingRecommendation(false)
+        abortController.abort();
     }
+
+    const attractionTypes = ['pub', 'restaurant', 'library', 'plaza', 'fountain', 'bar', 'cafe'];
+    // attractionTypes.map((name) => {return name.charAt(0).toUpperCase() + name.slice(1)})
 
     return (
         <Box height={'xxlarge'} margin={{"top": "medium"}} overflow={'scroll'}>
@@ -47,10 +59,10 @@ export const AttractionTypeSelection = props => {
                                    name="controlled"
                                    value={value}
                                    onChange={({value: nextValue}) => setValue(nextValue)}
-                                   options={['pub', 'restaurant', 'library', 'plaza', 'fountain', 'bar', 'cafe']}
+                                   options={attractionTypes}
                     />
                 </FormField>
-                <Button primary={true} label="Load recommendation" disabled={fetchingRecommendation} onClick={()=>{ fetchData().then(() => setFetchingRecommendation(false))}}/>
+                <Button primary={true} label="Load recommendation" disabled={fetchingRecommendation} onClick={onLoadRecommendation}/>
             </Form>
             {fetchingRecommendation && (
                 <Layer
