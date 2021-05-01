@@ -77,6 +77,8 @@ test {
 	useJUnitPlatform()
 }
 
+apply plugin: 'java'
+
 sonarqube {
 	properties {
 		property "sonar.projectKey", "eloquent-elks_EloquentElks_Airbnb_API"
