@@ -1,0 +1,6 @@
+com/airbnb/eloquentelksbackend/controller/PropertyControllerTest.java
+ com.airbnb.eloquentelksbackend.controller.PropertyControllerTest
+com/airbnb/eloquentelksbackend/DTO/PropertyFetchDTOTest.java
+ com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTOTest
+com/airbnb/eloquentelksbackend/service/PropertyServiceTest.java
+ com.airbnb.eloquentelksbackend.service.PropertyServiceTest

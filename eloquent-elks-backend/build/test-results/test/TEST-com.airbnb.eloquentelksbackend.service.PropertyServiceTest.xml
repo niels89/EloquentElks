@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.airbnb.eloquentelksbackend.service.PropertyServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-04-26T14:47:26" hostname="Patricks-MBP-2" time="0.606">
+  <properties/>
+  <testcase name="testPropertyService()" classname="com.airbnb.eloquentelksbackend.service.PropertyServiceTest" time="0.606"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
