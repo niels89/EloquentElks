@@ -37,6 +37,7 @@ export const AttractionTypeSelection = props => {
     }
 
 
+    // Abort loading the recommendationLayer
     const onClose = () => {
         setFetchingRecommendation(false)
         abortController.abort();
