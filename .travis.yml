@@ -27,12 +27,12 @@ jobs:
               - $HOME/.gradle/caches/
               - $HOME/.gradle/wrapper/
           script:
-            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend build
-            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend test
-            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend jacocoTestReport
-            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend sonarqube
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api build
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api test
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api sonarqube
           after_success:
-            - ./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend jacocoTestReport coveralls
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport coveralls
         - language: java
           install: skip
           os: linux
