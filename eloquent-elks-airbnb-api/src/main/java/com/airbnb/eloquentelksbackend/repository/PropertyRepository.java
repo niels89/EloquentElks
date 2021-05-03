@@ -21,10 +21,9 @@ public interface PropertyRepository extends MongoRepository<Property, Long> {
      */
     List<Property> findAll();
     List<Property> findByPriceBetween(int min, int max);
-<<<<<<< HEAD:eloquent-elks-airbnb-api/src/main/java/com/airbnb/eloquentelksbackend/repository/PropertyRepository.java
 
     @Query(value = "{ 'latitude': {'$lt': ?0, '$gt': ?2}, 'longitude': {'$lt': ?1, '$gt': ?3}, 'price': {'$gt': ?4, '$lt': ?5}, 'availability_365': {'$gt': 120}}")
     List<Property> findInBoundingBox(double north, double east, double south, double west, int minPrice, int maxPrice);
-=======
->>>>>>> feature/ASEP-47:eloquent-elks-backend/src/main/java/com/airbnb/eloquentelksbackend/repository/PropertyRepository.java
+
+
 }

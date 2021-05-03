@@ -66,16 +66,11 @@ public class PropertyServiceTest {
 
     @Test
     public void testPropertyService(){
-<<<<<<< HEAD:eloquent-elks-airbnb-api/src/test/java/com/airbnb/eloquentelksbackend/service/PropertyServiceTest.java
         BoundingBox bbox = new BoundingBox(40.92842013954254, -73.68572896669198, 40.47050851839848, -74.29541147644714);
         Mockito.when(propertyRepository.findInBoundingBox(bbox.getNorth(), bbox.getEast(),
                 bbox.getSouth(), bbox.getWest(), 0,999)).thenReturn(propertyList);
 
         List<Property> propertyListReturned = propertyService.getAllProperties(bbox,0,999);
-=======
-        Mockito.when(propertyRepository.findByPriceBetween(0,999)).thenReturn(propertyList);
-        List<Property> propertyListReturned = propertyService.getAllProperties(0,999);
->>>>>>> feature/ASEP-47:eloquent-elks-backend/src/test/java/com/airbnb/eloquentelksbackend/service/PropertyServiceTest.java
         assertEquals(propertyListReturned.size(),propertyList.size());
     }
 
