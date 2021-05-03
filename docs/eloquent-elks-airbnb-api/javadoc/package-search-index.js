@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.airbnb.eloquentelksbackend"},{"l":"com.airbnb.eloquentelksbackend.controller"},{"l":"com.airbnb.eloquentelksbackend.DTO"},{"l":"com.airbnb.eloquentelksbackend.entity"},{"l":"com.airbnb.eloquentelksbackend.repository"},{"l":"com.airbnb.eloquentelksbackend.service"}]

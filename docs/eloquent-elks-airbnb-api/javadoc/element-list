@@ -1,0 +1,6 @@
+com.airbnb.eloquentelksbackend
+com.airbnb.eloquentelksbackend.controller
+com.airbnb.eloquentelksbackend.DTO
+com.airbnb.eloquentelksbackend.entity
+com.airbnb.eloquentelksbackend.repository
+com.airbnb.eloquentelksbackend.service
