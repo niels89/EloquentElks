@@ -34,6 +34,11 @@ public class Property{
     private Date lastReview;
     private double number_of_reviews;
     private double calculated_host_listings_count;
+<<<<<<< HEAD:eloquent-elks-airbnb-api/src/main/java/com/airbnb/eloquentelksbackend/entity/Property.java
     @Field("availability_365")
     private int availability;
+=======
+    private int availability_365;
+
+>>>>>>> feature/ASEP-47:eloquent-elks-backend/src/main/java/com/airbnb/eloquentelksbackend/entity/Property.java
 }

@@ -54,6 +54,7 @@ public class PropertyController {
     @GetMapping("/airbnb")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
+<<<<<<< HEAD:eloquent-elks-airbnb-api/src/main/java/com/airbnb/eloquentelksbackend/controller/PropertyController.java
     public List<PropertyFetchDTO> getProperty(@RequestParam(defaultValue = "1") int min,
                                               @RequestParam(defaultValue = "999") int max,
                                               @RequestParam(defaultValue = "40.92842013954254") double north,
@@ -61,6 +62,13 @@ public class PropertyController {
                                               @RequestParam(defaultValue = "40.47050851839848") double south,
                                               @RequestParam(defaultValue = "-74.29541147644714") double west){
         BoundingBox bbox = new BoundingBox(north, east, south, west);
+=======
+    public List<PropertyFetchDTO> getProperty(@RequestParam(defaultValue = "1") int min, @RequestParam(defaultValue = "999") int max){
+        List<Property> propertiesList = propertyService.getAllProperties(min, max);
+        return DTOMapper.INSTANCE.map(propertiesList.stream().limit(100).collect(Collectors.toList()));
+    }
+
+>>>>>>> feature/ASEP-47:eloquent-elks-backend/src/main/java/com/airbnb/eloquentelksbackend/controller/PropertyController.java
 
         List<Property> propertiesList = propertyService.getAllProperties(bbox, min, max);
 

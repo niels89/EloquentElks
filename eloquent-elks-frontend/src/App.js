@@ -7,6 +7,7 @@ import './App.css'
 import {AirBnBInformationLayer} from "./components/AirBnBInformationLayer";
 import {MainMap} from "./components/MainMap";
 import {AttractionTypeSelection} from "./components/AttractionTypeSelection";
+import {PriceRangeSelector} from './components/PriceRangeSelector';
 
 
 
@@ -16,15 +17,20 @@ function App() {
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
     const [recommendationLayer, setRecommendationLayer] = useState(null)
+    const [range, setRange] = useState([0, 100]);
+
 
 
     // Loading the AirBnB Data
     useEffect(() => {
-        async function fetchData() {
-            return getAirbnbs();
+        async function fetchData(currentRange) {
+            let ab = await getAirbnbs(currentRange)
+            console.log(typeof ab )
+            return ab;
         }
-        fetchData().then((data) => setAirbnbs(data))
-    }, [])
+        fetchData(range).then((data) => setAirbnbs(data))
+    }, [range])
+
 
 
 
@@ -42,6 +48,7 @@ function App() {
                          align='center'
                          justify='center'
                     >
+                        <PriceRangeSelector label="Apply Price Filter" setRange = {setRange} range = {range} />
                         <AttractionTypeSelection setRecommendationLayer = {setRecommendationLayer}/>
                     </Box>
                     <Box flex align='center' justify='center' >

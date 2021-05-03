@@ -46,6 +46,7 @@ public class PropertyControllerTest {
         testProperty.setLatitude(47.376888);
         testProperty.setLongitude(8.541694);
         testProperty.setRoom_type("test type");
+<<<<<<< HEAD:eloquent-elks-airbnb-api/src/test/java/com/airbnb/eloquentelksbackend/controller/PropertyControllerTest.java
         List<Property> allProperty = Collections.singletonList(testProperty);
 
         given(propertyService.getAllProperties(any(BoundingBox.class), any(Integer.class),any(Integer.class))).willReturn(allProperty);
@@ -53,6 +54,13 @@ public class PropertyControllerTest {
         MockHttpServletRequestBuilder getRequest = get("/api/v1/airbnb?min=1&max=1000").contentType(MediaType.APPLICATION_JSON);
 
         // act, assert
+=======
+
+        List<Property> allProperty = Collections.singletonList(testProperty);
+        given(propertyService.getAllProperties(1,1000)).willReturn(allProperty);
+
+        MockHttpServletRequestBuilder getRequest = get("/api/v1/airbnb?min=1&max=1000").contentType(MediaType.APPLICATION_JSON);
+>>>>>>> feature/ASEP-47:eloquent-elks-backend/src/test/java/com/airbnb/eloquentelksbackend/controller/PropertyControllerTest.java
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].latitude", is(testProperty.getLatitude())))

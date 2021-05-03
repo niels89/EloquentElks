@@ -21,9 +21,17 @@ public class PropertyService {
         this.propertyRepository = propertyRepository;
     }
 
+<<<<<<< HEAD:eloquent-elks-airbnb-api/src/main/java/com/airbnb/eloquentelksbackend/service/PropertyService.java
     public List<Property> getAllProperties(BoundingBox boundingBox, int min, int max){
         List<Property> allEntries = propertyRepository.findInBoundingBox(boundingBox.getNorth(), boundingBox.getEast(),
                 boundingBox.getSouth(), boundingBox.getWest(), min, max);
         return allEntries;
     }
+=======
+    public List<Property> getAllProperties(int min, int max){
+        List<Property> allEntries = propertyRepository.findByPriceBetween(min,max);
+        return allEntries;
+    }
+
+>>>>>>> feature/ASEP-47:eloquent-elks-backend/src/main/java/com/airbnb/eloquentelksbackend/service/PropertyService.java
 }

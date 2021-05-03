@@ -15,7 +15,11 @@ public class PropertyFetchDTOTest {
         testProperty.setLatitude(47.376888);
         testProperty.setRoom_type("testRoomType");
         testProperty.setName("testName");
+<<<<<<< HEAD:eloquent-elks-airbnb-api/src/test/java/com/airbnb/eloquentelksbackend/DTO/PropertyFetchDTOTest.java
         testProperty.setAvailability(120);
+=======
+        testProperty.setAvailability_365(120);
+>>>>>>> feature/ASEP-47:eloquent-elks-backend/src/test/java/com/airbnb/eloquentelksbackend/DTO/PropertyFetchDTOTest.java
         testProperty.setHost_name("testHostName");
         testProperty.setPrice(300);
         testProperty.setNeighbourhood_group("testNeighborhhodGroup");
