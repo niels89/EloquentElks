@@ -4,18 +4,18 @@ import {getRecommendationLayer} from "../requests/getRecommendationLayer";
 import {FormClose} from "grommet-icons";
 
 // Remove all cells that have a value of zero.
-const reduceGeoJson = (data) => {
-    let newFeatures = []
-    console.log(data.features)
-    data.features.forEach(feature => {
-        if (feature.properties.poiCount > 0) {
-            newFeatures.push(feature)
-        }
-    })
-    console.log(newFeatures)
-    data.features = newFeatures
-    return data
-}
+// const reduceGeoJson = (data) => {
+//     let newFeatures = []
+//     console.log(data.features)
+//     data.features.forEach(feature => {
+//         if (feature.properties.poiCount > 0) {
+//             newFeatures.push(feature)
+//         }
+//     })
+//     console.log(newFeatures)
+//     data.features = newFeatures
+//     return data
+// }
 
 
 export const AttractionTypeSelection = props => {
@@ -31,7 +31,7 @@ export const AttractionTypeSelection = props => {
         setFetchingRecommendation(true)
         const req = getRecommendationLayer(value, signal);
         req.then(data => {
-            props.setRecommendationLayer(reduceGeoJson(data))
+            props.setRecommendationLayer(data)
             setFetchingRecommendation(false)
         });
     }
