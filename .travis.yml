@@ -31,6 +31,8 @@ jobs:
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api test
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api sonarqube
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api javadoc
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api build publishGhPages
           after_success:
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport coveralls
         - language: java
@@ -73,21 +75,6 @@ jobs:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api sonarqube
           after_success:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api jacocoTestReport coveralls
-        - language: java
-          install: true
-          jdk: 
-            - openjdk12
-          script:
-            - ./gradlew build publishGhPages
-          before_cache:
-            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-          deploy:
-            provider: pages
-            skip-cleanup: true
-            github-token: $GITHUB_TOKEN
-            on:
-              branch: master
 
 cache:
   directories:

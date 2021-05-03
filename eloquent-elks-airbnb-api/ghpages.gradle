@@ -12,7 +12,7 @@ apply plugin: org.ajoberstar.gradle.git.ghpages.GithubPagesPlugin
 
 ext {
     repoPath = 'niels89/EloquentElks'
-    ghToken = System.getenv('GH_TOKEN')
+    ghToken = System.getenv('eloquent_elks_travis_ci')
 }
 
 githubPages {
