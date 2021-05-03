@@ -29,7 +29,7 @@ function App() {
         }
         fetchData().then((data) => setAirbnbs(data))
     }, [mapBounds])
-    
+
 
     return (
         <Grommet theme={grommetTheme} full>

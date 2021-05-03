@@ -27,11 +27,11 @@ const RoomInformation = props => {
 };
 
 
-const PoiInformation = props => {
-    return (
-        <Markdown>{"**" + props.poi.type + ":** " + props.poi.name}</Markdown>
-    )
-};
+// const PoiInformation = props => {
+//     return (
+//         <Markdown>{"**" + props.poi.type + ":** " + props.poi.name}</Markdown>
+//     )
+// };
 
 
 export const AirBnBInformationLayer = props => {
