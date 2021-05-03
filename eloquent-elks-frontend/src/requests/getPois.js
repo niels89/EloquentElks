@@ -11,7 +11,7 @@ export async function getPois(lat, lon) {
         let data = await response.json()
         return data
     } else {
-        console.log(response.error())
+        console.log(response.error)
         alert('Something went wrong. Contact the developers')
     }
 }

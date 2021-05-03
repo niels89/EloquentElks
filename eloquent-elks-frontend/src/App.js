@@ -6,6 +6,7 @@ import {getAirbnbs} from "./requests/getAirbnbs";
 import './App.css'
 import {AirBnBInformationLayer} from "./components/AirBnBInformationLayer";
 import {MainMap} from "./components/MainMap";
+import {AttractionTypeSelection} from "./components/AttractionTypeSelection";
 
 
 
@@ -14,25 +15,25 @@ function App() {
     const [pois, setPois] = useState([])
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
+    const [recommendationLayer, setRecommendationLayer] = useState(null)
 
+
+    // Loading the AirBnB Data
     useEffect(() => {
         async function fetchData() {
-            let ab = await getAirbnbs()
-            console.log(typeof ab )
-            return ab;
+            return getAirbnbs();
         }
         fetchData().then((data) => setAirbnbs(data))
     }, [])
 
-    useEffect( () => {
-        console.log(airbnbs)
-    }, [airbnbs])
+
+
 
     return (
         <Grommet theme={grommetTheme} full>
             <Box fill>
-                <Header background="brand">
-                    <Button icon={<Home/>} hoverIndicator/>
+                <Header background='linear-gradient(to right, #228BE6, #69AEEA)'>
+                    <Button icon={<Home color='light-1'/>} hoverIndicator/>
                 </Header>
                 <Box direction='row' flex>
                     <Box width='medium'
@@ -41,7 +42,7 @@ function App() {
                          align='center'
                          justify='center'
                     >
-                        sidebar
+                        <AttractionTypeSelection setRecommendationLayer = {setRecommendationLayer}/>
                     </Box>
                     <Box flex align='center' justify='center' >
                         <MainMap airbnbs={airbnbs}
@@ -49,11 +50,13 @@ function App() {
                                  setPois={setPois}
                                  setShowInformation={setShowInformation}
                                  setCurrentAirBnB={setCurrentAirBnB}
+                                 recommendation={recommendationLayer}
                         />
                         {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}
                                                                     pois={pois}
                                                                     setPois={setPois}
-                                                                    content={currentAirBnB} />}
+                                                                    content={currentAirBnB}
+                        />}
                     </Box>
                 </Box>
             </Box>

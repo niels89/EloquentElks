@@ -1,5 +1,5 @@
 import {Box} from "grommet";
-import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
+import {MapContainer, Marker, TileLayer, Tooltip, GeoJSON} from "react-leaflet";
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
 import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
@@ -9,6 +9,30 @@ import {useState} from "react";
 
 export const MainMap = props => {
     const [map, setMap] = useState([])
+
+
+    const getColor = (d) => {
+        // Color palette from https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
+        let palette = ['#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#54278f','#3f007d']
+        // let palette = ['#011AFA','#00E596','#FFEB1C','#FF7700','#FF0000']
+        let i
+        for (i = 1; i <= palette.length; i++) {
+            // values of the property are between 0 and 1
+            if (d <= i * (1.0 / palette.length)) {
+                return palette[i - 1]
+            }
+        }
+    };
+
+    const geoJsonStyle = (feature) => {
+        return {
+            stroke: false,
+            // the fillColor is adapted depending on the poiCount
+            fillColor: getColor(feature.properties.poiCount),
+            fillOpacity: 0.6
+        };
+    };
+
 
     const handleAirBnBClick = async (event, airbnb) => {
         const { lat, lng } = event.latlng
@@ -20,10 +44,6 @@ export const MainMap = props => {
         // ()=>{if (map.getZoom() > 15) { return 15} return map.getZoom()}
         map.flyTo(event.latlng, 15)
     }
-
-    // const handleOutsideClick = () => {
-    //     props.setPois([])
-    // }
 
 
     return (
@@ -40,6 +60,7 @@ export const MainMap = props => {
                     subdomains='abcd'
                     maxZoom={19}
                 />
+                {props.recommendation ? <GeoJSON data={props.recommendation} style={geoJsonStyle}/> : null}
                 {props.airbnbs.map && props.airbnbs.map((airbnb, index) => {
                         return (
                             <Marker key={index}

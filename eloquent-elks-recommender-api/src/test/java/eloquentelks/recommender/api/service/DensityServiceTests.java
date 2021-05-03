@@ -81,11 +81,11 @@ public class DensityServiceTests {
         List<FeatureCollection> resultingCollections = densityService.normalizeDensities(List.of(featureCollection1, featureCollection2));
 
         // assert
-        assertEquals(0, accessor.getFeatureById(resultingCollections.get(0), 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
-        assertEquals(0.4, accessor.getFeatureById(resultingCollections.get(0), 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.23076923076923078, accessor.getFeatureById(resultingCollections.get(0), 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.5384615384615384, accessor.getFeatureById(resultingCollections.get(0), 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
         assertEquals(1, accessor.getFeatureById(resultingCollections.get(0), 3).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
-        assertEquals(0.5454545454545454, accessor.getFeatureById(resultingCollections.get(1), 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
-        assertEquals(0, accessor.getFeatureById(resultingCollections.get(1), 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.58333333333333333, accessor.getFeatureById(resultingCollections.get(1), 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.08333333333333333, accessor.getFeatureById(resultingCollections.get(1), 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
         assertEquals(1, accessor.getFeatureById(resultingCollections.get(1), 3).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
     }
 
@@ -98,8 +98,8 @@ public class DensityServiceTests {
         FeatureCollection normalizedCollection = densityService.normalizeDensity(featureCollection);
 
         // assert
-        assertEquals(0, accessor.getFeatureById(normalizedCollection, 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
-        assertEquals(0.4, accessor.getFeatureById(normalizedCollection, 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.23076923076923078, accessor.getFeatureById(normalizedCollection, 1).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
+        assertEquals(0.5384615384615384, accessor.getFeatureById(normalizedCollection, 2).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
         assertEquals(1, accessor.getFeatureById(normalizedCollection, 3).properties().get(GEOJSON_FEATURE_PROPERTY_POICOUNT).getAsDouble());
 
     }

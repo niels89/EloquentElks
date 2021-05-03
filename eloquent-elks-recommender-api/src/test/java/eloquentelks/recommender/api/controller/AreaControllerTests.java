@@ -48,8 +48,8 @@ public class AreaControllerTests {
         FeatureCollection featureCollection = FeatureCollection.fromJson(controller.postArea(requestDto));
 
         // assert
-        assertEquals(0.09090909090909087, accessor.getDensity(featureCollection, 1));
-        assertEquals(0, accessor.getDensity(featureCollection, 2));
+        assertEquals(0.40705128205128205, accessor.getDensity(featureCollection, 1));
+        assertEquals(0.3108974358974359, accessor.getDensity(featureCollection, 2));
         assertEquals(1, accessor.getDensity(featureCollection, 3));
     }
 }
