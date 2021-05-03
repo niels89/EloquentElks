@@ -18,7 +18,6 @@ rm -rf .eloquent-elks-airbnb-api/build/libs/*
 ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api enunciate
 ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api build
 
-
 # POI Density API
 rm -rf ./eloquent-elks-poi-density-api/dist/*
 npm install --prefix ./eloquent-elks-poi-density-api
