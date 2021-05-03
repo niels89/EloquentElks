@@ -14,19 +14,22 @@ function App() {
     const [pois, setPois] = useState([])
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
+    const [mapBounds, setMapBounds] = useState()
+
 
     useEffect(() => {
         async function fetchData() {
-            let ab = await getAirbnbs()
-            console.log(typeof ab )
+            let ab
+            if (typeof mapBounds !== 'undefined') {
+                ab = await getAirbnbs(mapBounds)
+            } else {
+                ab = await getAirbnbs()
+            }
             return ab;
         }
         fetchData().then((data) => setAirbnbs(data))
-    }, [])
-
-    useEffect( () => {
-        console.log(airbnbs)
-    }, [airbnbs])
+    }, [mapBounds])
+    
 
     return (
         <Grommet theme={grommetTheme} full>
@@ -49,6 +52,7 @@ function App() {
                                  setPois={setPois}
                                  setShowInformation={setShowInformation}
                                  setCurrentAirBnB={setCurrentAirBnB}
+                                 setMapBounds={setMapBounds}
                         />
                         {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}
                                                                     pois={pois}
