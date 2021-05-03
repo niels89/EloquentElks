@@ -11,7 +11,7 @@ buildscript {
 apply plugin: org.ajoberstar.gradle.git.ghpages.GithubPagesPlugin
 
 ext {
-    repoPath = 'bmuschko/gradle-docker-plugin'
+    repoPath = 'niels89/EloquentElks'
     ghToken = System.getenv('GH_TOKEN')
 }
 
