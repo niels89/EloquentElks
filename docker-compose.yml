@@ -98,7 +98,7 @@ services:
             - 27019:27017
         restart: unless-stopped
         
-    dbseed_airbnb:
+    dbseed_poi-density:
         build:
             context: ./eloquent-elks-poi-density-db/dbseed
             dockerfile: Dockerfile
