@@ -1,7 +1,7 @@
 [
 	{
   "type": "FeatureCollection",
-  "attractionType": "fountain"
+  "attractionType": "fountain",
   "features": [
     {
       "type": "Feature",
@@ -8364,7 +8364,7 @@
   ]
 },{
   "type": "FeatureCollection",
-  "attractionType": "restaurant"
+  "attractionType": "restaurant",
   "features": [
     {
       "type": "Feature",

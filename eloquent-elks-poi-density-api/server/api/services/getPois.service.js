@@ -1,13 +1,13 @@
 import fetch from 'node-fetch';
-import { getDomain } from '../helpers/getDomain';
+import { getPOIDomain } from '../helpers/getPOIDomain';
 
 /**
  * This is a get request on the POI service to get the pois
  * @returns {list}
  */
-export async function getPoisService(attractionType) {
+export async function getPois(attractionType) {
   let response = await fetch(
-    `${getDomain()}/api/v1/poi/attraction?attractionType=${attractionType}`,
+    `${getPOIDomain()}/api/v1/poi/attraction?attractionType=${attractionType}`,
     { method: 'GET' }
   );
   if (response.ok) {
