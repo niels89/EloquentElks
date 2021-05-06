@@ -2,14 +2,12 @@ package eloquentelks.poi.api.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Represents a Point of Interest
  */
 @Getter
 @Setter
-@ToString
 public class PoiGetDto {
     /**
      * Name of the point of interest
@@ -18,4 +16,9 @@ public class PoiGetDto {
     private String type;
     private double longitude;
     private double latitude;
+
+    /**
+     * Distance to this famous Point of Interest (in kilometers)
+     */
+    private double distance;
 }
