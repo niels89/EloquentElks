@@ -17,4 +17,18 @@ public interface IFeatureRepository {
      * @return
      */
     List<Feature> getFeatures(Point center, double radius);
+
+    /**
+     * Loads GeoJson features from the database with a specific attraction type.
+     * @param attractionType
+     * @return A list of features containing the POIs of the specified attractionType
+     */
+    List<Feature> getFeatures(String attractionType);
+
+    /**
+     * Calculates the distance of the specified point to New York's most famous POIs
+     * @param point Point of reference for measuring the distance to the POIs
+     * @return  A list of features with the respective distances to the specified point
+     */
+    List<Feature> getDistanceOfFamousFeatures(Point point);
 }

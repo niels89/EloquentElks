@@ -14,9 +14,14 @@ rm -rf .eloquent-elks-recommender-api/build/libs/*
 ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api build
 
 #Airbnb API
-rm -rf .eloquent-elks-backend/build/libs/*
-./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend enunciate
-./eloquent-elks-backend/gradlew -p ./eloquent-elks-backend build
+rm -rf .eloquent-elks-airbnb-api/build/libs/*
+./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api enunciate
+./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api build
+
+# POI Density API
+rm -rf ./eloquent-elks-poi-density-api/dist/*
+npm install --prefix ./eloquent-elks-poi-density-api
+npm run compile --prefix ./eloquent-elks-poi-density-api
 
 docker-compose pull
 docker-compose build

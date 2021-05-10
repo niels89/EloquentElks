@@ -17,13 +17,12 @@ services:
         depends_on:
             - mongodb_airbnb
 
-    springboot-mongodb:
+    airbnb_api:
         build:
-            context: eloquent-elks-backend
+            context: eloquent-elks-airbnb-api
             dockerfile: Dockerfile
-        container_name: springboot-mongodb
         ports:
-            - 8080:8080
+            - 1340:8080
         links:
             - mongodb_airbnb
         environment:
@@ -31,6 +30,7 @@ services:
            - SPRING_DATA_MONGODB_PORT=27017
            - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
            - JVM_OPTS=-Xmx1g -Xms1g -XX:MaxPermSize=1024m
+        hostname: airbnb-api
     
     mongodb_poi:
         image: mongo
@@ -71,5 +71,42 @@ services:
             dockerfile: Dockerfile
         ports: 
             - 1338:8080
+        environment:
+            - ELOQUENTELKS_POI_DENSITY_API_PROTOCOL=http
+            - ELOQUENTELKS_POI_DENSITY_API_HOST=poi-density-api
+            - ELOQUENTELKS_POI_DENSITY_API_PORT=3001
         hostname: recommender-api
+        
+    poi-density-api:
+        build:
+            context: eloquent-elks-poi-density-api
+            dockerfile: Dockerfile
+        ports:
+            - 1339:3001
+        environment:
+            - LOG_LEVEL=debug
+            - ELOQUENTELKS_POI_API_PROTOCOL=http
+            - ELOQUENTELKS_POI_API_HOST=poi-api
+            - ELOQUENTELKS_POI_API_PORT=8080
+            - ELOQUENTELKS_POI_DENSITY_DB_HOST=mongodb_poi-density
+            - ELOQUENTELKS_POI_DENSITY_DB_PORT=27017
+        hostname: poi-density-api
+        
+    mongodb_poi-density:
+        image: mongo
+        volumes:
+            - ./eloquent-elks-poi-density-db/mongodb/database:/data/db
+        ports:
+            - 27019:27017
+        restart: unless-stopped
+        hostname: mongodb_poi-density
+        
+    dbseed_poi-density:
+        build:
+            context: ./eloquent-elks-poi-density-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_poi-density
+        depends_on:
+            - mongodb_poi-density
 

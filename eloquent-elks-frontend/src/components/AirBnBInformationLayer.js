@@ -9,12 +9,22 @@ import {
     Collapsible,
     Heading,
     Image,
-    Layer, List,
+    Layer, List, Markdown,
     Paragraph,
     Stack
 } from "grommet";
-import {Close, Favorite, FormDown, FormUp, ShareOption} from "grommet-icons";
+import {Close, Favorite, FormDown, FormUp, Home, Money, ShareOption, User} from "grommet-icons";
 import img from "../resources/mock_nyc_airbnb.jpg"
+
+
+const RoomInformation = props => {
+    return (
+        <Box margin={{bottom: 'small'}} direction={"row"} gap={'xsmall'} align={'center'}>
+            {props.icon}
+            <Markdown>{props.roomInformation}</Markdown>
+        </Box>
+    )
+};
 
 export const AirBnBInformationLayer = props => {
  const [open, setOpen] = React.useState(false);
@@ -61,17 +71,20 @@ export const AirBnBInformationLayer = props => {
                                     onClick={() => {
                                         props.setShowInformation(false);
                                         props.setPois([])
+                                        props.setShowAirBnBs(true)
                                     }}
                             />
                         </Stack>
-
                     </CardBody>
-                    <Box pad={{horizontal: 'medium'}}>
-                        <Heading level="3" margin={{top: 'medium', bottom: 'small'}}>
+                    <Box pad={{horizontal: 'medium'}} overflow={'scroll'}>
+                        <Heading level="3" margin={{top: 'medium', bottom: 'medium'}}>
                             {props.content.name}
                         </Heading>
+                        <RoomInformation icon = {<Money/>} roomInformation = {"**Price:** " + props.content.price + "$"}/>
+                        <RoomInformation icon = {<Home/>} roomInformation = {"**Room Type:** " + props.content.roomType}/>
+                        <RoomInformation icon = {<User/>} roomInformation = {"**Host Name:** " + props.content.hostName}/>
                         <Paragraph margin={{top: 'none'}}>
-                            Here we could write some basic information about the AirBnb.
+                            Here is some basic information about the apartment by the owner.
                         </Paragraph>
                     </Box>
                     <CardFooter>
@@ -100,7 +113,9 @@ export const AirBnBInformationLayer = props => {
                             <Box margin={{bottom: 'medium'}}
                                  height={'small'}
                                  overflow='scroll'>
-                                <List data={props.pois}/>
+                                <List primaryKey="Type"
+                                      secondaryKey="Name"
+                                      data={props.pois.map(poi => {return ({Type: poi.type, Name: poi.name})})}/>
                             </Box>
                         </Box>
                     </Collapsible>

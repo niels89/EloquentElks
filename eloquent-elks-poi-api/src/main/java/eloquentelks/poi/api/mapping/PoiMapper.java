@@ -14,6 +14,31 @@ import java.util.List;
 public class PoiMapper {
 
     /**
+     * Private constructor to hide the implicit constructor
+     */
+    private PoiMapper(){}
+
+    /**
+     * Property name of the distance field
+     */
+    private static final String PROPERTY_DISTANCE = "distance";
+
+    /**
+     * Property name of the tourism field
+     */
+    private static final String PROPERTY_TOURISM = "tourism";
+
+    /**
+     * Property name of the name field
+     */
+    private static final String PROPERTY_NAME = "name";
+
+    /**
+     * Placeholder value for JSON Null representation in DTO
+     */
+    private static final String NOT_AVAILABLE = "N/A";
+
+    /**
      * Maps GeoJson features to @see {@link eloquentelks.poi.api.model.PoiGetDto}
      *
      * @param features A list of GeoJson features
@@ -43,8 +68,12 @@ public class PoiMapper {
         dto.setLatitude(p.latitude());
         dto.setLongitude(p.longitude());
 
-        dto.setName(getProperty(feature, "name"));
-        dto.setType(getProperty(feature, "tourism"));
+        if(feature.hasProperty(PROPERTY_DISTANCE)){
+            dto.setDistance(feature.getProperty(PROPERTY_DISTANCE).getAsDouble());
+        }
+
+        dto.setName(getProperty(feature, PROPERTY_NAME));
+        dto.setType(getProperty(feature, PROPERTY_TOURISM));
 
         return dto;
     }
@@ -60,7 +89,11 @@ public class PoiMapper {
         JsonElement element = feature.properties().get(name);
 
         if(element == null){
-            return null;
+            return NOT_AVAILABLE;
+        }
+
+        if(element.isJsonNull()) {
+            return NOT_AVAILABLE;
         }
 
         return element.getAsString();

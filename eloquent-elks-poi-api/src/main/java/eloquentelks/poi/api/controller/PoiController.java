@@ -14,18 +14,13 @@ import java.util.List;
  * Rest controller which serves Points of Interest
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/poi")
 public class PoiController {
 
     /**
      * Service that provides the Points of Interests from the database
      */
     private final IPoiService poiService;
-
-    /**
-     * Logger
-     */
-    private final Logger log = LoggerFactory.getLogger(PoiController.class);
 
     /**
      * @param poiService Service that provides the Points of Interests from the database
@@ -42,13 +37,39 @@ public class PoiController {
      * @return A list of points of interest in New York city
      */
     @CrossOrigin(origins="http://localhost:3000")
-    @GetMapping("poi")
+    @GetMapping("radius")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<PoiGetDto> getAllPoi(@RequestParam("longitude") double longitude,
                                      @RequestParam("latitude") double latitude){
-        List<PoiGetDto> poiList = poiService.getAllPois(longitude, latitude);
+        return poiService.getAllPois(longitude, latitude);
+    }
 
-        return poiList;
+    /**
+     * Returns the points of interest of a specific attraction type
+     * @param attractionType Type of attraction to be returned
+     * @return A list of points of interest in New York city
+     */
+    @CrossOrigin(origins="http://localhost:3000")
+    @GetMapping("attraction")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<PoiGetDto> getPoiByAttractionType(@RequestParam("attractionType") String attractionType){
+        return poiService.getPoisByAttractionType(attractionType);
+    }
+
+    /**
+     * Returns the famous points of interest together with their distances (in kilometers) to the specified point
+     * @param longitude Geographical longitude of the reference point
+     * @param latitude Geographical latitude of the reference point
+     * @return A list of famous attractions of New York City with the distances to the specified point
+     */
+    @CrossOrigin(origins="http://localhost:3000")
+    @GetMapping("famous/distance")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<PoiGetDto> getFamousPoiWithDistance(@RequestParam("longitude") double longitude,
+                                                    @RequestParam("latitude") double latitude){
+        return poiService.getFamousPoisWithDistance(longitude, latitude);
     }
 }

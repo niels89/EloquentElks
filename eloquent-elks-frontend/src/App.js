@@ -6,6 +6,8 @@ import {getAirbnbs} from "./requests/getAirbnbs";
 import './App.css'
 import {AirBnBInformationLayer} from "./components/AirBnBInformationLayer";
 import {MainMap} from "./components/MainMap";
+import {AttractionTypeSelection} from "./components/AttractionTypeSelection";
+import {PriceRangeSelector} from './components/PriceRangeSelector';
 
 
 
@@ -14,25 +16,33 @@ function App() {
     const [pois, setPois] = useState([])
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
+    const [recommendationLayer, setRecommendationLayer] = useState(null)
+    const [range, setRange] = useState([0, 100]);
+    const [mapBounds, setMapBounds] = useState()
+    const [showAirBnBs, setShowAirBnBs] = useState(true)
 
+    // Loading the AirBnB Data
     useEffect(() => {
-        async function fetchData() {
-            let ab = await getAirbnbs()
-            console.log(typeof ab )
+        async function fetchData(currentRange) {
+            let ab
+            if (typeof mapBounds !== 'undefined') {
+                ab = await getAirbnbs(mapBounds, currentRange)
+            } else {
+                ab = await getAirbnbs(null, currentRange)
+            }
             return ab;
         }
-        fetchData().then((data) => setAirbnbs(data))
-    }, [])
+        fetchData(range).then((data) => setAirbnbs(data))
+    }, [mapBounds, range])
 
-    useEffect( () => {
-        console.log(airbnbs)
-    }, [airbnbs])
+
+    console.log(recommendationLayer)
 
     return (
         <Grommet theme={grommetTheme} full>
             <Box fill>
-                <Header background="brand">
-                    <Button icon={<Home/>} hoverIndicator/>
+                <Header background='linear-gradient(to right, #228BE6, #69AEEA)'>
+                    <Button icon={<Home color='light-1'/>} hoverIndicator/>
                 </Header>
                 <Box direction='row' flex>
                     <Box width='medium'
@@ -41,19 +51,27 @@ function App() {
                          align='center'
                          justify='center'
                     >
-                        sidebar
+                        <PriceRangeSelector label="Apply Price Filter" setRange = {setRange} range = {range} />
+                        <AttractionTypeSelection setRecommendationLayer = {setRecommendationLayer}/>
                     </Box>
                     <Box flex align='center' justify='center' >
                         <MainMap airbnbs={airbnbs}
                                  pois={pois}
                                  setPois={setPois}
                                  setShowInformation={setShowInformation}
+                                 currentAirBnB={currentAirBnB}
                                  setCurrentAirBnB={setCurrentAirBnB}
+                                 recommendation={recommendationLayer}
+                                 setMapBounds={setMapBounds}
+                                 showAirBnBs={showAirBnBs}
+                                 setShowAirBnBs={setShowAirBnBs}
                         />
                         {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}
                                                                     pois={pois}
                                                                     setPois={setPois}
-                                                                    content={currentAirBnB} />}
+                                                                    content={currentAirBnB}
+                                                                    setShowAirBnBs={setShowAirBnBs}
+                        />}
                     </Box>
                 </Box>
             </Box>

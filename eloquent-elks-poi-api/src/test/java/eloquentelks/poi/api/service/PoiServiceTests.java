@@ -1,5 +1,6 @@
 package eloquentelks.poi.api.service;
 
+import com.google.gson.JsonPrimitive;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
 import eloquentelks.poi.api.model.PoiGetDto;
@@ -14,13 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for @see {@link eloquentelks.poi.api.service.PoiService}
  */
 @ExtendWith(MockitoExtension.class)
-public class PoiServiceTests {
+class PoiServiceTests {
 
     /**
      * Stub of a @see{@link eloquentelks.poi.api.repository.FeatureRepository}
@@ -37,7 +40,7 @@ public class PoiServiceTests {
      * Sets up two features that are returned by the FeatureRepository stub
      */
     @BeforeAll
-    public static void setUp(){
+    static void setUp(){
         Feature f1 = Feature.fromJson("{\n" +
                 "\t  \"type\": \"Feature\",\n" +
                 "\t  \"properties\": {\n" +
@@ -82,15 +85,46 @@ public class PoiServiceTests {
      * Tests if the PoiService is able to return all PoIs stored on the database
      */
     @Test
-    public void testGetAllPois(){
+    void testGetAllPois(){
         // arrange
-        when(poiRepository.getFeatures(Point.fromLngLat(40.6804506, -73.9475876), 500)).thenReturn(features);
+        when(poiRepository.getFeatures(Point.fromLngLat(-73.9475876, 40.6804506), 500)).thenReturn(features);
         IPoiService service = new PoiService(poiRepository);
 
         // act
-        List<PoiGetDto> pois = service.getAllPois(40.6804506, -73.9475876);
+        List<PoiGetDto> pois = service.getAllPois( -73.9475876, 40.6804506);
 
         // assert
         assertEquals(2, pois.size());
+    }
+
+    @Test
+    void testGetPoisByAttractionType(){
+        // arrange
+        when(poiRepository.getFeatures(any(String.class))).thenReturn(features);
+        IPoiService service = new PoiService(poiRepository);
+
+        // act
+        List<PoiGetDto> restaurant = service.getPoisByAttractionType("restaurant");
+
+        // assert
+        assertEquals(2, restaurant.size());
+    }
+
+    @Test
+    void testGetFamousPoisWithDistance(){
+        // arrange
+        Feature f1 = Feature.fromGeometry(Point.fromLngLat(-73.8, 40.74));
+        Feature f2 = Feature.fromGeometry(Point.fromLngLat(-74.01, 40.61));
+        f1.addProperty("distance", new JsonPrimitive(1500.75));
+        f2.addProperty("distance", new JsonPrimitive(125.98));
+        when(poiRepository.getDistanceOfFamousFeatures(any(Point.class))).thenReturn(List.of(f1, f2));
+
+        IPoiService service = new PoiService(poiRepository);
+
+        // act
+        List<PoiGetDto> pois = service.getFamousPoisWithDistance(-73.96839771059717, 40.778716795476605);
+
+        // assert
+        assertTrue(pois.stream().allMatch(poi -> poi.getDistance() > 0));
     }
 }

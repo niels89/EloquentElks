@@ -2,14 +2,21 @@ package eloquentelks.poi.api.repository;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
+import org.springframework.data.geo.Metric;
+import org.springframework.data.geo.Metrics;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.NearQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 /**
  * Provides access to MongoDb feature collection
@@ -20,7 +27,7 @@ public class FeatureRepository implements IFeatureRepository{
     /**
      * Key for the GeoJson distance query
      */
-    private final String QUERY_KEY = "geometry";
+    private static final String QUERY_KEY = "geometry";
 
     /**
      * Data access component
@@ -30,7 +37,27 @@ public class FeatureRepository implements IFeatureRepository{
     /**
      * Name of the feature collection on the database
      */
-    private final String FEATURE_COLLECTION = "feature";
+    private static final String FEATURE_COLLECTION = "feature";
+
+    /**
+     * Property path of the tourism field
+     */
+    private static final String PROPERTY_TOURISM = "properties.tourism";
+
+    /**
+     * Property path of the distance field
+     */
+    private static final String PROPERTY_DISTANCE = "properties.distance";
+
+    /**
+     * Attraction type famous
+     */
+    private static final String FAMOUS_ATTRACTION = "famous";
+
+    /**
+     * Maximum distance in meters to be considered for the famous POI distance calculation
+     */
+    private static final int MAX_DISTANCE_TO_FAMOUS = 25000;
 
     /**
      * Constructor
@@ -51,9 +78,44 @@ public class FeatureRepository implements IFeatureRepository{
 
         List<String> documents = mongoTemplate.find(query, String.class, FEATURE_COLLECTION);
 
-        List<Feature> features = convert(documents);
+        return convert(documents);
+    }
 
-        return features;
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public List<Feature> getFeatures(String attractionType){
+        Criteria criteria = Criteria.where(PROPERTY_TOURISM).is(attractionType);
+
+        Query query = new Query(criteria);
+
+        List<String> document = mongoTemplate.find(query, String.class, FEATURE_COLLECTION);
+
+        return convert(document);
+    }
+
+    /**
+     * @inheritDoc
+     * Built after this example: @see <a href="https://stackoverflow.com/questions/32795980/how-to-get-distance-mongodb-template-near-function">StackOverflow</a>
+     */
+    @Override
+    public List<Feature> getDistanceOfFamousFeatures(Point point) {
+        Criteria famousCriteria = Criteria.where(PROPERTY_TOURISM).is(FAMOUS_ATTRACTION);
+
+        Query famousPoiQuery = new Query(famousCriteria);
+
+        NearQuery query = NearQuery.near(point.longitude(), point.latitude())
+                .query(famousPoiQuery)
+                .maxDistance(MAX_DISTANCE_TO_FAMOUS)
+                .spherical(true)
+                .in(Metrics.KILOMETERS);
+
+        Aggregation aggregation = newAggregation(Aggregation.geoNear(query, PROPERTY_DISTANCE));
+
+        AggregationResults<String> aggregate = mongoTemplate.aggregate(aggregation, FEATURE_COLLECTION, String.class);
+
+        return convert(aggregate.getMappedResults());
     }
 
     /**
