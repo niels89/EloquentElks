@@ -23,11 +23,6 @@ public class PoiController {
     private final IPoiService poiService;
 
     /**
-     * Logger
-     */
-    private final Logger log = LoggerFactory.getLogger(PoiController.class);
-
-    /**
      * @param poiService Service that provides the Points of Interests from the database
      */
     @Autowired
@@ -47,9 +42,7 @@ public class PoiController {
     @ResponseBody
     public List<PoiGetDto> getAllPoi(@RequestParam("longitude") double longitude,
                                      @RequestParam("latitude") double latitude){
-        List<PoiGetDto> poiList = poiService.getAllPois(longitude, latitude);
-
-        return poiList;
+        return poiService.getAllPois(longitude, latitude);
     }
 
     /**
@@ -62,8 +55,21 @@ public class PoiController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<PoiGetDto> getPoiByAttractionType(@RequestParam("attractionType") String attractionType){
-        List<PoiGetDto> poiList = poiService.getPoisByAttractionType(attractionType);
+        return poiService.getPoisByAttractionType(attractionType);
+    }
 
-        return poiList;
+    /**
+     * Returns the famous points of interest together with their distances (in kilometers) to the specified point
+     * @param longitude Geographical longitude of the reference point
+     * @param latitude Geographical latitude of the reference point
+     * @return A list of famous attractions of New York City with the distances to the specified point
+     */
+    @CrossOrigin(origins="http://localhost:3000")
+    @GetMapping("famous/distance")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<PoiGetDto> getFamousPoiWithDistance(@RequestParam("longitude") double longitude,
+                                                    @RequestParam("latitude") double latitude){
+        return poiService.getFamousPoisWithDistance(longitude, latitude);
     }
 }
