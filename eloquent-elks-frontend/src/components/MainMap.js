@@ -97,7 +97,7 @@ export const MainMap = props => {
                     subdomains='abcd'
                     maxZoom={19}
                 />
-                {props.recommendation ? <GeoJSON data={props.recommendation} style={geoJsonStyle}/> : null}
+                {props.recommendation ? <GeoJSON key={new Date().getTime().toString()} data={props.recommendation} style={geoJsonStyle}/> : null}
                 {props.showAirBnBs? props.airbnbs.map && props.airbnbs.map((airbnb, index) => {
                         return (
                             <Marker key={index}

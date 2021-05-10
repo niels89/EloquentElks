@@ -17,10 +17,11 @@ function isAbortError(error) {
  * @returns {list}
  */
 export async function getRecommendationLayer(attractionTypes, signal) {
-    let promise = new PromiseWithCancel(async resolve => {
+    return new PromiseWithCancel(async resolve => {
         try {
             const response = await fetch(`${getDomain(1338)}/api/${getVersion()}/recommendation/area`,
-                {method: 'POST',
+                {
+                    method: 'POST',
                     body: JSON.stringify({"attractionTypes": attractionTypes}),
                     headers: {'Content-Type': 'application/json'},
                     signal,
@@ -28,7 +29,7 @@ export async function getRecommendationLayer(attractionTypes, signal) {
 
             const data = await response.json()
             resolve(data);
-        } catch (ex){
+        } catch (ex) {
             if (isAbortError(ex)) {
                 console.log(ex.message);
             } else {
@@ -36,6 +37,5 @@ export async function getRecommendationLayer(attractionTypes, signal) {
                 alert('Something went wrong. Contact the developers')
             }
         }
-    })
-    return promise;
+    });
 }
