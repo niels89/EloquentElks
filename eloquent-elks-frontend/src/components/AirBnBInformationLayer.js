@@ -79,6 +79,7 @@ export const AirBnBInformationLayer = props => {
                                     onClick={() => {
                                         props.setShowInformation(false);
                                         props.setPois([])
+                                        props.setShowAirBnBs(true)
                                     }}
                             />
                         </Stack>

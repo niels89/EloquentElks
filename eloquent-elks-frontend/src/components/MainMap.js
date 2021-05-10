@@ -4,17 +4,26 @@ import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
 import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
 import {useState} from "react";
+import {airbnbGlowLeafletIcon} from "./icons/airbnbLeafletIconGlow";
 
 
 const createMapBounds = map => {
     let mapBounds = map.getBounds()
-    return {north: mapBounds._northEast.lat, east: mapBounds._northEast.lng, south: mapBounds._southWest.lat, west: mapBounds._southWest.lng}
+    return {
+        north: mapBounds._northEast.lat,
+        east: mapBounds._northEast.lng,
+        south: mapBounds._southWest.lat,
+        west: mapBounds._southWest.lng
+    }
 }
 
 
 const ZoomListener = props => {
     const map = useMapEvents({
         zoomend() {
+            props.setMapBounds(createMapBounds(map))
+        },
+        dragend() {
             props.setMapBounds(createMapBounds(map))
         }
     })
@@ -25,6 +34,8 @@ const ZoomListener = props => {
 export const MainMap = props => {
     const [map, setMap] = useState()
 
+
+
     const getFlyToZoom = () => {
         if (map.getZoom() < 15) {
             return 15
@@ -33,12 +44,13 @@ export const MainMap = props => {
     }
 
     const handleAirBnBClick = async (event, airbnb) => {
-        const { lat, lng } = event.latlng
+        const {lat, lng} = event.latlng
         let pois = await getPois(lat, lng)
         props.setPois(pois)
         props.setShowInformation(true)
         props.setCurrentAirBnB(airbnb)
         map.flyTo(event.latlng, getFlyToZoom())
+        props.setShowAirBnBs(false)
     }
 
     const onMapCreation = map => {
@@ -61,11 +73,16 @@ export const MainMap = props => {
                     subdomains='abcd'
                     maxZoom={19}
                 />
-                {props.airbnbs.map && props.airbnbs.map((airbnb, index) => {
+
+                {props.showAirBnBs? props.airbnbs.map && props.airbnbs.map((airbnb, index) => {
                         return (
                             <Marker key={index}
                                     position={[airbnb.latitude, airbnb.longitude]}
-                                    eventHandlers={{click: (event) => {handleAirBnBClick(event, airbnb)}}}
+                                    eventHandlers={{
+                                        click: (event) => {
+                                            handleAirBnBClick(event, airbnb)
+                                        }
+                                    }}
                                     icon={airbnbLeafletIcon}
                             >
                                 {/*<Popup>*/}
@@ -74,8 +91,9 @@ export const MainMap = props => {
                             </Marker>
                         )
                     }
-                )
+                ) : null
                 }
+
                 {props.pois.map && props.pois.map((poi, index) => {
                         return (
                             <Marker key={"POI" + index}
@@ -89,6 +107,18 @@ export const MainMap = props => {
                         )
                     }
                 )
+                }
+                {props.showAirBnBs? null :
+                    <Marker key={"currentAirBnB"}
+                            position={[props.currentAirBnB.latitude, props.currentAirBnB.longitude]}
+                            eventHandlers={{
+                                click: (event) => {
+                                    handleAirBnBClick(event, props.currentAirBnB)
+                                }
+                            }}
+                            icon={airbnbGlowLeafletIcon}
+                            zIndexOffset={50}
+                    />
                 }
             </MapContainer>
         </Box>

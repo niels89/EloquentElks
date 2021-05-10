@@ -15,6 +15,7 @@ function App() {
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
     const [mapBounds, setMapBounds] = useState()
+    const [showAirBnBs, setShowAirBnBs] = useState(true)
 
 
     useEffect(() => {
@@ -51,13 +52,19 @@ function App() {
                                  pois={pois}
                                  setPois={setPois}
                                  setShowInformation={setShowInformation}
+                                 currentAirBnB={currentAirBnB}
                                  setCurrentAirBnB={setCurrentAirBnB}
                                  setMapBounds={setMapBounds}
+                                 showAirBnBs={showAirBnBs}
+                                 setShowAirBnBs={setShowAirBnBs}
                         />
                         {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}
                                                                     pois={pois}
                                                                     setPois={setPois}
-                                                                    content={currentAirBnB} />}
+                                                                    content={currentAirBnB}
+                                                                    setShowAirBnBs={setShowAirBnBs}
+
+                        />}
                     </Box>
                 </Box>
             </Box>
