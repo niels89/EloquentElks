@@ -18,20 +18,22 @@ function App() {
     const [currentAirBnB, setCurrentAirBnB] = useState({})
     const [recommendationLayer, setRecommendationLayer] = useState(null)
     const [range, setRange] = useState([0, 100]);
-
-
+    const [mapBounds, setMapBounds] = useState()
+    const [showAirBnBs, setShowAirBnBs] = useState(true)
 
     // Loading the AirBnB Data
     useEffect(() => {
         async function fetchData(currentRange) {
-            let ab = await getAirbnbs(currentRange)
-            console.log(typeof ab )
+            let ab
+            if (typeof mapBounds !== 'undefined') {
+                ab = await getAirbnbs(mapBounds, currentRange)
+            } else {
+                ab = await getAirbnbs(null, currentRange)
+            }
             return ab;
         }
         fetchData(range).then((data) => setAirbnbs(data))
-    }, [range])
-
-
+    }, [mapBounds, range])
 
 
 
@@ -56,13 +58,18 @@ function App() {
                                  pois={pois}
                                  setPois={setPois}
                                  setShowInformation={setShowInformation}
+                                 currentAirBnB={currentAirBnB}
                                  setCurrentAirBnB={setCurrentAirBnB}
                                  recommendation={recommendationLayer}
+                                 setMapBounds={setMapBounds}
+                                 showAirBnBs={showAirBnBs}
+                                 setShowAirBnBs={setShowAirBnBs}
                         />
                         {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}
                                                                     pois={pois}
                                                                     setPois={setPois}
                                                                     content={currentAirBnB}
+                                                                    setShowAirBnBs={setShowAirBnBs}
                         />}
                     </Box>
                 </Box>
