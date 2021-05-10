@@ -1,4 +1,5 @@
 import * as turf from '@turf/turf';
+import {getPOIDensityfromDB, writePOIDensityToDB} from "./poiDensityDB.service";
 
 export class PoiDensityService {
   constructor(getPois) {
@@ -51,7 +52,14 @@ export class PoiDensityService {
   }
 
   async byType(attractionType) {
+    let density = await getPOIDensityfromDB(attractionType)
+    if (density !== null) {
+      return density;
+    }
     let pois = await this.getPois(attractionType);
-    return this.calculateDensity(pois);
+    let calcDensity = this.calculateDensity(pois);
+    calcDensity.attractionType = attractionType;
+    await writePOIDensityToDB(calcDensity);
+    return calcDensity;
   }
 }

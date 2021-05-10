@@ -88,5 +88,25 @@ services:
             - ELOQUENTELKS_POI_API_PROTOCOL=http
             - ELOQUENTELKS_POI_API_HOST=poi-api
             - ELOQUENTELKS_POI_API_PORT=8080
+            - ELOQUENTELKS_POI_DENSITY_DB_HOST=mongodb_poi-density
+            - ELOQUENTELKS_POI_DENSITY_DB_PORT=27017
         hostname: poi-density-api
+        
+    mongodb_poi-density:
+        image: mongo
+        volumes:
+            - ./eloquent-elks-poi-density-db/mongodb/database:/data/db
+        ports:
+            - 27019:27017
+        restart: unless-stopped
+        hostname: mongodb_poi-density
+        
+    dbseed_poi-density:
+        build:
+            context: ./eloquent-elks-poi-density-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_poi-density
+        depends_on:
+            - mongodb_poi-density
 
