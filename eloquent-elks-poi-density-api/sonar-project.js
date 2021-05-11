@@ -4,7 +4,7 @@ sonarScanner({
   serverUrl: 'https://sonarcloud.io',
   token: process.env.SONAR_TOKEN,
   options: {
-    'sonar.projectKey': 'eloquent-elks_EloquentElks_Frontend',
+    'sonar.projectKey': 'eloquent-elks_EloquentElks_poi_density_api',
     'sonar.organization': 'eloquent-elks',
     'sonar.sources': 'server',
     'sonar.tests': 'test',
