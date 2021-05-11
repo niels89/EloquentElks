@@ -73,6 +73,13 @@ jobs:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api sonarqube
           after_success:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api jacocoTestReport coveralls
+        - stage: docker image
+          script:
+          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          - docker build - < ./eloquent-elks-airbnb-api/Dockerfile
+          - docker tag eloquent-elks-airbnb-api $DOCKER_USERNAME/eloquent-elks
+          - docker push $DOCKER_USERNAME/eloquent-elks
+            
 addons:
     sonarcloud:
         organization: "eloquent-elks"
