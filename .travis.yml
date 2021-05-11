@@ -13,28 +13,28 @@ jobs:
 #            - yarn --cwd ./eloquent-elks-frontend sonar
 #          after_script:
 #            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls     
-        - language: java
-          install: skip
-          os: linux
-          dist: trusty
-          jdk: 
-            - openjdk12
-          before_cache:
-            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-          cache:
-            directories:
-              - $HOME/.gradle/caches/
-              - $HOME/.gradle/wrapper/
-          script:
-            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api build
-            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api test
-            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport
-            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api sonarqube
-          after_success:
-            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport coveralls
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ./eloquent-elks-airbnb-api/ && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH ./eloquent-elks-airbnb-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH
+#        - language: java
+#          install: skip
+#          os: linux
+#          dist: trusty
+#          jdk: 
+#            - openjdk12
+#          before_cache:
+#            - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#            - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+#          cache:
+#            directories:
+#              - $HOME/.gradle/caches/
+#              - $HOME/.gradle/wrapper/
+#          script:
+#            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api build
+#            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api test
+#            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport
+#            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api sonarqube
+#          after_success:
+#            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport coveralls
+#            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ./eloquent-elks-airbnb-api/ && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH
+#            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH ./eloquent-elks-airbnb-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH
 #        - language: java
 #          install: skip
 #          os: linux
@@ -78,7 +78,20 @@ jobs:
 #          after_success:
 #            - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api jacocoTestReport coveralls
 #            - - if [ $TRAVIS_BRANCH = "main" || $TRAVIS_TAG != "" ]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-recommender-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-recommender-api:$TRAVIS_BRANCH ./eloquent-elks-recommender-api/ && docker push $DOCKER_USERNAME/eloquent-elks-recommender-api:$TRAVIS_BRANCH ; fi
-            
+    
+        - language: node_js
+          node_js: 
+            - "stable"
+          cache:
+            directories:
+                - node_modules
+          script:
+            - npm install --prefix ./eloquent-elks-poi-density-api
+            - npm test --prefix ./eloquent-elks-poi-density-api/ -- --coverage
+            - npm run compile --prefix ./eloquent-elks-poi-density-api
+            - npm sonar --prefix ./eloquent-elks-poi-density-api
+          after_script:
+            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls     
 addons:
     sonarcloud:
         organization: "eloquent-elks"
