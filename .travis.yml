@@ -36,7 +36,7 @@ jobs:
             - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             - docker build - < ./eloquent-elks-airbnb-api/Dockerfile
             - docker tag eloquent-elks-airbnb-api $DOCKER_USERNAME/eloquent-elks
-            - docker push $DOCKER_USERNAME/eloquent-elks
+            - docker push $DOCKER_USERNAME/eloquent-elks:eloquent-elks-airbnb-api
 #        - language: java
 #          install: skip
 #          os: linux
