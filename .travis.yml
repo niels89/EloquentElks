@@ -87,9 +87,9 @@ jobs:
                 - node_modules
           script:
             - npm install --prefix ./eloquent-elks-poi-density-api
-            - npm test --prefix ./eloquent-elks-poi-density-api/ -- --coverage
+            - npm test --prefix ./eloquent-elks-poi-density-api -- --coverage
             - npm run compile --prefix ./eloquent-elks-poi-density-api
-            - npm sonar --prefix ./eloquent-elks-poi-density-api
+            - npm run sonar --prefix ./eloquent-elks-poi-density-api
           after_script:
             - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls     
 addons:
