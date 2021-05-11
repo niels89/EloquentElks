@@ -35,7 +35,7 @@ jobs:
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport coveralls
             - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             - docker build -f ./eloquent-elks-airbnb-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ./eloquent-elks-airbnb-api/
-            - docker push $DOCKER_USERNAME/eloquent-elks:eloquent-elks-airbnb-api
+            - docker push $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH
 #        - language: java
 #          install: skip
 #          os: linux
