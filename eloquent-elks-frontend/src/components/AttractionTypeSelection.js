@@ -3,6 +3,9 @@ import React, {useState} from "react";
 import {getRecommendationLayer} from "../requests/getRecommendationLayer";
 import {FormClose} from "grommet-icons";
 
+
+
+
 // Remove all cells that have a value of zero.
 // const reduceGeoJson = (data) => {
 //     let newFeatures = []
@@ -19,7 +22,7 @@ import {FormClose} from "grommet-icons";
 
 
 export const AttractionTypeSelection = props => {
-    const [value, setValue] = React.useState([]);
+    const [value, setValue] = React.useState();
     const [fetchingRecommendation, setFetchingRecommendation] = useState(false);
     const [abortController, setAbortController] = useState()
 
@@ -43,11 +46,14 @@ export const AttractionTypeSelection = props => {
         abortController.abort();
     }
 
-    const attractionTypes = ['pub', 'restaurant', 'library', 'plaza', 'fountain', 'bar', 'cafe'];
+    let module = require('../resources/Attractlion-list');
+    const newAttractionList = module.attractionTypesList
+
+
     // attractionTypes.map((name) => {return name.charAt(0).toUpperCase() + name.slice(1)})
 
     return (
-        <Box height={'xxlarge'} margin={{"top": "medium"}} overflow={'scroll'}>
+        <Box margin={{"top": "medium"}}>
             <Form
                 onSubmit={({value: values, touched}) =>
                     // 'touched' is a single boolean value indication of
@@ -55,15 +61,18 @@ export const AttractionTypeSelection = props => {
                     console.log('Submit', values, touched)
                 }
             >
-                <FormField name="controlled">
+                <Box height={'small'} margin={{"vertical": "medium"}} overflow={'scroll'}>
                     <CheckBoxGroup id="check-box-group-id"
                                    name="controlled"
                                    value={value}
-                                   onChange={({value: nextValue}) => setValue(nextValue)}
-                                   options={attractionTypes}
+                                   onChange={event => { setValue(event.value); console.log('Group1: ', event.value); }}
+                                   options={newAttractionList}
+
                     />
-                </FormField>
-                <Button primary={true} label="Load recommendation" disabled={fetchingRecommendation} onClick={onLoadRecommendation}/>
+                </Box >
+                <Box>
+                    <Button primary={true} label="Load recommendation" disabled={fetchingRecommendation} onClick={onLoadRecommendation}/>
+                </Box>
             </Form>
             {fetchingRecommendation && (
                 <Layer
