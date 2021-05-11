@@ -33,8 +33,8 @@ jobs:
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api sonarqube
           after_success:
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport coveralls
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-api:v0.0.0 ./eloquent-elks-airbnb-api/ && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-api:v0.0.0
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:v0.0.0 ./eloquent-elks-airbnb-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:v0.0.0
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ./eloquent-elks-airbnb-api/ && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH ./eloquent-elks-airbnb-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH
         - language: java
           install: skip
           os: linux
@@ -55,8 +55,8 @@ jobs:
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api sonarqube
           after_success:
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api jacocoTestReport coveralls
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-api:v0.0.0 ./eloquent-elks-poi-api/ && docker push $DOCKER_USERNAME/eloquent-elks-poi-api:v0.0.0
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-dbseed:v0.0.0 ./eloquent-elks-poi-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-poi-dbseed:v0.0.0
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-api:$TRAVIS_BRANCH ./eloquent-elks-poi-api/ && docker push $DOCKER_USERNAME/eloquent-elks-poi-api:$TRAVIS_BRANCH
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-dbseed:$TRAVIS_BRANCH ./eloquent-elks-poi-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-poi-dbseed:$TRAVIS_BRANCH
         - language: java
           install: skip
           os: linux
@@ -77,7 +77,7 @@ jobs:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api sonarqube
           after_success:
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api jacocoTestReport coveralls
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-recommender-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-recommender-api:v0.0.0 ./eloquent-elks-recommender-api/ && docker push $DOCKER_USERNAME/eloquent-elks-recommender-api:v0.0.0
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-recommender-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-recommender-api:$TRAVIS_BRANCH ./eloquent-elks-recommender-api/ && docker push $DOCKER_USERNAME/eloquent-elks-recommender-api:$TRAVIS_BRANCH
         - language: node_js
           node_js: 
             - "stable"
@@ -91,8 +91,8 @@ jobs:
             - npm run sonar --prefix ./eloquent-elks-poi-density-api
           after_script:
             - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm coveralls --prefix ./eloquent-elks-poi-density-api
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-density-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-density-api:v0.0.0 ./eloquent-elks-poi-density-api/ && docker push $DOCKER_USERNAME/eloquent-elks-poi-density-api:v0.0.0
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-density-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-density-dbseed:v0.0.0 ./eloquent-elks-poi-density-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-poi-density-dbseed:v0.0.0
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-density-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-density-api:$TRAVIS_BRANCH ./eloquent-elks-poi-density-api/ && docker push $DOCKER_USERNAME/eloquent-elks-poi-density-api:$TRAVIS_BRANCH
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-density-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-density-dbseed:$TRAVIS_BRANCH ./eloquent-elks-poi-density-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-poi-density-dbseed:$TRAVIS_BRANCH
 addons:
     sonarcloud:
         organization: "eloquent-elks"
