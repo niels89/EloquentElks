@@ -33,8 +33,8 @@ jobs:
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api sonarqube
           after_success:
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport coveralls
-            - if [[ $TRAVIS_BRANCH = "main" ] || [ $TRAVIS_BRANCH = "develop" ] || [$TRAVIS_TAG != "" ]]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ./eloquent-elks-airbnb-api/ && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ; fi
-            - if [[ $TRAVIS_BRANCH = "main" ] || [ $TRAVIS_BRANCH = "develop" ] || [$TRAVIS_TAG != "" ]]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH ./eloquent-elks-airbnb-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH ; fi
+            - if [[ "$TRAVIS_BRANCH" = "main" ] || [ "$TRAVIS_BRANCH" = "develop" ] || ["$TRAVIS_TAG" != "" ]]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ./eloquent-elks-airbnb-api/ && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-api:$TRAVIS_BRANCH ; fi
+            - if [[ "$TRAVIS_BRANCH" = "main" ] || [ "$TRAVIS_BRANCH" = "develop" ] || ["$TRAVIS_TAG" != "" ]]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-airbnb-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH ./eloquent-elks-airbnb-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-airbnb-dbseed:$TRAVIS_BRANCH ; fi
 #        - language: java
 #          install: skip
 #          os: linux
