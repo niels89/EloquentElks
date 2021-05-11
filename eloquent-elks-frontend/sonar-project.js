@@ -6,6 +6,7 @@ sonarScanner(
         token: process.env.SONAR_TOKEN,
         options:{
             "sonar.projectKey": "eloquent-elks_EloquentElks_Frontend",
+			"sonar.projectName": "EloquentElks Frontend"
             "sonar.organization": "eloquent-elks",
             "sonar.sources": "src",
             "sonar.tests": "src",

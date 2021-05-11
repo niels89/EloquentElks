@@ -5,6 +5,7 @@ sonarScanner({
   token: process.env.SONAR_TOKEN,
   options: {
     'sonar.projectKey': 'eloquent-elks_EloquentElks_poi_density_api',
+	'sonar.projectName': 'EloquentElks POI Density API'
     'sonar.organization': 'eloquent-elks',
     'sonar.sources': 'server',
     'sonar.tests': 'test',
