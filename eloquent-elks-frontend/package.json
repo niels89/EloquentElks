@@ -28,7 +28,7 @@
     "coverage": "react-scripts test --env=jsdom --coverage",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "eject": "react-scripts eject",
-	"sonar": "node sonar-project.js"
+    "sonar": "node sonar-project.js"
   },
   "eslintConfig": {
     "extends": [
