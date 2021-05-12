@@ -72,7 +72,8 @@ test {
 
 sonarqube{
 	properties{
-		property "sonar.projectKey", "eloquent-elks_EloquentElks_Recommender_API"
+		property 'sonar.projectKey', 'eloquent-elks_EloquentElks_Recommender_API'
+		property 'sonar.projectName', 'eloquent-elks-recommender-api'
 		property 'sonar.language', 'java'
 		property 'sonar.sources', 'src/main'
 		property 'sonar.tests', 'src/test'

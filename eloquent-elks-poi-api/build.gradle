@@ -72,6 +72,7 @@ test {
 sonarqube {
 	properties {
 		property 'sonar.projectKey', 'eloquent-elks_EloquentElks_POI_API'
+		property 'sonar.projectName', 'eloquent-elks-poi-api'
 		property 'sonar.language', 'java'
 		property 'sonar.sources', 'src/main'
 		property 'sonar.tests', 'src/test'
