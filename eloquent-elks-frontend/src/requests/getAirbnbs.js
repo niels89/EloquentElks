@@ -1,4 +1,4 @@
-import {getDomain} from "../helpers/getDomain";
+import {getAirBnBDomain} from "../helpers/getDomain";
 import {getVersion} from "../helpers/getVersion";
 
 /**
@@ -12,10 +12,10 @@ export async function getAirbnbs(bbox, priceRange) {
     let params = {min, max};
     let requestUrl
     if(bbox) {
-        requestUrl = `${getDomain(1340)}/api/${getVersion()}/airbnb?` + new URLSearchParams(params).toString() + `&` + new URLSearchParams(bbox).toString()
+        requestUrl = `${getAirBnBDomain()}/api/${getVersion()}/airbnb?` + new URLSearchParams(params).toString() + `&` + new URLSearchParams(bbox).toString()
     }
     else {
-        requestUrl = `${getDomain(1340)}/api/${getVersion()}/airbnb?` + new URLSearchParams(params).toString()
+        requestUrl = `${getAirBnBDomain()}/api/${getVersion()}/airbnb?` + new URLSearchParams(params).toString()
     }
     let response = await fetch(requestUrl,
         {method: "GET"})
