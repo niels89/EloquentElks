@@ -1,9 +1,8 @@
-import {Box, Button, CheckBoxGroup, Form, FormField, Layer, Spinner, Text} from "grommet";
+import {Box, Button, CheckBoxGroup, Form, Layer, Spinner, Text} from "grommet";
 import React, {useState} from "react";
 import {getRecommendationLayer} from "../requests/getRecommendationLayer";
 import {FormClose} from "grommet-icons";
-
-
+import {attractionTypesList} from "../resources/Attractlion-list";
 
 
 // Remove all cells that have a value of zero.
@@ -46,8 +45,7 @@ export const AttractionTypeSelection = props => {
         abortController.abort();
     }
 
-    let module = require('../resources/Attractlion-list');
-    const newAttractionList = module.attractionTypesList
+    const newAttractionList = attractionTypesList
 
 
     // attractionTypes.map((name) => {return name.charAt(0).toUpperCase() + name.slice(1)})
@@ -66,7 +64,13 @@ export const AttractionTypeSelection = props => {
                                    name="controlled"
                                    value={value}
                                    onChange={event => { setValue(event.value); console.log('Group1: ', event.value); }}
-                                   options={newAttractionList}
+                                   options={newAttractionList.map(data => {
+                                       data.label = <Box direction={"row"} gap={"small"}>
+                                           {data.icon}
+                                           {data.name}
+                                       </Box>
+                                       return (data)
+                                   })}
 
                     />
                 </Box >
