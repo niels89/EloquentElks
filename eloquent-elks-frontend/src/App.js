@@ -8,6 +8,7 @@ import {AirBnBInformationLayer} from "./components/AirBnBInformationLayer";
 import {MainMap} from "./components/MainMap";
 import {AttractionTypeSelection} from "./components/AttractionTypeSelection";
 import {PriceRangeSelector} from './components/PriceRangeSelector';
+import {getFamousDistance} from "./requests/getFamousDistance";
 
 
 
@@ -20,6 +21,9 @@ function App() {
     const [range, setRange] = useState([0, 100]);
     const [mapBounds, setMapBounds] = useState()
     const [showAirBnBs, setShowAirBnBs] = useState(true)
+    const [distances, setDistances] = useState([])
+
+
 
     // Loading the AirBnB Data
     useEffect(() => {
@@ -34,6 +38,18 @@ function App() {
         }
         fetchData(range).then((data) => setAirbnbs(data))
     }, [mapBounds, range])
+
+    // Load the distances to the famous attractions as soon as a user selects an AirBnB
+    useEffect(() => {
+        async function fetchData(lat, lon) {
+            let ab = await getFamousDistance(lat, lon)
+            return ab;
+        }
+        if (currentAirBnB.latitude) {
+            fetchData(currentAirBnB.latitude, currentAirBnB.longitude).then((data) => setDistances(data))
+        }
+
+    }, [currentAirBnB])
 
 
     console.log(recommendationLayer)
@@ -71,6 +87,7 @@ function App() {
                                                                     setPois={setPois}
                                                                     content={currentAirBnB}
                                                                     setShowAirBnBs={setShowAirBnBs}
+                                                                    distances={distances}
                         />}
                     </Box>
                 </Box>
