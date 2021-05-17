@@ -16,26 +16,21 @@ produces:
   - application/json
 
 
-definitions:
-  ExampleBody:
-    type: object
-    title: example
-    required:
-      - name
-    properties:
-      name:
-        type: string
-        example: no_stress
-
 paths:
-  /poiDensity:
+  /poiDensity :
     get:
       tags:
         - Examples
-      description: Fetch all examples
+      description: Get density of attraction by type.
+      parameters:
+        - in: query
+          name: attractionType
+          type: string
+          required: true
+          description: String name of attraction type for which to get the density
       responses:
         200:
-          description: Returns all examples
+          description: Returns density of selected attraction type
 
   /spec:
     get:
