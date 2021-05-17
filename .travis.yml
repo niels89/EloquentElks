@@ -12,7 +12,20 @@ jobs:
             - yarn --cwd ./eloquent-elks-frontend run build
             - yarn --cwd ./eloquent-elks-frontend sonar
           after_script:
-            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls     
+            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls    
+        - language: node_js
+          node_js: 
+            - "stable"
+          cache:
+            directories:
+                - node_modules
+          script:
+            - npm --prefix ./eloquent-elks-poi-density-api install
+            - npm --prefix ./eloquent-elks-poi-density-api test -- --coverage
+            - npm --prefix ./eloquent-elks-poi-density-api run build
+            - npm --prefix ./eloquent-elks-poi-density-api sonar
+          after_script:
+            - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm --prefix ./eloquent-elks-poi-density-api coveralls     
         - language: java
           install: skip
           os: linux
