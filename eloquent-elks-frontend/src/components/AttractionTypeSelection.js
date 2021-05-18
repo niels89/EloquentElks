@@ -14,7 +14,7 @@ export const AttractionTypeSelection = props => {
         const signal = controller.signal;
         setAbortController(controller)
         setFetchingRecommendation(true)
-        console.log("Reco. Attr.: "+ props.attractionTypes)
+        
         getRecommendationLayer(props.attractionTypes, signal).then(data => {
             props.setRecommendationLayer(data)
             setFetchingRecommendation(false)
