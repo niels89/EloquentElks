@@ -52,3 +52,14 @@ amenities_centroid_clean <- amenities_clean %>%
 st_write(amenities_centroid_clean, "pois_processed.geojson")
 ```
 
+Find out all the types
+```{r}
+factets <- amenities_centroid_clean %>% 
+  group_by(tourism) %>%
+  count() %>% 
+  ungroup()
+
+
+factets$tourism
+```
+

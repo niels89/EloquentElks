@@ -1,4 +1,4 @@
-import {getDomain} from "../helpers/getDomain";
+import {getPOIDomain} from "../helpers/getDomain";
 import {getVersion} from "../helpers/getVersion";
 
 /**
@@ -6,7 +6,7 @@ import {getVersion} from "../helpers/getVersion";
  * @returns {list}
  */
 export async function getPois(lat, lon) {
-    let response = await fetch(`${getDomain(1337)}/api/${getVersion()}/poi/radius?longitude=${lon}&latitude=${lat}`, {method: "GET"})
+    let response = await fetch(`${getPOIDomain()}/api/${getVersion()}/poi/radius?longitude=${lon}&latitude=${lat}`, {method: "GET"})
     if (response.ok) {
         let data = await response.json()
         return data
