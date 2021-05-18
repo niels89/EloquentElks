@@ -1,4 +1,4 @@
-import {getDomain} from "../helpers/getDomain";
+import {getRecommenderDomain} from "../helpers/getDomain";
 import {getVersion} from "../helpers/getVersion";
 
 class PromiseWithCancel extends Promise {
@@ -19,7 +19,7 @@ function isAbortError(error) {
 export async function getRecommendationLayer(attractionTypes, signal) {
     return new PromiseWithCancel(async resolve => {
         try {
-            const response = await fetch(`${getDomain(1338)}/api/${getVersion()}/recommendation/area`,
+            const response = await fetch(`${getRecommenderDomain()}/api/${getVersion()}/recommendation/area`,
                 {
                     method: 'POST',
                     body: JSON.stringify({"attractionTypes": attractionTypes}),

@@ -35,8 +35,6 @@ function App() {
     }, [mapBounds, range])
 
 
-    console.log(recommendationLayer)
-
     return (
         <Grommet theme={grommetTheme} full>
             <Box fill>
