@@ -11,7 +11,7 @@ export const LandingPage = props => {
 
     const [showLanding, setShowLanding] = useState(!hasBeenVisited);
 
-    let attractions = getAttractionTypes("white", "50",);
+    let attractions = getAttractionTypes("white", "50");
     let numberOfAttractionTypes = attractions.length;
     let colsAndRows = Math.ceil(Math.sqrt(numberOfAttractionTypes));
     let rows = Array(colsAndRows).fill("small");
