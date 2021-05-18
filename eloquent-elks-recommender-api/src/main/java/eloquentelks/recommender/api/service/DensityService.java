@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Density service, currently returning a static GeoJson, will be replaced with real API call to density-api.
@@ -100,10 +99,6 @@ public class DensityService implements IDensityService {
             }
         }));
 
-//        for (Feature countingFeature : combinedFeatures.features()) {
-//            aggregateDensity(featureCollections, countingFeature, (id, density) -> featureCollectionAccessor.setDensity(combinedFeatures, id, density));
-//        }
-
         return combinedFeatures;
     }
 
@@ -126,29 +121,4 @@ public class DensityService implements IDensityService {
         }
     }
 
-    /**
-     * Increments the density value of the combinedFeatures collection
-     * @param featureCollections List of input feature collections containing normalized densities
-     * @param countingFeature Feature that contains the measured poiCount
-     * @param densitySetter Lambda expression to set the density in the FeatureCollection
-     */
-    private void aggregateDensity(List<FeatureCollection> featureCollections, Feature countingFeature, DensitySetter densitySetter) {
-        int id = featureCollectionAccessor.getId(countingFeature);
-
-        double density = featureCollectionAccessor.getDensity(countingFeature);
-
-        for(FeatureCollection featureCollection: featureCollections) {
-                density += featureCollectionAccessor.getDensity(featureCollection, id);
-        }
-
-        densitySetter.set(id, density);
-    }
-
-    /**
-     * Function interface for setting density via lambda expression
-     */
-    @FunctionalInterface
-    private interface DensitySetter{
-        void set(int id, double density);
-    }
 }

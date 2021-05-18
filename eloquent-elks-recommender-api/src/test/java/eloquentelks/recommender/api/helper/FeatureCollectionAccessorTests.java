@@ -8,12 +8,14 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_ID;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for @see{@link FeatureCollectionAccessor}
  */
-public class FeatureCollectionAccessorTests {
+class FeatureCollectionAccessorTests {
 
     /**
      * FeatureCollection containing the density data
@@ -29,7 +31,7 @@ public class FeatureCollectionAccessorTests {
      * Test initialization
      */
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         // arrange
         featureCollection = FeatureCollectionFactory.create(Map.of(1, 42));
         accessor = new FeatureCollectionAccessor();
@@ -39,7 +41,7 @@ public class FeatureCollectionAccessorTests {
      * Tests if the getPoiDensity method works properly
      */
     @Test
-    public void testGetPoiDensity(){
+    void testGetPoiDensity(){
         // act
         double density = accessor.getDensity(featureCollection, 1);
 
@@ -51,7 +53,7 @@ public class FeatureCollectionAccessorTests {
      * Tests if the getPoidensity method throws an execption if null is passed for a Feature
      */
     @Test
-    public void testGetPoiDensity_nullFeature(){
+    void testGetPoiDensity_nullFeature(){
         // act, assert
         assertThrows(IllegalArgumentException.class, () -> accessor.getDensity(null));
     }
@@ -61,7 +63,7 @@ public class FeatureCollectionAccessorTests {
      * preconditions are not met
      */
     @Test
-    public void testGetPoiDensity_featureNotExisting(){
+    void testGetPoiDensity_featureNotExisting(){
         // act, assert
         assertThrows(IllegalArgumentException.class, () -> accessor.getDensity(featureCollection, 0));
     }
@@ -70,7 +72,7 @@ public class FeatureCollectionAccessorTests {
      * Tests if the getFeatureById method works properly
      */
     @Test
-    public void testGetFeatureById(){
+    void testGetFeatureById(){
         // act
         Feature feature = accessor.getFeatureById(featureCollection, 1);
 
@@ -83,7 +85,7 @@ public class FeatureCollectionAccessorTests {
      * are not met
      */
     @Test
-    public void testGetFeatureById_notFound(){
+    void testGetFeatureById_notFound(){
         // act
         Feature feature = accessor.getFeatureById(featureCollection, 0);
 
@@ -96,7 +98,7 @@ public class FeatureCollectionAccessorTests {
      * collection
      */
     @Test
-    public void testCopyFeatureIds(){
+    void testCopyFeatureIds(){
         // act
         FeatureCollection copy = accessor.copyFeatureIds(featureCollection);
 
@@ -109,7 +111,7 @@ public class FeatureCollectionAccessorTests {
      * Tests if the setDensity method works properly
      */
     @Test
-    public void testSetDensity(){
+    void testSetDensity(){
         // act
         accessor.setDensity(featureCollection, 1, 244);
 
