@@ -1,9 +1,7 @@
-import {Box, Button, CheckBoxGroup, Form, Layer, Spinner, Text} from "grommet";
+import {Box, Button, CheckBoxGroup, Form, FormField, Layer, Spinner, Text} from "grommet";
 import React, {useState} from "react";
 import {getRecommendationLayer} from "../requests/getRecommendationLayer";
 import {FormClose} from "grommet-icons";
-import {attractionTypesList} from "../resources/Attractlion-list";
-
 
 // Remove all cells that have a value of zero.
 // const reduceGeoJson = (data) => {
@@ -21,7 +19,7 @@ import {attractionTypesList} from "../resources/Attractlion-list";
 
 
 export const AttractionTypeSelection = props => {
-    const [value, setValue] = React.useState();
+    const [value, setValue] = React.useState([]);
     const [fetchingRecommendation, setFetchingRecommendation] = useState(false);
     const [abortController, setAbortController] = useState()
 
@@ -44,13 +42,11 @@ export const AttractionTypeSelection = props => {
         abortController.abort();
     }
 
-    const newAttractionList = attractionTypesList
-
-
+    const attractionTypes = ['pub', 'restaurant', 'library', 'plaza', 'fountain', 'bar', 'cafe'];
     // attractionTypes.map((name) => {return name.charAt(0).toUpperCase() + name.slice(1)})
 
     return (
-        <Box margin={{"top": "medium"}}>
+        <Box height={'xxlarge'} margin={{"top": "medium"}} overflow={'scroll'}>
             <Form
                 onSubmit={({value: values, touched}) =>
                     // 'touched' is a single boolean value indication of
@@ -58,24 +54,15 @@ export const AttractionTypeSelection = props => {
                     console.log('Submit', values, touched)
                 }
             >
-                <Box height={'small'} margin={{"vertical": "medium"}} overflow={'scroll'}>
+                <FormField name="controlled">
                     <CheckBoxGroup id="check-box-group-id"
                                    name="controlled"
                                    value={value}
-                                   onChange={event => { setValue(event.value); console.log('Group1: ', event.value); }}
-                                   options={newAttractionList.map(data => {
-                                       data.label = <Box direction={"row"} gap={"small"}>
-                                           {data.icon}
-                                           {data.name}
-                                       </Box>
-                                       return (data)
-                                   })}
-
+                                   onChange={({value: nextValue}) => setValue(nextValue)}
+                                   options={attractionTypes}
                     />
-                </Box >
-                <Box>
-                    <Button primary={true} label="Load recommendation" disabled={fetchingRecommendation} onClick={onLoadRecommendation}/>
-                </Box>
+                </FormField>
+                <Button primary={true} label="Load recommendation" disabled={fetchingRecommendation} onClick={onLoadRecommendation}/>
             </Form>
             {fetchingRecommendation && (
                 <Layer
