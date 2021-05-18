@@ -33,8 +33,8 @@ export const getAirBnBDomain = () => {
  */
 export const getRecommenderDomain = () => {
     const protocol = process.env.REACT_APP_ELOQUENTELKS_RECOMMENDER_API_PROTOCOL;
-    const host = process.env.REACT_APP_ELOQUENTELKS_RECOMMENDER__API_HOST;
-    const port = process.env.REACT_APP_ELOQUENTELKS_RECOMMENDER__API_PORT;
+    const host = process.env.REACT_APP_ELOQUENTELKS_RECOMMENDER_API_HOST;
+    const port = process.env.REACT_APP_ELOQUENTELKS_RECOMMENDER_API_PORT;
 
     return createDomainString(protocol, host, port);
 };
