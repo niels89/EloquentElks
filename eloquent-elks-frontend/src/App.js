@@ -15,6 +15,7 @@ function App() {
     const [pois, setPois] = useState([])
     const [showInformation, setShowInformation] = useState(false)
     const [currentAirBnB, setCurrentAirBnB] = useState({})
+    const [attractionTypes, setAttractionTypes] = useState([])
     const [recommendationLayer, setRecommendationLayer] = useState(null)
     const [range, setRange] = useState([0, 100]);
     const [mapBounds, setMapBounds] = useState()
@@ -34,7 +35,6 @@ function App() {
         fetchData(range).then((data) => setAirbnbs(data))
     }, [mapBounds, range])
 
-
     return (
         <Grommet theme={grommetTheme} full>
             <Box fill>
@@ -49,10 +49,10 @@ function App() {
                         justify='center'
                     >
                         <PriceRangeSelector label="Apply Price Filter" setRange={setRange} range={range} />
-                        <AttractionTypeSelection setRecommendationLayer={setRecommendationLayer} />
+                        <AttractionTypeSelection attractionTypes={attractionTypes} setAttractionTypes={setAttractionTypes} setRecommendationLayer={setRecommendationLayer} />
                     </Box>
                     <Box flex align='center' justify='center'>
-                        <LandingPage />
+                        <LandingPage key={attractionTypes.length} attractionTypes={attractionTypes} setAttractionTypes={setAttractionTypes}/>
                         <MainMap airbnbs={airbnbs}
                             pois={pois}
                             setPois={setPois}

@@ -22,3 +22,7 @@ export function getAttractionTypes(color, size){
         { icon: <IceCream color={color} size={size} />, key: "icecream-logo", id: "icecream-id", value: "ice cream", caption: "Ice Cream" }
     ]
 }
+
+export function getAttractionType(key, color, size){
+    return getAttractionTypes(color, size).filter(attr => attr.key === key)[0];
+}
