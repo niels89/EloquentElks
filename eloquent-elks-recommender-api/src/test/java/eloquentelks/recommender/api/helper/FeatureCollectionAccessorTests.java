@@ -118,5 +118,4 @@ class FeatureCollectionAccessorTests {
         // assert
         assertEquals(244, accessor.getDensity(featureCollection, 1));
     }
-
 }

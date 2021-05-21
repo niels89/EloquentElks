@@ -7,10 +7,10 @@ This API is documented with Swagger UI. To access it, run the service (i.e. as a
 ## How does it work?
 We decided to make area recommendations according to the following schema (also depicted below):
 
-1.  [Frontend](../eloquent-elks-frontend/README.md) calls recommender API with HTTP Post containing the attraction types that the user is interested in
-2.  The recommender looks in the database if a recommendation for these areas have already been made and returns them if available.
-3.  For all the attraction types that are not in the database, the recommender requests the density calculation from the POI density calculation endpoint.
-4.  The [POI density API](../eloquent-elks-poi-density-api/README.md) requests the POI of the respective type from the [POI API](../eloquent-elks-poi-api/README.md).
+1.  The [Frontend](../eloquent-elks-frontend/README.md) calls recommender API with HTTP Post containing the attraction types that the user is interested in
+2.  The Recommender requests the density calculation from the POI density calculation endpoint.
+3.  The [POI density API](../eloquent-elks-poi-density-api/README.md) looks in the database if a recommendation for these areas have already been made and returns them if available.
+4. 	For all the attraction types that are not in the database, the [POI density API](../eloquent-elks-poi-density-api/README.md) requests the POI of the respective type from the [POI API](../eloquent-elks-poi-api/README.md).
 5.  With the received POIs, the POI density service structures the data into a hexagonal grid and counts the number of POIs in each grid cell. It assigns an ID to each grid cell, so that the recommender can normalize and aggregate the different attraction type densities.
 6.  When the recommender receives the density calculation results, it normalizes them and stores them into the database.
 7.  After normalization, the data is combined in to one aggregate density grid containing all the attraction types.
