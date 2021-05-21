@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"eloquentelks.recommender.api"},{"l":"eloquentelks.recommender.api.controller"},{"l":"eloquentelks.recommender.api.helper"},{"l":"eloquentelks.recommender.api.model"},{"l":"eloquentelks.recommender.api.service"}]
