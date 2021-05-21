@@ -22,8 +22,8 @@ public class FeatureCollectionFactory {
         List<Feature> features = new ArrayList<>();
 
         densities.forEach((k, v) -> {
-            int id = k.intValue();
-            int poiCount = v.intValue();
+            int id = k;
+            int poiCount = v;
 
             features.add(Feature.fromJson(
                     "{\n" +
