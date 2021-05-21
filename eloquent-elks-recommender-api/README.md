@@ -2,7 +2,12 @@
 The Recommender API is responsible for providing a variety of recommendations to the frontend. As of now, it is capable of recommending an area to look for accommodation when provided with a list of attraction types for POIs.
 
 ## Documentation
-This API is documented with Swagger UI. To access it, run the service (i.e. as a docker container using the script provided in the root directory) and access http://localhost:1338/docs/ui/index.html. The documentation is regenerated every time the `build_docker_containers.sh` script is executed.
+
+### Swagger UI
+This API is documented with Swagger UI. To access it, run the service (i.e. as a docker container using the script provided in the root directory) and access http://localhost:1338/docs/ui/index.html. The documentation is regenerated every time the `build_docker_containers.sh` script is executed. If you use [Docker Hub Images](https://hub.docker.com/repository/docker/niels89/eloquent-elks-recommender-api), Swagger UI is already included.
+
+### Javadoc
+For source code documentation, please refer to our [Javadocs](https://niels89.github.io/EloquentElks/eloquent-elks-recommender-api/javadoc/index.html)
 
 ## How does it work?
 We decided to make area recommendations according to the following schema (also depicted below):

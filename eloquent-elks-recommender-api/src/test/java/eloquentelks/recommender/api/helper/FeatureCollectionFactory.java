@@ -35,7 +35,6 @@ public class FeatureCollectionFactory {
                             "      \"geometry\": {\n" +
                             "        \"type\": \"Polygon\",\n" +
                             "        \"coordinates\": []\n" +
-                            "        ]\n" +
                             "      }\n" +
                             "    }\n")
             );
