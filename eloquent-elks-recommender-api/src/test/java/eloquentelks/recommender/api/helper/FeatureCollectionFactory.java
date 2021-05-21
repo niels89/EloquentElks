@@ -8,18 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class is used to generate empty features with the specified densities and ids
+ * This class will be moved to the test package as soon as the real density api is integrated
  */
 public class FeatureCollectionFactory {
 
-    private FeatureCollectionFactory(){
-        throw new IllegalStateException("This class is not meant to be instantiated");
-    }
-    /**
-     * Creates a FeatureCollection of densities
-     * @param densities Map with Key = Id and Value = Poi Density
-     * @return A FeatureCollection containing densities
-     */
     public static FeatureCollection create(Map<Integer, Integer> densities) {
         List<Feature> features = createFeatures(densities);
 
@@ -30,21 +22,22 @@ public class FeatureCollectionFactory {
         List<Feature> features = new ArrayList<>();
 
         densities.forEach((k, v) -> {
-            var id = k;
-            var poiCount = v;
+            int id = k;
+            int poiCount = v;
 
             features.add(Feature.fromJson(
                     "{\n" +
-                    "  \"type\": \"Feature\",\n" +
-                    "  \"properties\": {\n" +
-                    "    \"poiCount\": " + poiCount + ",\n" +
-                    "    \"id\": " + id + "\n" +
-                    "  },\n" +
-                    "  \"geometry\": {\n" +
-                    "    \"type\": \"Polygon\",\n" +
-                    "    \"coordinates\": []\n" +
-                    "  }\n" +
-                    "}\n")
+                            "      \"type\": \"Feature\",\n" +
+                            "      \"properties\": {\n" +
+                            "        \"poiCount\": " + poiCount + ",\n" +
+                            "        \"id\": " + id + "\n" +
+                            "      },\n" +
+                            "      \"geometry\": {\n" +
+                            "        \"type\": \"Polygon\",\n" +
+                            "        \"coordinates\": []\n" +
+                            "        ]\n" +
+                            "      }\n" +
+                            "    }\n")
             );
         });
         return features;
