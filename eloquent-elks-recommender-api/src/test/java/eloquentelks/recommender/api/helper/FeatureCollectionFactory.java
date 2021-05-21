@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class will be moved to the test package as soon as the real density api is integrated
+ * This class is used to generate empty features with the specified densities and ids
  */
 public class FeatureCollectionFactory {
 
