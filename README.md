@@ -19,7 +19,7 @@ The easiest way to get the application up and running is to use our docker-compo
 
 To get the application started, run the following command:
 
-`docker compose -d -f docker-compose-prod.yml up -d`
+`docker compose -f docker-compose-prod.yml up -d`
 
 ## Development
 ### Prerequisites
