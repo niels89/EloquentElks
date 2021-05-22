@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"eloquentelks.poi.api"},{"l":"eloquentelks.poi.api.controller"},{"l":"eloquentelks.poi.api.mapping"},{"l":"eloquentelks.poi.api.model"},{"l":"eloquentelks.poi.api.repository"},{"l":"eloquentelks.poi.api.service"}]
