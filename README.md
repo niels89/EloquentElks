@@ -21,6 +21,12 @@ To get the application started, run the following command:
 
 `docker compose -f docker-compose-prod.yml up -d`
 
+Afterwards, open your browser and go to `http://localhost:3000` to access the application.
+
+To stop the entire application, run the following command:
+
+`docker compose -f docker-compose-prod.yml down`
+
 ## Development
 ### Prerequisites
 In order to be able to build all of the services, you need the following tools and environments installed on your machine:
