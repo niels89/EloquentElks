@@ -2,7 +2,6 @@ package eloquentelks.poi.api.repository;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
-import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -68,7 +67,8 @@ public class FeatureRepository implements IFeatureRepository{
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     * Note that the radius calculation is done by the database using a geospatial spherical index.
      */
     @Override
     public List<Feature> getFeatures(Point center, double radius){
@@ -82,7 +82,7 @@ public class FeatureRepository implements IFeatureRepository{
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public List<Feature> getFeatures(String attractionType){
@@ -96,8 +96,9 @@ public class FeatureRepository implements IFeatureRepository{
     }
 
     /**
-     * @inheritDoc
-     * Built after this example: @see <a href="https://stackoverflow.com/questions/32795980/how-to-get-distance-mongodb-template-near-function">StackOverflow</a>
+     * {@inheritDoc}
+     * Built after this example: <a href="https://stackoverflow.com/questions/32795980/how-to-get-distance-mongodb-template-near-function">StackOverflow</a>
+     * Note that the distance calculation is done by the database using a geospatial spherical index.
      */
     @Override
     public List<Feature> getDistanceOfFamousFeatures(Point point) {
@@ -119,7 +120,7 @@ public class FeatureRepository implements IFeatureRepository{
     }
 
     /**
-     * Converts JSON documents to @see{@link com.mapbox.geojson.Feature}
+     * Converts JSON documents to {@link com.mapbox.geojson.Feature}
      * @param documents List of JSON strings from the database
      * @return List of GeoJson Features
      */
