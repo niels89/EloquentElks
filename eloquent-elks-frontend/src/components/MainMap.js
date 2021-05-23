@@ -125,20 +125,6 @@ export const MainMap = props => {
                     }
                 ) : null
                 }
-                {famous.map && famous.map((famous, index) => {
-                        return (
-                            <Marker key={"Famous" + index}
-                                    position={[famous.latitude, famous.longitude]}
-                                    icon={famousLeafletIcon}
-                            >
-                                <Tooltip>
-                                    {famous.name}
-                                </Tooltip>
-                            </Marker>
-                        )
-                    }
-                )
-                }
                 {props.pois.map && props.pois.map((poi, index) => {
                         return (
                             <Marker key={"POI" + index}
@@ -147,6 +133,20 @@ export const MainMap = props => {
                             >
                                 <Tooltip>
                                     {poi.type}
+                                </Tooltip>
+                            </Marker>
+                        )
+                    }
+                )
+                }
+                {famous.map && famous.map((famous, index) => {
+                        return (
+                            <Marker key={"Famous" + index}
+                                    position={[famous.latitude, famous.longitude]}
+                                    icon={famousLeafletIcon}
+                            >
+                                <Tooltip>
+                                    {famous.name}
                                 </Tooltip>
                             </Marker>
                         )
