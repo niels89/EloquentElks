@@ -12,7 +12,8 @@ jobs:
             - yarn --cwd ./eloquent-elks-frontend run build
             - yarn --cwd ./eloquent-elks-frontend sonar
           after_script:
-            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls     
+            - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn --cwd ./eloquent-elks-frontend coveralls
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-frontend/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-frontend:$TRAVIS_BRANCH ./eloquent-elks-frontend/ && docker push $DOCKER_USERNAME/eloquent-elks-frontend:$TRAVIS_BRANCH     
         - language: java
           install: skip
           os: linux

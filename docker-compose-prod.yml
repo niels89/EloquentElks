@@ -9,14 +9,14 @@ services:
         restart: unless-stopped
         
     dbseed_airbnb:
-        image: niels89/eloquent-elks-airbnb-dbseed:v0.0.0
+        image: niels89/eloquent-elks-airbnb-dbseed:develop
         links:
             - mongodb_airbnb
         depends_on:
             - mongodb_airbnb
 
     airbnb_api:
-        image: niels89/eloquent-elks-airbnb-api:v0.0.0
+        image: niels89/eloquent-elks-airbnb-api:develop
         ports:
             - 1340:8080
         links:
@@ -39,14 +39,14 @@ services:
         hostname: mongodb_poi
                 
     dbseed_poi:
-        image: niels89/eloquent-elks-poi-dbseed:v0.0.0
+        image: niels89/eloquent-elks-poi-dbseed:develop
         links:
             - mongodb_poi
         depends_on:
             - mongodb_poi
             
     poi-api:
-        image: niels89/eloquent-elks-poi-api:v0.0.0
+        image: niels89/eloquent-elks-poi-api:develop
         ports: 
             - 1337:8080
         depends_on:
@@ -58,7 +58,7 @@ services:
         hostname: poi-api
         
     recommender-api:
-        image: niels89/eloquent-elks-recommender-api:v0.0.0
+        image: niels89/eloquent-elks-recommender-api:develop
         ports: 
             - 1338:8080
         environment:
@@ -68,7 +68,7 @@ services:
         hostname: recommender-api
         
     poi-density-api:
-        image: niels89/eloquent-elks-poi-density-api:v0.0.0
+        image: niels89/eloquent-elks-poi-density-api:develop
         ports:
             - 1339:3001
         environment:
@@ -90,9 +90,25 @@ services:
         hostname: mongodb_poi-density
         
     dbseed_poi-density:
-        image: niels89/eloquent-elks-poi-density-dbseed:v0.0.0
+        image: niels89/eloquent-elks-poi-density-dbseed:develop
         links:
             - mongodb_poi-density
         depends_on:
             - mongodb_poi-density
+
+    frontend:
+        image: niels89/eloquent-elks-frontend:develop
+        ports:
+            - 3000:80
+        environment:
+            - REACT_APP_ELOQUENTELKS_POI_API_PROTOCOL=http
+            - REACT_APP_ELOQUENTELKS_POI_API_HOST=localhost
+            - REACT_APP_ELOQUENTELKS_POI_API_PORT=1337
+            - REACT_APP_ELOQUENTELKS_AIRBNB_API_PROTOCOL=http
+            - REACT_APP_ELOQUENTELKS_AIRBNB_API_HOST=localhost
+            - REACT_APP_ELOQUENTELKS_AIRBNB_API_PORT=1340
+            - REACT_APP_ELOQUENTELKS_RECOMMENDER_API_PROTOCOL=http
+            - REACT_APP_ELOQUENTELKS_RECOMMENDER_API_HOST=localhost
+            - REACT_APP_ELOQUENTELKS_RECOMMENDER_API_PORT=1338
+        hostname: frontend
 
