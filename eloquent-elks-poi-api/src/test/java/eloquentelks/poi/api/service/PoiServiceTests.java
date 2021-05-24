@@ -20,13 +20,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for @see {@link eloquentelks.poi.api.service.PoiService}
+ * Unit tests for {@link eloquentelks.poi.api.service.PoiService}
  */
 @ExtendWith(MockitoExtension.class)
 class PoiServiceTests {
 
     /**
-     * Stub of a @see{@link eloquentelks.poi.api.repository.FeatureRepository}
+     * Stub of a {@link eloquentelks.poi.api.repository.FeatureRepository}
      */
     @Mock
     private FeatureRepository poiRepository;
@@ -82,7 +82,7 @@ class PoiServiceTests {
     }
 
     /**
-     * Tests if the PoiService is able to return all PoIs stored on the database
+     * Tests if the PoiService is able to return all PoIs from the FeatureRepository
      */
     @Test
     void testGetAllPois(){
@@ -97,6 +97,9 @@ class PoiServiceTests {
         assertEquals(2, pois.size());
     }
 
+    /**
+     * Checks if the POIService is able to load filtered from the FeatureRepository.
+     */
     @Test
     void testGetPoisByAttractionType(){
         // arrange
@@ -110,6 +113,9 @@ class PoiServiceTests {
         assertEquals(2, restaurant.size());
     }
 
+    /**
+     * Checks if the PoiService can handle radius results from the FeatureRepository.
+     */
     @Test
     void testGetFamousPoisWithDistance(){
         // arrange

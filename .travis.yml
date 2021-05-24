@@ -28,6 +28,7 @@ jobs:
               - $HOME/.gradle/caches/
               - $HOME/.gradle/wrapper/
           script:
+            - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api enunciate
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api build
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api test
             - ./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api jacocoTestReport
@@ -50,6 +51,7 @@ jobs:
               - $HOME/.gradle/caches/
               - $HOME/.gradle/wrapper/
           script:
+            - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api enunciate
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api build
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api test
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api jacocoTestReport
@@ -58,6 +60,7 @@ jobs:
             - ./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api jacocoTestReport coveralls
             - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-api/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-api:$TRAVIS_BRANCH ./eloquent-elks-poi-api/ && docker push $DOCKER_USERNAME/eloquent-elks-poi-api:$TRAVIS_BRANCH
             - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-db/dbseed/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-dbseed:$TRAVIS_BRANCH ./eloquent-elks-poi-db/dbseed && docker push $DOCKER_USERNAME/eloquent-elks-poi-dbseed:$TRAVIS_BRANCH
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -f ./eloquent-elks-poi-db/mongodb/Dockerfile -t $DOCKER_USERNAME/eloquent-elks-poi-mongodb:$TRAVIS_BRANCH ./eloquent-elks-poi-db/mongodb && docker push $DOCKER_USERNAME/eloquent-elks-poi-mongodb:$TRAVIS_BRANCH
         - language: java
           install: skip
           os: linux
@@ -72,6 +75,7 @@ jobs:
               - $HOME/.gradle/caches/
               - $HOME/.gradle/wrapper/
           script:
+            - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api enunciate
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api build
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api test
             - ./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api jacocoTestReport

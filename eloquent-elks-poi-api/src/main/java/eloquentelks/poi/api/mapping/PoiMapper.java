@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Maps Points of Interest from Features (GeoJson) to @see {@link eloquentelks.poi.api.model.PoiGetDto}
+ * Maps Points of Interest from Features (GeoJson) to {@link eloquentelks.poi.api.model.PoiGetDto}
  */
 public class PoiMapper {
 
@@ -39,10 +39,10 @@ public class PoiMapper {
     private static final String NOT_AVAILABLE = "N/A";
 
     /**
-     * Maps GeoJson features to @see {@link eloquentelks.poi.api.model.PoiGetDto}
+     * Maps GeoJson features to {@link eloquentelks.poi.api.model.PoiGetDto}
      *
      * @param features A list of GeoJson features
-     * @return A list of @see {@link eloquentelks.poi.api.model.PoiGetDto}
+     * @return A list of {@link eloquentelks.poi.api.model.PoiGetDto}
      */
     public static List<PoiGetDto> mapToDto(List<Feature> features){
         List<PoiGetDto> dtos = new ArrayList<>();
@@ -57,7 +57,7 @@ public class PoiMapper {
     }
 
     /**
-     * Takes a GeoJson feature and converts it to a @see {@link eloquentelks.poi.api.model.PoiGetDto}
+     * Takes a GeoJson feature and converts it to a {@link eloquentelks.poi.api.model.PoiGetDto}
      *
      * @param feature GeoJson feature
      * @return

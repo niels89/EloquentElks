@@ -15,19 +15,20 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 /**
  * Unit tests for @see{@link eloquentelks.recommender.api.controller.AreaController}
  */
-public class AreaControllerTests {
+class AreaControllerTests {
 
     /**
      * Tests if the @see{@link eloquentelks.recommender.api.controller.AreaController} returns an area recommendation
      */
     @Test
-    public void testPostArea(){
+    void testPostArea(){
         // arrange
         IDensityRestService densityRestService = mock(IDensityRestService.class);
         Map<Integer, Integer> densities1 = Map.of(1, 42, 2, 98, 3, 182);

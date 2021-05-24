@@ -29,10 +29,9 @@ services:
         hostname: airbnb-api
     
     mongodb_poi:
-        image: mongo
+        image: niels89/eloquent-elks-poi-mongodb:develop
         volumes:
             - ./eloquent-elks-poi-db/mongodb/database:/data/db
-            - ./eloquent-elks-poi-db/mongodb/init.js:/docker-entrypoint-initdb.d/init.js
         ports:
             - 27018:27017
         restart: unless-stopped

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @inheritDoc
+ * {@inheritDoc}
  */
 @Service
 public class PoiService implements IPoiService {
@@ -37,7 +37,7 @@ public class PoiService implements IPoiService {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public List<PoiGetDto> getAllPois(double longitude, double latitude) {
@@ -47,7 +47,7 @@ public class PoiService implements IPoiService {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public List<PoiGetDto> getPoisByAttractionType(String attractionType){
@@ -57,7 +57,7 @@ public class PoiService implements IPoiService {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public List<PoiGetDto> getFamousPoisWithDistance(double longitude, double latitude) {

@@ -9,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Unit tests for the model @see{@link eloquentelks.recommender.api.model.AreaPostRequestDto}
  */
-public class AreaPostRequestDtoTests {
+class AreaPostRequestDtoTests {
 
     /**
      * Tests it attractionType is handled correctly
      */
     @Test
-    public void testAttractionType(){
+    void testAttractionType(){
         // arrange
         AreaPostRequestDto requestDto = new AreaPostRequestDto();
 
