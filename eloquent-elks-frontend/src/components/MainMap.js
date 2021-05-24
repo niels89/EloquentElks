@@ -58,7 +58,6 @@ export const MainMap = props => {
     const getColor = (d) => {
         // Color palette from https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
         let palette = ['#dadaeb', '#bcbddc', '#9e9ac8', '#807dba', '#6a51a3', '#54278f', '#3f007d']
-        // let palette = ['#011AFA','#00E596','#FFEB1C','#FF7700','#FF0000']
         let i
         for (i = 1; i <= palette.length; i++) {
             // values of the property are between 0 and 1
@@ -89,8 +88,8 @@ export const MainMap = props => {
     }
 
 
-    const onMapCreation = map => {
-        setMap(map)
+    const onMapCreation = currentMap => {
+        setMap(currentMap)
     }
 
     return (
@@ -99,7 +98,7 @@ export const MainMap = props => {
                           zoom={13}
                           scrollWheelZoom={true}
                           style={{height: '100%', zIndex: 0}}
-                          whenCreated={map => onMapCreation(map)}
+                          whenCreated={thisMap => onMapCreation(thisMap)}
             >
                 <ZoomListener setMapBounds={props.setMapBounds}/>
                 <TileLayer

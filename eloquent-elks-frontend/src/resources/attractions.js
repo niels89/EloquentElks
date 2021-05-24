@@ -1,7 +1,6 @@
 import {Cafeteria, Restaurant, Brush, Bar, Book, Java, Anchor, Spa, Bus, Music, Cart, IceCream, Car, Shop, Ticket, Bike } from "grommet-icons"
 import React from "react";
 
-// TODO: synchronize with ASEP-63, this is only a modified copy of its work in progress commit
 export function getAttractionTypes(color, size){
     return [
         { icon: <Bar color={color} size={size} />, key: "Bar-logo", id: "Bar-id", value: "bar", a11yTitle: "bar" , caption: "Bar"},
