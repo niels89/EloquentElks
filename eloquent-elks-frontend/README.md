@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# EloquentElks – Frontend
+The frontend is the presentation layer to the user. It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Documentation
+
 
 ## Available Scripts
 
