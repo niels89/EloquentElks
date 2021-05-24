@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {
     Anchor,
     Box,
@@ -11,11 +11,10 @@ import {
     Image,
     Layer, List, Markdown,
     Paragraph,
-    Stack, Text
+    Stack
 } from "grommet";
 import {Close, Favorite, FormDown, FormUp, Home, Money, ShareOption, User} from "grommet-icons";
 import img from "../resources/mock_nyc_airbnb.jpg"
-import {getFamousDistance} from "../requests/getFamousDistance";
 
 
 const RoomInformation = props => {
