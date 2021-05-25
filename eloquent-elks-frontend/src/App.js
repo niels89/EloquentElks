@@ -52,7 +52,6 @@ function App() {
     }, [currentAirBnB])
 
 
-    console.log(recommendationLayer)
 
     return (
         <Grommet theme={grommetTheme} full>

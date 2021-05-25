@@ -80,6 +80,9 @@ export const MainMap = props => {
     const handleAirBnBClick = async (event, airbnb) => {
         const {lat, lng} = event.latlng
         let pois = await getPois(lat, lng)
+        console.log(pois)
+
+
         props.setPois(pois)
         props.setShowInformation(true)
         props.setCurrentAirBnB(airbnb)

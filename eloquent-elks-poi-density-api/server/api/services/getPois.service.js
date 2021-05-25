@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { getPOIDomain } from '../helpers/getPOIDomain';
+import {getPOIDomain} from '../helpers/getPOIDomain';
 
 /**
  * This is a get request on the POI service to get the pois
@@ -11,10 +11,8 @@ export async function getPois(attractionType) {
     { method: 'GET' }
   );
   if (response.ok) {
-    let data = await response.json();
-    return data;
+    return await response.json();
   } else {
     console.log(response.status + ': ' + response.statusText);
-    return;
   }
 }
