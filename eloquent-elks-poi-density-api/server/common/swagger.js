@@ -30,7 +30,7 @@ export default function swagger(app, routes) {
           }
         )
       );
-      
+
 
       // These two middleware don't have any options (yet)
       app.use(mw.CORS(), mw.validateRequest());
