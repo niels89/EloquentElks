@@ -23,6 +23,6 @@ rm -rf ./eloquent-elks-poi-density-api/dist/*
 npm install --prefix ./eloquent-elks-poi-density-api
 npm run compile --prefix ./eloquent-elks-poi-density-api
 
-docker-compose -f docker-compose.yml pull
-docker-compose -f docker-compose.yml build
-docker-compose -f docker-compose.yml up -d --force-recreate
+docker-compose -f docker-compose-dev.yml pull
+docker-compose -f docker-compose-dev.yml build
+docker-compose -f docker-compose-dev.yml up -d --force-recreate
