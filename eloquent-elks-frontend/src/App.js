@@ -13,9 +13,6 @@ import {getFamousDistance} from "./requests/getFamousDistance";
 import {getRecommendationLayer} from "./requests/getRecommendationLayer";
 
 function App() {
-    const storageKey = "hasBeenVisited";
-    let hasBeenVisited = localStorage[storageKey];
-
     const [airbnbs, setAirbnbs] = useState([])
     const [pois, setPois] = useState([])
     const [showInformation, setShowInformation] = useState(false)
@@ -109,8 +106,7 @@ function App() {
                                                      attractionTypes={attractionTypes}
                                                      setAttractionTypes={setAttractionTypes}
                                                      onLoadRecommendation={onLoadRecommendation}
-                                                     setShowLanding={setShowLanding}
-                                                     storageKey={storageKey}/>}
+                                                     setShowLanding={setShowLanding}/>}
                         <MainMap airbnbs={airbnbs}
                                  pois={pois}
                                  setPois={setPois}
