@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit tests for @see{@link eloquentelks.poi.api.mapping.PoiMapper}
+ * Unit tests for {@link eloquentelks.poi.api.mapping.PoiMapper}
  */
 class PoiMapperTest {
 

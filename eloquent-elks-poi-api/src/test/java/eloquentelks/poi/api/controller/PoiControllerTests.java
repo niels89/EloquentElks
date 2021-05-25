@@ -17,24 +17,24 @@ import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for @see{@link eloquentelks.poi.api.controller.PoiController}
+ * Unit tests for {@link eloquentelks.poi.api.controller.PoiController}
  */
 @ExtendWith(MockitoExtension.class)
 class PoiControllerTests {
 
     /**
-     * Stub of @see{@link eloquentelks.poi.api.service.IPoiService}
+     * Stub of {@link eloquentelks.poi.api.service.IPoiService}
      */
     @Mock
     private IPoiService poiServiceMock;
 
     /**
-     * List of @see{@link eloquentelks.poi.api.model.PoiGetDto} used by the @see{@link eloquentelks.poi.api.service.IPoiService} stub
+     * List of {@link eloquentelks.poi.api.model.PoiGetDto} used by the {@link eloquentelks.poi.api.service.IPoiService} stub
      */
     private static List<PoiGetDto> poiList;
 
     /**
-     * Initialization of the @see{@link eloquentelks.poi.api.service.IPoiService} stub
+     * Initialization of the {@link eloquentelks.poi.api.service.IPoiService} stub
      */
     @BeforeAll
     static void setUp(){

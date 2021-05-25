@@ -3,8 +3,10 @@ import {MapContainer, Marker, TileLayer, Tooltip, GeoJSON, useMapEvents} from "r
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
 import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {airbnbGlowLeafletIcon} from "./icons/airbnbLeafletIconGlow";
+import {famousLeafletIcon} from "./icons/famousLeafletIcon";
+import {getFamous} from "../requests/getFamous";
 
 
 const createMapBounds = map => {
@@ -33,7 +35,16 @@ const ZoomListener = props => {
 
 export const MainMap = props => {
     const [map, setMap] = useState()
+    const [famous, setFamous] = useState([])
 
+    useEffect(() => {
+        async function fetchData() {
+            let ab = await getFamous()
+            return ab;
+        }
+
+        fetchData().then((data) => setFamous(data))
+    }, [])
 
 
     const getFlyToZoom = () => {
@@ -46,7 +57,7 @@ export const MainMap = props => {
 
     const getColor = (d) => {
         // Color palette from https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
-        let palette = ['#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#54278f','#3f007d']
+        let palette = ['#dadaeb', '#bcbddc', '#9e9ac8', '#807dba', '#6a51a3', '#54278f', '#3f007d']
         // let palette = ['#011AFA','#00E596','#FFEB1C','#FF7700','#FF0000']
         let i
         for (i = 1; i <= palette.length; i++) {
@@ -97,8 +108,9 @@ export const MainMap = props => {
                     subdomains='abcd'
                     maxZoom={19}
                 />
-                {props.recommendation ? <GeoJSON key={new Date().getTime().toString()} data={props.recommendation} style={geoJsonStyle}/> : null}
-                {props.showAirBnBs? props.airbnbs.map && props.airbnbs.map((airbnb, index) => {
+                {props.recommendation ? <GeoJSON key={new Date().getTime().toString()} data={props.recommendation}
+                                                 style={geoJsonStyle}/> : null}
+                {props.showAirBnBs ? props.airbnbs.map && props.airbnbs.map((airbnb, index) => {
                         return (
                             <Marker key={index}
                                     position={[airbnb.latitude, airbnb.longitude]}
@@ -108,16 +120,11 @@ export const MainMap = props => {
                                         }
                                     }}
                                     icon={airbnbLeafletIcon}
-                            >
-                                {/*<Popup>*/}
-                                {/*    {airbnb.name}*/}
-                                {/*</Popup>*/}
-                            </Marker>
+                            />
                         )
                     }
                 ) : null
                 }
-
                 {props.pois.map && props.pois.map((poi, index) => {
                         return (
                             <Marker key={"POI" + index}
@@ -132,7 +139,21 @@ export const MainMap = props => {
                     }
                 )
                 }
-                {props.showAirBnBs? null :
+                {famous.map && famous.map((famous, index) => {
+                        return (
+                            <Marker key={"Famous" + index}
+                                    position={[famous.latitude, famous.longitude]}
+                                    icon={famousLeafletIcon}
+                            >
+                                <Tooltip>
+                                    {famous.name}
+                                </Tooltip>
+                            </Marker>
+                        )
+                    }
+                )
+                }
+                {props.showAirBnBs ? null :
                     <Marker key={"currentAirBnB"}
                             position={[props.currentAirBnB.latitude, props.currentAirBnB.longitude]}
                             eventHandlers={{

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
     Anchor,
     Box,
@@ -27,8 +27,18 @@ const RoomInformation = props => {
 };
 
 export const AirBnBInformationLayer = props => {
- const [open, setOpen] = React.useState(false);
- const [favorite, setFavorite] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [favorite, setFavorite] = useState(false);
+
+
+    // const loadFamousDistances = () => {
+    //     async function fetchData(lat, lon) {
+    //         let ab = await getFamousDistance(lat, lon)
+    //         return ab;
+    //     }
+    //
+    //     fetchData(props.content.latitude, props.content.longitude).then((data) => setDistances(data))
+    // }
 
     const ExpandButton = ({...rest}) => {
         const Icon = open ? FormUp : FormDown;
@@ -80,9 +90,9 @@ export const AirBnBInformationLayer = props => {
                         <Heading level="3" margin={{top: 'medium', bottom: 'medium'}}>
                             {props.content.name}
                         </Heading>
-                        <RoomInformation icon = {<Money/>} roomInformation = {"**Price:** " + props.content.price + "$"}/>
-                        <RoomInformation icon = {<Home/>} roomInformation = {"**Room Type:** " + props.content.roomType}/>
-                        <RoomInformation icon = {<User/>} roomInformation = {"**Host Name:** " + props.content.hostName}/>
+                        <RoomInformation icon={<Money/>} roomInformation={"**Price:** " + props.content.price + "$"}/>
+                        <RoomInformation icon={<Home/>} roomInformation={"**Room Type:** " + props.content.roomType}/>
+                        <RoomInformation icon={<User/>} roomInformation={"**Host Name:** " + props.content.hostName}/>
                         <Paragraph margin={{top: 'none'}}>
                             Here is some basic information about the apartment by the owner.
                         </Paragraph>
@@ -101,21 +111,31 @@ export const AirBnBInformationLayer = props => {
                                 label="Book Now"
                             />
                         </Box>
-                        <ExpandButton onClick={() => setOpen(!open)}/>
+                        <ExpandButton onClick={() => {
+                            // loadFamousDistances()
+                            setOpen(!open)
+                        }
+                        }/>
                     </CardFooter>
                     <Collapsible open={open}>
                         <Box pad={{horizontal: 'medium'}}
                              responsive={true}
                         >
                             <Heading level="4" margin={{vertical: 'small'}}>
-                                Points of Interest Nearby:
+                                Distances to famous attractions:
                             </Heading>
                             <Box margin={{bottom: 'medium'}}
                                  height={'small'}
                                  overflow='scroll'>
-                                <List primaryKey="Type"
-                                      secondaryKey="Name"
-                                      data={props.pois.map(poi => {return ({Type: poi.type, Name: poi.name})})}/>
+                                <List primaryKey="Name"
+                                      secondaryKey="Distance"
+                                      data={props.distances && props.distances.map(famous => {
+                                          return ({
+                                              Name: famous.name,
+                                              Distance: (Math.round((famous.distance + Number.EPSILON) * 100) / 100).toString() + " km"
+                                          })
+                                      })}
+                                />
                             </Box>
                         </Box>
                     </Collapsible>

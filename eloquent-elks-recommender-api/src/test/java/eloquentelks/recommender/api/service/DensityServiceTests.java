@@ -1,8 +1,6 @@
 package eloquentelks.recommender.api.service;
 
-import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
-import eloquentelks.recommender.api.Constants;
 import eloquentelks.recommender.api.helper.FeatureCollectionAccessor;
 import eloquentelks.recommender.api.helper.FeatureCollectionFactory;
 import eloquentelks.recommender.api.helper.IFeatureCollectionAccessor;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static eloquentelks.recommender.api.Constants.GEOJSON_FEATURE_PROPERTY_POICOUNT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,7 +20,7 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for @see {@link eloquentelks.recommender.api.service.DensityService}
  */
-public class DensityServiceTests {
+class DensityServiceTests {
 
     /**
      * Object under test
@@ -39,7 +36,7 @@ public class DensityServiceTests {
      * Test initialization
      */
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         // arrange
         IDensityRestService densityRestService = mock(IDensityRestService.class);
         Map<Integer, Integer> densities1 = Map.of(1, 42, 2, 98, 3, 182);
@@ -59,7 +56,7 @@ public class DensityServiceTests {
      * Tests if the density property is contained in the FeatureCollection
      */
     @Test
-    public void testGetDensity()
+    void testGetDensity()
     {
         // act
         List<FeatureCollection> densities = densityService.getDensities(List.of("museum"));
@@ -72,7 +69,7 @@ public class DensityServiceTests {
      * Tests if the density normalization works properly
      */
     @Test
-    public void testNormalizeDensities(){
+    void testNormalizeDensities(){
         // arrange
         FeatureCollection featureCollection1 = FeatureCollectionFactory.create(Map.of(1, 42, 2, 98, 3, 182));
         FeatureCollection featureCollection2 = FeatureCollectionFactory.create(Map.of(1, 7, 2, 1, 3, 12));
@@ -90,7 +87,7 @@ public class DensityServiceTests {
     }
 
     @Test
-    public void testNormalizeDensity(){
+    void testNormalizeDensity(){
         // arrange
         FeatureCollection featureCollection = FeatureCollectionFactory.create(Map.of(1, 42, 2, 98, 3, 182));
 
@@ -108,7 +105,7 @@ public class DensityServiceTests {
      * Tests if the density aggregation works properly
      */
     @Test
-    public void testAggregateDensities(){
+    void testAggregateDensities(){
         // arrange
         FeatureCollection featureCollection = FeatureCollectionFactory.create(Map.of(1, 42));
 
@@ -123,7 +120,7 @@ public class DensityServiceTests {
      * Tests if the density aggregation throws an exception if an empty feature collection list is passed
      */
     @Test
-    public void testAggregateDensities_emptyList(){
+    void testAggregateDensities_emptyList(){
         // act, assert
         assertThrows(IllegalArgumentException.class, () -> densityService.aggregateDensities(List.of()));
     }

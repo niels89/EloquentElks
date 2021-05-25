@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IPoiService {
     /**
-     * Loads all Points of Interest from the database and returns them as Dtos
+     * Loads all Points of Interest from the database and returns them as DTOs
      * @param longitude Geographical longitude of center
      * @param latitude Geographical latitude of center
      * @return A list of {@link eloquentelks.poi.api.model.PoiGetDto}, which is the structure that is exposed to the clients of the API

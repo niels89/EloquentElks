@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker-compose down
+docker-compose -f docker-compose.yml down
 ./clean_up_databases.sh
 
 #POI API
@@ -23,6 +23,6 @@ rm -rf ./eloquent-elks-poi-density-api/dist/*
 npm install --prefix ./eloquent-elks-poi-density-api
 npm run compile --prefix ./eloquent-elks-poi-density-api
 
-docker-compose pull
-docker-compose build
-docker-compose up -d --force-recreate
+docker-compose -f docker-compose-dev.yml pull
+docker-compose -f docker-compose-dev.yml build
+docker-compose -f docker-compose-dev.yml up -d --force-recreate

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @inheritDoc
+ * Implementation connecting to the POI Density REST API to retrieve density values for attractions in NYC.
  */
 @Service
 public class DensityRestService implements IDensityRestService {
@@ -34,14 +34,9 @@ public class DensityRestService implements IDensityRestService {
     private String port;
 
     /**
-     * Returns the endpoint route of the poi density api
-     */
-    private final String endpoint = "api/v1/poiDensity";
-
-    /**
      * Rest Template used to access other REST APIs
      */
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public DensityRestService(RestTemplate restTemplate){
@@ -49,7 +44,7 @@ public class DensityRestService implements IDensityRestService {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public FeatureCollection getDensity(String attractionType) {
@@ -61,7 +56,7 @@ public class DensityRestService implements IDensityRestService {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public List<FeatureCollection> getDensities(List<String> attractionTypes) {
@@ -80,6 +75,8 @@ public class DensityRestService implements IDensityRestService {
      * @return Endpoint URL
      */
     private String getPoiDensityEndpoint(String attractionType){
-        return protocol+"://"+host+":"+port+"/"+endpoint+"?attractionType="+attractionType;
+        String endpoint = "api/v1/poiDensity";
+
+        return protocol+"://"+host+":"+port+"/"+ endpoint +"?attractionType="+attractionType;
     }
 }
