@@ -18,13 +18,13 @@ The easiest way to get the application up and running is to use our docker-compo
 
 To get the application started, run the following command:
 
-`docker compose -f docker-compose-prod.yml up -d`
+`docker compose -f docker-compose.yml up -d`
 
 Afterwards, open your browser and go to `http://localhost:3000` to access the application.
 
 To stop the entire application, run the following command:
 
-`docker compose -f docker-compose-prod.yml down`
+`docker compose -f docker-compose.yml down`
 
 ## Development
 ### Prerequisites
