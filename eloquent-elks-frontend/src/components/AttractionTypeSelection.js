@@ -1,32 +1,8 @@
-import { Box, Button, CheckBoxGroup, Form, Layer, Spinner, Text } from "grommet";
-import React, { useState } from "react";
-import { getRecommendationLayer } from "../requests/getRecommendationLayer";
-import { FormClose } from "grommet-icons";
+import { Box, Button, CheckBoxGroup, Form } from "grommet";
+import React from "react";
 import { getAttractionTypes } from "../resources/attractions";
 
 export const AttractionTypeSelection = props => {
-    const [fetchingRecommendation, setFetchingRecommendation] = useState(false);
-    const [abortController, setAbortController] = useState()
-    
-    // Loading the recommendationLayer
-    const onLoadRecommendation = () => {
-        const controller = new AbortController();
-        const signal = controller.signal;
-        setAbortController(controller)
-        setFetchingRecommendation(true)
-        
-        getRecommendationLayer(props.attractionTypes, signal).then(data => {
-            props.setRecommendationLayer(data)
-            setFetchingRecommendation(false)
-        });
-    }
-
-    // Abort loading the recommendationLayer
-    const onClose = () => {
-        setFetchingRecommendation(false)
-        abortController.abort();
-    }
-
     const newAttractionList = getAttractionTypes("black", "20")
 
     return (
@@ -54,37 +30,9 @@ export const AttractionTypeSelection = props => {
                     />
                 </Box >
                 <Box>
-                    <Button primary={true} label="Load recommendation" disabled={fetchingRecommendation} onClick={onLoadRecommendation} />
+                    <Button primary={true} label="Load recommendation" disabled={props.fetchingRecommendation} onClick={props.onLoadRecommendation} />
                 </Box>
             </Form>
-            {fetchingRecommendation && (
-                <Layer
-                    position="bottom"
-                    modal={false}
-                    margin={{ vertical: 'medium', horizontal: 'small' }}
-                    onEsc={onClose}
-                    responsive={false}
-                    plain
-                >
-                    <Box
-                        align="center"
-                        direction="row"
-                        gap="small"
-                        justify="between"
-                        round="medium"
-                        elevation="medium"
-                        pad={{ vertical: 'xsmall', horizontal: 'small' }}
-                        background="status-ok"
-                    >
-                        <Box align="center" direction="row" gap="xsmall">
-                            <Spinner />
-                            <Text>
-                                Loading your recommendation layer. This may take some time.
-                            </Text>
-                        </Box>
-                        <Button icon={<FormClose />} onClick={onClose} plain />
-                    </Box>
-                </Layer>)}
         </Box>
     )
 }
