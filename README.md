@@ -41,7 +41,7 @@ In order to be able to build all of the services, you need the following tools a
 To build the entire application including all microservices, run the following command in the root directory of the project: `bash ./build_docker_containers.sh`. This builds all the projects and sets up the docker containers. For details on the individual microservices, please refer to the following pages:
 
  - Frontend: [README](./eloquent-elks-frontend/README.md)
- - Airbnb API: [README](./eloquent-elks-backend/README.md)
+ - Airbnb API: [README](./eloquent-elks-airbnb-api/README.md)
  - POI API: [README](./eloquent-elks-poi-api/README.md)
  - Recommender API: [README](./eloquent-elks-recommender-api/README.md)
  - POI Density API: [README](./eloquent-elks-poi-density-api/README.md)
@@ -60,6 +60,8 @@ The POI API is based on [Java Spring Boot](https://spring.io/projects/spring-boo
 The POI database is a [MongoDB](https://www.mongodb.com) containing data on the Points of Interest of New York. The data has been collected from [OpenStreetMap](https://www.openstreetmap.org).
 #### eloquent-elks-poi-density-api
 The POI Density API is implemented in [NodeJS Express](https://expressjs.com). Its job is to calculate the density of various types of attractions and is called by the Recommender API. In turns, it gets the POIs from the POI API. For the density calculation, it uses the [TurfJS](https://turfjs.org/) library.
+#### eloquent-elks-poi-density-db
+The POI Density database is a [MongoDB](https://www.mongodb.com) acting as a cache for the POI Density API, such that it does not have to recompute the density layers if they did not change.
 #### eloquent-elks-recommender-api
 The Recommender API is written in [Java Spring Boot](https://spring.io/projects/spring-boot). It is responsible for retrieving the density calculations from the POI Density API and processing these results. In particular, this involves normalization and aggregation.
 
