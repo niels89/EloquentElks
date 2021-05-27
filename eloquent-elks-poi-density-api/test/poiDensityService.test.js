@@ -176,18 +176,67 @@ let randTestPoints = {
     ]
 }
 
+let testPois = [
+    {
+      "name": "Gina Mexicana",
+      "type": "restaurant",
+      "longitude": -73.9667985,
+      "latitude": 40.763388799999866,
+      "distance": 0.0
+    },
+    {
+      "name": "Pick a Bagel",
+      "type": "cafe",
+      "longitude": -73.9670304,
+      "latitude": 40.76357149999984,
+      "distance": 0.0
+    }
+]
 
 
 describe('poiDensityService test', () => {
-    test('Should count three points in Square', () => {
+    test('countPointInPolygons: Should count three points in Square', () => {
+        // arrange
         let service = new PoiDensityService(getPoisMock("Test"));
+
+        // act
         let pointInPoly = service.countPointInPolygons(testPolygon, testPoints, "poiCount")
+
+        // assert
         expect(pointInPoly.features[0].properties.poiCount).toBe(3)
     })
-    test("Should count zero points in square and thus return no features", () => {
+    test("countPointInPolygons: Should count zero points in square and thus return no features", () => {
+        // arrange
         let service = new PoiDensityService(getPoisMock("Test"));
+
+        // act
         let pointInPoly = service.countPointInPolygons(testPolygon, randTestPoints, "poiCount")
+
+        // assert
         expect(pointInPoly.features).toStrictEqual([])
+    })
+    test("createPointList: Should convert the POIs to features", () => {
+        // arrange
+        let service = new PoiDensityService(getPoisMock("Test"));
+        
+        // act
+        let pois = service.createPointList(testPois)
+
+        // assert
+        expect(pois.length).toBe(2)
+        expect(pois[0].type).toStrictEqual("Feature")
+        expect(pois[1].type).toStrictEqual("Feature")
+    })
+    test("mapPoisToFeatureCollection: Should convert the POIs to a FeatureCollection", () => {
+        // arrange
+        let service = new PoiDensityService(getPoisMock("Test"));
+
+        // act
+        let featureCollection = service.mapPoisToFeatureCollection(testPois)
+        
+        // assert
+        expect(featureCollection.features.length).toBe(2)
+        expect(featureCollection.type).toStrictEqual("FeatureCollection")
     })
 });
 
