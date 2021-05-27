@@ -84,4 +84,4 @@ For continuous integration, we use [Travis CI](https://travis-ci.com/). In order
 
 For quality checks, we use Sonarcloud's Quality Gates, which are displayed at the top of this page. If a Pull Request is opened, Sonarcloud will provide the Quality Gate evaluation results automatically as comments. This is a very helpful tool to keep code quality on a good level. 
 
-![Continuous Integration Process](docs/img/CICD.jpeg)
+![Continuous Integration Process](docs/img/CICD.png)
