@@ -31,15 +31,6 @@ export const AirBnBInformationLayer = props => {
     const [favorite, setFavorite] = useState(false);
 
 
-    // const loadFamousDistances = () => {
-    //     async function fetchData(lat, lon) {
-    //         let ab = await getFamousDistance(lat, lon)
-    //         return ab;
-    //     }
-    //
-    //     fetchData(props.content.latitude, props.content.longitude).then((data) => setDistances(data))
-    // }
-
     const ExpandButton = ({...rest}) => {
         const Icon = open ? FormUp : FormDown;
         return (
