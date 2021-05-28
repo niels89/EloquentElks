@@ -1,6 +1,6 @@
-import {Box, Button, Grommet, Header, Layer, Spinner, Text} from "grommet";
+import {Box, Button, Grommet, Header, Heading, Layer, Spinner, Text} from "grommet";
 import {grommetTheme} from './GrommetTheme'
-import {FormClose, Home} from 'grommet-icons';
+import {FormClose} from 'grommet-icons';
 import {useEffect, useState} from "react";
 import {getAirbnbs} from "./requests/getAirbnbs";
 import './App.css'
@@ -19,7 +19,7 @@ function App() {
     const [currentAirBnB, setCurrentAirBnB] = useState({})
     const [attractionTypes, setAttractionTypes] = useState([])
     const [recommendationLayer, setRecommendationLayer] = useState(null)
-    const [range, setRange] = useState([0, 100]);
+    const [range, setRange] = useState([0, 1000]);
     const [mapBounds, setMapBounds] = useState()
     const [showAirBnBs, setShowAirBnBs] = useState(true)
     const [distances, setDistances] = useState([])
@@ -83,18 +83,19 @@ function App() {
 
     return (
         <Grommet theme={grommetTheme} full>
-            <Box fill>
-                <Header background='linear-gradient(to right, #228BE6, #69AEEA)'>
-                    <Button icon={<Home color='light-1'/>} hoverIndicator/>
+            <Box height={{max: '100vh'}} fill>
+                <Header height={'8%'} direction={'column'} background='linear-gradient(to right, #228BE6, #69AEEA)' align={'start'} gap={'none'}>
+                    <Heading level={1} margin={{horizontal: 'medium', bottom: 'xxsmall'}} size={'xxsmall'}>New York City – Apartment Finder</Heading>
+                    <Text size={'xxsmall'} margin={{horizontal: 'medium', bottom: 'small'}} color={'white'}>Brought to you by Eloquent Elks</Text>
                 </Header>
-                <Box direction='row' flex>
+                <Box height={{max: '92%'}} direction='row' flex>
                     <Box width='medium'
                          background='light-2'
                          elevation='small'
                          align='center'
                          justify='center'
                     >
-                        <PriceRangeSelector label="Apply Price Filter" setRange={setRange} range={range}/>
+                        <PriceRangeSelector label="Price Range (in $ per day)" setRange={setRange} range={range}/>
                         <AttractionTypeSelection attractionTypes={attractionTypes}
                                                  setAttractionTypes={setAttractionTypes}
                                                  fetchingRecommendation={fetchingRecommendation}

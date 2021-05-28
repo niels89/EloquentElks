@@ -6,7 +6,7 @@ export const AttractionTypeSelection = props => {
     const newAttractionList = getAttractionTypes("black", "20")
 
     return (
-        <Box margin={{ "top": "medium" }}>
+        <Box margin={{ "top": "small" }} width={'70%'}>
             <Form
                 onSubmit={({ value: values, touched }) =>
                     // 'touched' is a single boolean value indication of
@@ -14,7 +14,7 @@ export const AttractionTypeSelection = props => {
                     console.log('Submit', values, touched)
                 }
             >
-                <Box height={'small'} margin={{ "vertical": "medium" }} overflow={'scroll'}>
+                <Box height={{max: "55vh"}} pad={'small'} overflow={'scroll'}>
                     <CheckBoxGroup id="check-box-group-id"
                         name="controlled"
                         value={props.attractionTypes}
@@ -29,7 +29,7 @@ export const AttractionTypeSelection = props => {
 
                     />
                 </Box >
-                <Box>
+                <Box pad={'small'}>
                     <Button primary={true} label="Load recommendation" disabled={props.fetchingRecommendation} onClick={props.onLoadRecommendation} />
                 </Box>
             </Form>
