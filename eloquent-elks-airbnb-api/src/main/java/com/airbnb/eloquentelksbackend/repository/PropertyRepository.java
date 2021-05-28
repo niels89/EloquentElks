@@ -16,12 +16,15 @@ import java.util.List;
 public interface PropertyRepository extends MongoRepository<Property, Long> {
 
     /**
-     * findAll method returns all the Property present in the database
+     * 
+     * @param north Latitude of the bounding box in the Northern edge
+     * @param east Longitude of the bounding box in the Eastern edge
+     * @param south Latitude of the bounding box in the Northern edge
+     * @param west Longitude of the bounding box in the Western edge
+     * @param minPrice minPrice filter to fetch the properties above the minPrice
+     * @param maxPrice maxPrice filter to fetch the properties below the maxPrice
      * @return List of Properties @see {@link com.airbnb.eloquentelksbackend.entity.Property}
      */
-    List<Property> findAll();
-    List<Property> findByPriceBetween(int min, int max);
-
     @Query(value = "{ 'latitude': {'$lt': ?0, '$gt': ?2}, 'longitude': {'$lt': ?1, '$gt': ?3}, 'price': {'$gt': ?4, '$lt': ?5}, 'availability_365': {'$gt': 120}}")
     List<Property> findInBoundingBox(double north, double east, double south, double west, int minPrice, int maxPrice);
 }
