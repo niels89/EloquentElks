@@ -49,8 +49,8 @@ export const MainMap = props => {
 
 
     const getFlyToZoom = () => {
-        if (map.getZoom() < 15) {
-            return 15
+        if (map.getZoom() < 17) {
+            return 17
         }
         return map.getZoom()
     }
@@ -90,11 +90,10 @@ export const MainMap = props => {
         // for (let poi in pois) {
         //     if (poi.type == "bic"
         // }
-
+        props.setImageNumber((props.imageNumber + 1)%5)
         props.setPois(pois)
         props.setShowInformation(true)
         props.setCurrentAirBnB(airbnb)
-        props.setImageNumber((props.imageNumber + 1)%5)
         map.flyTo(event.latlng, getFlyToZoom())
         props.setShowAirBnBs(false)
     }

@@ -16,7 +16,7 @@ export function getAttractionTypes(color, size){
         { icon: <Bus color={color} size={size} />, key: "bus-logo", id: "bus-id", value: "bus station", caption: "Bus Station"},
         { icon: <Java color={color} size={size} />, key: "Cafe-logo", id: "cafe-id", value: "cafe", caption: "Coffee Shop" },
         { icon: <Shop color={color} size={size} />, key: "cloth-logo", id: "cloth-id", value: "clothing store", caption: "Clothing" },
-        { icon: <Music color={color} size={size} />, key: "music-logo", id: "cloth-id", value: "music venue", caption: "Music Store" },
+        { icon: <Music color={color} size={size} />, key: "music-logo", id: "music-id", value: "music venue", caption: "Music Venue" },
         { icon: <Cart color={color} size={size} />, key: "store-logo", id: "store-id", value: "store", caption: "Shopping" },
         { icon: <IceCream color={color} size={size} />, key: "icecream-logo", id: "icecream-id", value: "ice cream", caption: "Ice Cream" }
     ]
