@@ -1,4 +1,5 @@
 
+
 # EloquentElks - New York City Tourism Recommender 
 ## Introduction
 Traveling to New York is a dream for many people. However, planning the trip such that one has the best possible experience in New York can be difficult. Finding the right place to stay is often the first but most challenging task when planning a trip. In NYC, there are just too many options. Therefore, we created a tool where users can enter their budget and their preferences for the city trip, and we recommend an area to look for an apartment as well as interesting activities to do in the city.
@@ -15,17 +16,26 @@ For a current snapshot of our code quality metrics, please refer to the links be
 
 ## Quick Start
 
-The easiest way to get the application up and running is to use our docker-compose-prod.yml, which uses our [Docker Hub Images](https://hub.docker.com/search?q=niels89%2Feloquent-elks&type=image)
+The easiest way to get the application up and running is to use our docker-compose.yml, which uses our [Docker Hub Images](https://hub.docker.com/search?q=niels89%2Feloquent-elks&type=image)
+
+All you need in order to get started is our [docker-compose.yml](./docker-compose.yml). 
+
+After downloading it, put it into an empty folder of your choice and open a command line in the same folder.
 
 To get the application started, run the following command:
-
 `docker compose -f docker-compose.yml up -d`
 
 Afterwards, open your browser and go to `http://localhost:3000` to access the application.
 
 To stop the entire application, run the following command:
-
 `docker compose -f docker-compose.yml down`
+
+If you decide to re-run docker compose up at a later point, remember to delete the generated database folder on your local system:
+`rm -rf eloquent-elks-airbnb-db`
+`rm -rf eloquent-elks-poi-db`
+`rm -rf eloquent-elks-poi-density-db`
+
+This ensures that the database folders are cleared, so you can start over with fresh databases.
 
 ## Development
 ### Prerequisites
@@ -97,7 +107,7 @@ For quality checks, we use Sonarcloud's Quality Gates, which are displayed at th
 
 The build job of each microservice takes care of building the respective database and database seed images, and pushes them to docker hub as well.
 
-![Continuous Integration Process](docs/img/CICD.jpeg)
+![Continuous Integration Process](docs/img/CICD.png)
 
 ## Other Resources
 If you are interested in our working procedures, check out our [YouTrack KANBAN board](https://aseii-eloquentelks.myjetbrains.com/youtrack/agiles) (requires a user account).
