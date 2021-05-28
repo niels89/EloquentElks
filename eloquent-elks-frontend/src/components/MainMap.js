@@ -1,12 +1,13 @@
 import {Box} from "grommet";
 import {MapContainer, Marker, TileLayer, Tooltip, GeoJSON, useMapEvents} from "react-leaflet";
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
-import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
 import {useEffect, useState} from "react";
 import {airbnbGlowLeafletIcon} from "./icons/airbnbLeafletIconGlow";
 import {famousLeafletIcon} from "./icons/famousLeafletIcon";
 import {getFamous} from "../requests/getFamous";
+import {getAttractionByValue} from "../resources/attractions";
+import {poiLeafletIcon} from "./icons/poiLeafletIcon";
 
 
 const createMapBounds = map => {
@@ -80,12 +81,20 @@ export const MainMap = props => {
     const handleAirBnBClick = async (event, airbnb) => {
         const {lat, lng} = event.latlng
         let pois = await getPois(lat, lng)
-        console.log(pois)
 
+        // Code to remove some unnecessary pois
+        // let parkingLotCount
+        // let bicycleRentalCount
+        // let renderedPois
+        //
+        // for (let poi in pois) {
+        //     if (poi.type == "bic"
+        // }
 
         props.setPois(pois)
         props.setShowInformation(true)
         props.setCurrentAirBnB(airbnb)
+        props.setImageNumber((props.imageNumber + 1)%5)
         map.flyTo(event.latlng, getFlyToZoom())
         props.setShowAirBnBs(false)
     }
@@ -127,14 +136,18 @@ export const MainMap = props => {
                     }
                 ) : null
                 }
-                {props.pois.map && props.pois.map((poi, index) => {
-                        return (
+                {props.pois.map && props.pois.slice(0, 100).map((poi, index) => {
+                    let info = getAttractionByValue(poi.type, '#ffffff', "12")
+                    if (info === undefined) {
+                        return null;
+                    }
+                    return (
                             <Marker key={"POI" + index}
                                     position={[poi.latitude, poi.longitude]}
-                                    icon={attractionLeafletIcon}
+                                    icon={poiLeafletIcon(info.icon, poi)}
                             >
                                 <Tooltip>
-                                    {poi.type}
+                                    {info.caption}: {poi.name}
                                 </Tooltip>
                             </Marker>
                         )

@@ -14,7 +14,7 @@ import {
     Stack
 } from "grommet";
 import {Close, Favorite, FormDown, FormUp, Home, Money, ShareOption, User} from "grommet-icons";
-import img from "../resources/mock_nyc_airbnb.jpg"
+import {getAptImage} from "../resources/getAptImage";
 
 
 const RoomInformation = props => {
@@ -51,6 +51,7 @@ export const AirBnBInformationLayer = props => {
         );
     };
 
+    let image = getAptImage(props.index)
 
     return (
         <Layer position='top-right'
@@ -73,7 +74,7 @@ export const AirBnBInformationLayer = props => {
                         <Stack>
                             <Image
                                 fill={true}
-                                src={img}
+                                src={image}
                                 a11yTitle="mock_nyc_image"
                             />
                             <Button icon={<Close color={"white"}/>}

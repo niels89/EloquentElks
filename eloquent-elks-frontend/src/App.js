@@ -26,11 +26,11 @@ function App() {
     const [fetchingRecommendation, setFetchingRecommendation] = useState(false);
     const [abortController, setAbortController] = useState()
     const [showLanding, setShowLanding] = useState(true);
+    const [imageNumber, setImageNumber] = useState(0)
 
     // Loading the recommendationLayer
     async function onLoadRecommendation(selectedAttractionTypes) {
         console.log("Fetching recommendation")
-        console.log(attractionTypes)
         const controller = new AbortController();
         const signal = controller.signal;
         setAbortController(controller)
@@ -117,6 +117,8 @@ function App() {
                                  setMapBounds={setMapBounds}
                                  showAirBnBs={showAirBnBs}
                                  setShowAirBnBs={setShowAirBnBs}
+                                 imageNumber={imageNumber}
+                                 setImageNumber={setImageNumber}
                         />
                         {showInformation && <AirBnBInformationLayer setShowInformation={setShowInformation}
                                                                     pois={pois}
@@ -124,6 +126,7 @@ function App() {
                                                                     content={currentAirBnB}
                                                                     setShowAirBnBs={setShowAirBnBs}
                                                                     distances={distances}
+                                                                    index={imageNumber}
                         />}
                     </Box>
                     {fetchingRecommendation && (

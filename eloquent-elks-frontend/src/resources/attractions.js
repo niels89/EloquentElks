@@ -25,3 +25,7 @@ export function getAttractionTypes(color, size){
 export function getAttractionType(key, color, size){
     return getAttractionTypes(color, size).filter(attr => attr.key === key)[0];
 }
+
+export function getAttractionByValue(value, color, size){
+    return getAttractionTypes(color, size).filter(attr => attr.value === value)[0];
+}
