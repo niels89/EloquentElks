@@ -112,4 +112,6 @@ The build job of each microservice takes care of building the respective databas
 ## Other Resources
 If you are interested in our working procedures, check out our [YouTrack KANBAN board](https://aseii-eloquentelks.myjetbrains.com/youtrack/agiles) (requires a user account).
 
-The rationale behind our choices and decisions is available in our [YouTrack Knowledge Base (Wiki)](https://aseii-eloquentelks.myjetbrains.com/youtrack/articles/)
+The rationale behind our choices and decisions is available in our [YouTrack Knowledge Base (Wiki)](https://aseii-eloquentelks.myjetbrains.com/youtrack/articles/) (requires a user account).
+
+Gantt charts for the stories and for the whole project are available at [YouTrack Reports](https://aseii-eloquentelks.myjetbrains.com/youtrack/reports) (requires a user account).

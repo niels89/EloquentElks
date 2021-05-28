@@ -8,3 +8,6 @@ The dbseed folder contains the Dockerfile for building the docker image, as well
 
 ## Specialities of the POI database
 The POI database has an additional step that it needs for initialization. In order to be able to run the geospatial queries of the POI API, it is necessary to create a spherical index on the database. This is done in by copying the `init.js` file inside the `mongodb` folder into the docker image at build time. By doing that, the database will automatically execute the script and create the needed index.
+
+## Data Source
+This data originates from [OpenStreetMap](https://www.openstreetmap.org/) and was extracted with [Overpass Turbo](https://overpass-turbo.eu/)
