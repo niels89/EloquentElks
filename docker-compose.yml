@@ -9,18 +9,14 @@ services:
         restart: unless-stopped
         
     dbseed_airbnb:
-        build:
-            context: ./eloquent-elks-airbnb-db/dbseed
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-airbnb-dbseed:main
         links:
             - mongodb_airbnb
         depends_on:
             - mongodb_airbnb
 
     airbnb_api:
-        build:
-            context: eloquent-elks-airbnb-api
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-airbnb-api:main
         ports:
             - 1340:8080
         links:
@@ -33,9 +29,7 @@ services:
         hostname: airbnb-api
     
     mongodb_poi:
-        build:
-            context: ./eloquent-elks-poi-db/mongodb
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-poi-mongodb:main
         volumes:
             - ./eloquent-elks-poi-db/mongodb/database:/data/db
         ports:
@@ -44,18 +38,14 @@ services:
         hostname: mongodb_poi
                 
     dbseed_poi:
-        build:
-            context: ./eloquent-elks-poi-db/dbseed
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-poi-dbseed:main
         links:
             - mongodb_poi
         depends_on:
             - mongodb_poi
             
     poi-api:
-        build:
-            context: eloquent-elks-poi-api
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-poi-api:main
         ports: 
             - 1337:8080
         depends_on:
@@ -67,9 +57,7 @@ services:
         hostname: poi-api
         
     recommender-api:
-        build:
-            context: eloquent-elks-recommender-api
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-recommender-api:main
         ports: 
             - 1338:8080
         environment:
@@ -79,9 +67,7 @@ services:
         hostname: recommender-api
         
     poi-density-api:
-        build:
-            context: eloquent-elks-poi-density-api
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-poi-density-api:main
         ports:
             - 1339:3001
         environment:
@@ -103,18 +89,14 @@ services:
         hostname: mongodb_poi-density
         
     dbseed_poi-density:
-        build:
-            context: ./eloquent-elks-poi-density-db/dbseed
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-poi-density-dbseed:main
         links:
             - mongodb_poi-density
         depends_on:
             - mongodb_poi-density
- 
+
     frontend:
-        build:
-            context: eloquent-elks-frontend
-            dockerfile: Dockerfile
+        image: niels89/eloquent-elks-frontend:main
         ports:
             - 3000:80
         environment:
