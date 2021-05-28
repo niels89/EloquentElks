@@ -1,3 +1,4 @@
+
 # EloquentElks - New York City Tourism Recommender 
 ## Introduction
 Traveling to New York is a dream for many people. However, planning the trip such that one has the best possible experience in New York can be difficult. Finding the right place to stay is often the first but most challenging task when planning a trip. In NYC, there are just too many options. Therefore, we created a tool where users can enter their budget and their preferences for the city trip, and we recommend an area to look for an apartment as well as interesting activities to do in the city.
@@ -47,6 +48,12 @@ To build the entire application including all microservices, run the following c
  - Recommender API: [README](./eloquent-elks-recommender-api/README.md)
  - POI Density API: [README](./eloquent-elks-poi-density-api/README.md)
 
+Each eloquent-elks database has its own seeding docker image. We found this to be the most stable way of initially loading data into a mongodb docker container. DB-Seeds are available for the following databases:
+
+ - eloquent-elks-airbnb-db: [README](./eloquent-elks-airbnb-db/README.md)
+ - eloquent-elks-poi-db: [README](./eloquent-elks-poi-db/README.md)
+ - eloquent-elks-poi-density-db: [README](./eloquent-elks-poi-density-db/README.md)
+
 ### Architecture
 This application consists of various microservices. Each of them runs in a docker container, which enables easy deployment on cloud platforms. As of now, the application consists of the following microservices:
 #### eloquent-elks-frontend
@@ -71,12 +78,15 @@ For each microservice, we wrote unit tests during the development. For the Java 
 
 Here is how you can run the tests of each microservice, assuming your current working directory is the EloquentElks root folder:
 
- - Frontend: `yarn --cwd ./eloquent-elks-frontend test -- --coverage`
+ - Frontend: `yarn --cwd ./eloquent-elks-frontend test`
  - AirBnb API: `./eloquent-elks-airbnb-api/gradlew -p ./eloquent-elks-airbnb-api test`
  - POI API: `./eloquent-elks-poi-api/gradlew -p ./eloquent-elks-poi-api test`
  - Recommender API: `./eloquent-elks-recommender-api/gradlew -p ./eloquent-elks-recommender-api test`
- - POI Density API: `npm test --prefix ./eloquent-elks-poi-density-api -- --coverage`
+ - POI Density API: `npm test --prefix ./eloquent-elks-poi-density-api`
 
+The coverages of each microservice is available in the [Code Metrics](#code-metrics) section.
+
+For the frontend, we focused also on manual user acceptance testing, as it yields invaluable feedback regarding the usability of the application. Also, the frontend served for manual intergration testing, as it allows to call the microservices and verify if they work together properly.
 
 ## Continuous Integration
 
@@ -84,4 +94,11 @@ For continuous integration, we use [Travis CI](https://travis-ci.com/). In order
 
 For quality checks, we use Sonarcloud's Quality Gates, which are displayed at the top of this page. If a Pull Request is opened, Sonarcloud will provide the Quality Gate evaluation results automatically as comments. This is a very helpful tool to keep code quality on a good level. 
 
-![Continuous Integration Process](docs/img/CICD.png)
+The build job of each microservice takes care of building the respective database and database seed images, and pushes them to docker hub as well.
+
+![Continuous Integration Process](docs/img/CICD.jpeg)
+
+## Other Resources
+If you are interested in our working procedures, check out our [YouTrack KANBAN board](https://aseii-eloquentelks.myjetbrains.com/youtrack/agiles) (requires a user account).
+
+The rationale behind our choices and decisions is available in our [YouTrack Knowledge Base (Wiki)](https://aseii-eloquentelks.myjetbrains.com/youtrack/articles/)
