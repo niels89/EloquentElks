@@ -16,7 +16,6 @@ export const grommetTheme = {
        },
    },
     heading: {
-        color: 'white',
         level: {
             "1": {
                 "font": {},

@@ -85,7 +85,7 @@ function App() {
         <Grommet theme={grommetTheme} full>
             <Box height={{max: '100vh'}} fill>
                 <Header height={'8%'} direction={'column'} background='linear-gradient(to right, #228BE6, #69AEEA)' align={'start'} gap={'none'}>
-                    <Heading level={1} margin={{horizontal: 'medium', bottom: 'xxsmall'}} size={'xxsmall'}>New York City – Apartment Finder</Heading>
+                    <Heading level={1} color={'white'} margin={{horizontal: 'medium', bottom: 'xxsmall'}} size={'xxsmall'}>New York City – Apartment Finder</Heading>
                     <Text size={'xxsmall'} margin={{horizontal: 'medium', bottom: 'small'}} color={'white'}>Brought to you by Eloquent Elks</Text>
                 </Header>
                 <Box height={{max: '92%'}} direction='row' flex>
