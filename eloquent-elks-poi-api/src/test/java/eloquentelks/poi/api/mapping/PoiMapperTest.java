@@ -1,6 +1,9 @@
 package eloquentelks.poi.api.mapping;
 
+import com.google.gson.JsonNull;
+import com.google.gson.JsonPrimitive;
 import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
 import eloquentelks.poi.api.model.PoiGetDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit tests for @see{@link eloquentelks.poi.api.mapping.PoiMapper}
+ * Unit tests for {@link eloquentelks.poi.api.mapping.PoiMapper}
  */
 class PoiMapperTest {
 
@@ -24,7 +27,7 @@ class PoiMapperTest {
      * Sets up two features from json structures that will be used for the mapping process
      */
     @BeforeAll
-    public static void setUp(){
+    static void setUp(){
         Feature f1 = Feature.fromJson("{\n" +
                 "\t  \"type\": \"Feature\",\n" +
                 "\t  \"properties\": {\n" +
@@ -83,7 +86,7 @@ class PoiMapperTest {
      * Tests if the name of a feature is mapped correctly
      */
     @Test
-    public void testMapToDto_name(){
+    void testMapToDto_name(){
         // act
         List<PoiGetDto> poiGetDtos = PoiMapper.mapToDto(features);
 
@@ -96,7 +99,7 @@ class PoiMapperTest {
      * Tests if the type of a feature is mapped correctly
      */
     @Test
-    public void testMapToDto_type(){
+    void testMapToDto_type(){
         // act
         List<PoiGetDto> poiGetDtos = PoiMapper.mapToDto(features);
 
@@ -109,7 +112,7 @@ class PoiMapperTest {
      * Tests if the latitude of a feature is mapped correctly
      */
     @Test
-    public void testMapToDto_latitude(){
+    void testMapToDto_latitude(){
         // act
         List<PoiGetDto> poiGetDtos = PoiMapper.mapToDto(features);
 
@@ -122,12 +125,29 @@ class PoiMapperTest {
      * Tests if the longitude of a feature is mapped correctly
      */
     @Test
-    public void testMapToDto_longitude(){
+    void testMapToDto_longitude(){
         // act
         List<PoiGetDto> poiGetDtos = PoiMapper.mapToDto(features);
 
         // assert
         assertEquals(-74.2084784, poiGetDtos.get(0).getLongitude());
         assertEquals(-74.0249925, poiGetDtos.get(1).getLongitude());
+    }
+
+    /**
+     * Tests if features with JsonNull are mapped correctly
+     */
+    @Test
+    void testMapToDto_jsonNull(){
+        // arrange
+        Feature featureJsonNull = Feature.fromGeometry(Point.fromLngLat(-73.92, 40.82));
+        featureJsonNull.addProperty("name", JsonNull.INSTANCE);
+        featureJsonNull.addProperty("tourism", new JsonPrimitive("Test"));
+
+        // act
+        List<PoiGetDto> poiGetDtos = PoiMapper.mapToDto(List.of(featureJsonNull));
+
+        // assert
+        assertEquals("N/A", poiGetDtos.get(0).getName());
     }
 }

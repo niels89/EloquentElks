@@ -2,13 +2,11 @@ swagger: "2.0"
 info:
   version: 1.0.0
   title: eloquent-elks-poi-density-api
-  description: API that computes the POI density of POIs of a certain type
+  description: The poi-density-api is responsible for computing densities of a certain attraction type in a hex-grid. It connects to the poi-api, which returns pois per attraction type. By default, the docker container exposes the application on HTTP port 1339.
 basePath: /api/v1
 tags:
-  - name: Examples
-    description: Simple example endpoints
-  - name: Specification
-    description: The swagger API specification
+  - name: Density
+    description: Calculates densities
 
 consumes:
   - application/json
@@ -16,26 +14,21 @@ produces:
   - application/json
 
 
-definitions:
-  ExampleBody:
-    type: object
-    title: example
-    required:
-      - name
-    properties:
-      name:
-        type: string
-        example: no_stress
-
 paths:
   /poiDensity:
     get:
       tags:
         - Examples
-      description: Fetch all examples
+      description: Get density of attraction by type.
+      parameters:
+        - in: query
+          name: attractionType
+          type: string
+          required: true
+          description: String name of attraction type for which to get the density
       responses:
         200:
-          description: Returns all examples
+          description: Returns density of selected attraction type
 
   /spec:
     get:

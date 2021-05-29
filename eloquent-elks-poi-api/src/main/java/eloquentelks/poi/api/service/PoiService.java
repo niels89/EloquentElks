@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @inheritDoc
+ * {@inheritDoc}
  */
 @Service
 public class PoiService implements IPoiService {
@@ -19,7 +19,7 @@ public class PoiService implements IPoiService {
     /**
      * Search radius to look for features
      */
-    private final double SEARCH_RADIUS = 500.0d;
+    private static final double SEARCH_RADIUS = 500.0d;
 
     /**
      * Database accessor
@@ -36,9 +36,8 @@ public class PoiService implements IPoiService {
         this.poiRepository = poiRepository;
     }
 
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public List<PoiGetDto> getAllPois(double longitude, double latitude) {
@@ -48,11 +47,21 @@ public class PoiService implements IPoiService {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public List<PoiGetDto> getPoisByAttractionType(String attractionType){
         List<Feature> features = poiRepository.getFeatures(attractionType);
+
+        return PoiMapper.mapToDto(features);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<PoiGetDto> getFamousPoisWithDistance(double longitude, double latitude) {
+        List<Feature> features = poiRepository.getDistanceOfFamousFeatures(Point.fromLngLat(longitude, latitude));
 
         return PoiMapper.mapToDto(features);
     }

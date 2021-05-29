@@ -27,4 +27,6 @@ public interface PropertyRepository extends MongoRepository<Property, Long> {
      */
     @Query(value = "{ 'latitude': {'$lt': ?0, '$gt': ?2}, 'longitude': {'$lt': ?1, '$gt': ?3}, 'price': {'$gt': ?4, '$lt': ?5}, 'availability_365': {'$gt': 120}}")
     List<Property> findInBoundingBox(double north, double east, double south, double west, int minPrice, int maxPrice);
+
+
 }

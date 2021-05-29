@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
     Anchor,
     Box,
@@ -9,16 +9,36 @@ import {
     Collapsible,
     Heading,
     Image,
-    Layer, List,
+    Layer, List, Markdown,
     Paragraph,
     Stack
 } from "grommet";
-import {Close, Favorite, FormDown, FormUp, ShareOption} from "grommet-icons";
+import {Close, Favorite, FormDown, FormUp, Home, Money, ShareOption, User} from "grommet-icons";
 import img from "../resources/mock_nyc_airbnb.jpg"
 
+
+const RoomInformation = props => {
+    return (
+        <Box margin={{bottom: 'small'}} direction={"row"} gap={'xsmall'} align={'center'}>
+            {props.icon}
+            <Markdown>{props.roomInformation}</Markdown>
+        </Box>
+    )
+};
+
 export const AirBnBInformationLayer = props => {
- const [open, setOpen] = React.useState(false);
- const [favorite, setFavorite] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [favorite, setFavorite] = useState(false);
+
+
+    // const loadFamousDistances = () => {
+    //     async function fetchData(lat, lon) {
+    //         let ab = await getFamousDistance(lat, lon)
+    //         return ab;
+    //     }
+    //
+    //     fetchData(props.content.latitude, props.content.longitude).then((data) => setDistances(data))
+    // }
 
     const ExpandButton = ({...rest}) => {
         const Icon = open ? FormUp : FormDown;
@@ -61,17 +81,20 @@ export const AirBnBInformationLayer = props => {
                                     onClick={() => {
                                         props.setShowInformation(false);
                                         props.setPois([])
+                                        props.setShowAirBnBs(true)
                                     }}
                             />
                         </Stack>
-
                     </CardBody>
-                    <Box pad={{horizontal: 'medium'}}>
-                        <Heading level="3" margin={{top: 'medium', bottom: 'small'}}>
+                    <Box pad={{horizontal: 'medium'}} overflow={'scroll'}>
+                        <Heading level="3" margin={{top: 'medium', bottom: 'medium'}}>
                             {props.content.name}
                         </Heading>
+                        <RoomInformation icon={<Money/>} roomInformation={"**Price:** " + props.content.price + "$"}/>
+                        <RoomInformation icon={<Home/>} roomInformation={"**Room Type:** " + props.content.roomType}/>
+                        <RoomInformation icon={<User/>} roomInformation={"**Host Name:** " + props.content.hostName}/>
                         <Paragraph margin={{top: 'none'}}>
-                            Here we could write some basic information about the AirBnb.
+                            Here is some basic information about the apartment by the owner.
                         </Paragraph>
                     </Box>
                     <CardFooter>
@@ -88,19 +111,31 @@ export const AirBnBInformationLayer = props => {
                                 label="Book Now"
                             />
                         </Box>
-                        <ExpandButton onClick={() => setOpen(!open)}/>
+                        <ExpandButton onClick={() => {
+                            // loadFamousDistances()
+                            setOpen(!open)
+                        }
+                        }/>
                     </CardFooter>
                     <Collapsible open={open}>
                         <Box pad={{horizontal: 'medium'}}
                              responsive={true}
                         >
                             <Heading level="4" margin={{vertical: 'small'}}>
-                                Points of Interest Nearby:
+                                Distances to famous attractions:
                             </Heading>
                             <Box margin={{bottom: 'medium'}}
                                  height={'small'}
                                  overflow='scroll'>
-                                <List data={props.pois}/>
+                                <List primaryKey="Name"
+                                      secondaryKey="Distance"
+                                      data={props.distances && props.distances.map(famous => {
+                                          return ({
+                                              Name: famous.name,
+                                              Distance: (Math.round((famous.distance + Number.EPSILON) * 100) / 100).toString() + " km"
+                                          })
+                                      })}
+                                />
                             </Box>
                         </Box>
                     </Collapsible>

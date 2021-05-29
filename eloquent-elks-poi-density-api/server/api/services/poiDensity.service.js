@@ -1,4 +1,5 @@
 import * as turf from '@turf/turf';
+import {getPOIDensityfromDB, writePOIDensityToDB} from "./poiDensityDB.service";
 
 export class PoiDensityService {
   constructor(getPois) {
@@ -21,7 +22,9 @@ export class PoiDensityService {
       poly.properties[outField] = values;
       poly.properties['id'] = i;
     }
-
+    polyFC.features = polyFC.features.filter(
+      (poly) => poly.properties[outField] > 0
+    );
     return polyFC;
   }
 
@@ -36,20 +39,28 @@ export class PoiDensityService {
     return turf.featureCollection(pointList);
   }
 
-  calculateDensity(pois) {
-    let bbox = [-74.6, 40.41, -73.07, 41.05];
-    let cellSide = 1;
-    let options = { units: 'kilometers' };
-
+  calculateDensity(pois, gridLayer) {
     let pointLayer = this.mapPoisToFeatureCollection(pois);
-    let gridLayer = turf.hexGrid(bbox, cellSide, options);
-
     let counted = this.countPointInPolygons(gridLayer, pointLayer, 'poiCount');
     return counted;
   }
 
   async byType(attractionType) {
+    let density = await getPOIDensityfromDB(attractionType)
+    if (density !== null) {
+      return density;
+    }
+
     let pois = await this.getPois(attractionType);
-    return this.calculateDensity(pois);
+
+    let bbox = [-74.6, 40.41, -73.71, 40.95];
+    let cellSide = 0.25;
+    let options = { units: 'kilometers' };
+    let gridLayer = turf.hexGrid(bbox, cellSide, options);
+
+    let calcDensity = this.calculateDensity(pois, gridLayer);
+    calcDensity.attractionType = attractionType;
+    await writePOIDensityToDB(calcDensity);
+    return calcDensity;
   }
 }

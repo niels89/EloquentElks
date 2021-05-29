@@ -5,7 +5,8 @@ import com.mapbox.geojson.FeatureCollection;
 import java.util.List;
 
 /**
- * Service to access the POI density REST API
+ * Service to access the POI density REST API. Classes implementing this interface are responsible for
+ * retrieving POI Density data from the POI Density API, which is a REST API.
  */
 public interface IDensityRestService {
 

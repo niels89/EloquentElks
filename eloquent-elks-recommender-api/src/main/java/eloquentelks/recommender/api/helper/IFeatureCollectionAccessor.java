@@ -4,8 +4,9 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 
 /**
- * Extends the functionality of mapbox's FeatureCollection, as it is a final class that cannot be
- * changed.
+ * Extends the functionality of Mapbox FeatureCollection, as it is a final class that cannot be
+ * changed. Provides access to various properties of Features inside a FeatureCollection. In this case,
+ * Two fields are of particular interest: 'id' and 'poiCount'
  */
 public interface IFeatureCollectionAccessor {
 
@@ -19,8 +20,7 @@ public interface IFeatureCollectionAccessor {
 
     /**
      * Reads the poiCount property from a Feature
-     * @param collection The FeatureCollection to be searched
-     * @param id Id of the desired Feature
+     * @param feature The Feature containing a density property
      * @return Density value (poiCount)
      */
     double getDensity(Feature feature);
@@ -54,13 +54,6 @@ public interface IFeatureCollectionAccessor {
      * @return A copy of the original FeatureCollection with poiCount reset to 0
      */
     FeatureCollection copyFeatureIds(FeatureCollection collection);
-
-    /**
-     * Returns the minimum poiCount value of a FeatureCollection
-     * @param collection The FeatureCollection to be investigated
-     * @return Minimum poiCount value
-     */
-    double getMinDensity(FeatureCollection collection);
 
     /**
      * Returns the maximum poiCount value of a FeatureCollection

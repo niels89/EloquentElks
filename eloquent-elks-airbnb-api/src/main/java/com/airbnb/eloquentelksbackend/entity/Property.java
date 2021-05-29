@@ -84,4 +84,5 @@ public class Property{
      */
     @Field("availability_365")
     private int availability;
+
 }

@@ -41,7 +41,7 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    /**
+    /** Returns all the properties within the bounding box of area
      * @param min Minimum price of an AirBnb
      * @param max Maximum price of an AirBnb
      * @param north Northern boundary to be considered
