@@ -1,7 +1,6 @@
 import {Cafeteria, Restaurant, Brush, Bar, Book, Java, Anchor, Spa, Bus, Music, Cart, IceCream, Car, Shop, Ticket, Bike } from "grommet-icons"
 import React from "react";
 
-// TODO: synchronize with ASEP-63, this is only a modified copy of its work in progress commit
 export function getAttractionTypes(color, size){
     return [
         { icon: <Bar color={color} size={size} />, key: "Bar-logo", id: "Bar-id", value: "bar", a11yTitle: "bar" , caption: "Bar"},
@@ -17,7 +16,7 @@ export function getAttractionTypes(color, size){
         { icon: <Bus color={color} size={size} />, key: "bus-logo", id: "bus-id", value: "bus station", caption: "Bus Station"},
         { icon: <Java color={color} size={size} />, key: "Cafe-logo", id: "cafe-id", value: "cafe", caption: "Coffee Shop" },
         { icon: <Shop color={color} size={size} />, key: "cloth-logo", id: "cloth-id", value: "clothing store", caption: "Clothing" },
-        { icon: <Music color={color} size={size} />, key: "music-logo", id: "cloth-id", value: "music venue", caption: "Music Store" },
+        { icon: <Music color={color} size={size} />, key: "music-logo", id: "music-id", value: "music venue", caption: "Music Venue" },
         { icon: <Cart color={color} size={size} />, key: "store-logo", id: "store-id", value: "store", caption: "Shopping" },
         { icon: <IceCream color={color} size={size} />, key: "icecream-logo", id: "icecream-id", value: "ice cream", caption: "Ice Cream" }
     ]
@@ -25,4 +24,8 @@ export function getAttractionTypes(color, size){
 
 export function getAttractionType(key, color, size){
     return getAttractionTypes(color, size).filter(attr => attr.key === key)[0];
+}
+
+export function getAttractionByValue(value, color, size){
+    return getAttractionTypes(color, size).filter(attr => attr.value === value)[0];
 }
