@@ -9,12 +9,12 @@ export class PoiDensityService {
   // Function from https://github.com/turf-junkyard/turf-count/blob/master/index.js
   // The junkyard from turf should not be use anymore we copied the function from there and take responsibility.
   countPointInPolygons(polyFC, ptFC, outField) {
-    for (var i = 0; i < polyFC.features.length; i++) {
-      var poly = polyFC.features[i];
+    for (let i = 0; i < polyFC.features.length; i++) {
+      let poly = polyFC.features[i];
       if (!poly.properties) poly.properties = {};
-      var values = 0;
-      for (var j = 0; j < ptFC.features.length; j++) {
-        var pt = ptFC.features[j];
+      let values = 0;
+      for (let j = 0; j < ptFC.features.length; j++) {
+        let pt = ptFC.features[j];
         if (turf.booleanPointInPolygon(pt, poly)) {
           values++;
         }
@@ -23,7 +23,7 @@ export class PoiDensityService {
       poly.properties['id'] = i;
     }
     polyFC.features = polyFC.features.filter(
-      (poly) => poly.properties[outField] > 0
+      (polygon) => polygon.properties[outField] > 0
     );
     return polyFC;
   }
@@ -41,8 +41,7 @@ export class PoiDensityService {
 
   calculateDensity(pois, gridLayer) {
     let pointLayer = this.mapPoisToFeatureCollection(pois);
-    let counted = this.countPointInPolygons(gridLayer, pointLayer, 'poiCount');
-    return counted;
+    return this.countPointInPolygons(gridLayer, pointLayer, 'poiCount');
   }
 
   async byType(attractionType) {

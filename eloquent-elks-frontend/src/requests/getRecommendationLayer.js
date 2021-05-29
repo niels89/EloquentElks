@@ -3,7 +3,8 @@ import {getVersion} from "../helpers/getVersion";
 
 class PromiseWithCancel extends Promise {
     cancel() {
-    };
+        //Cancel will be implemented by abort controller
+    }
 }
 
 

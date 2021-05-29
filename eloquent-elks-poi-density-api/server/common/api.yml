@@ -25,10 +25,10 @@ paths:
           name: attractionType
           type: string
           required: true
-          description: String name of attraction type for which to get the density
+          description: String name of attraction type (e.g. restaurant) for which to get the density.
       responses:
         200:
-          description: Returns density of selected attraction type
+          description: Returns density of selected attraction type as a geojson (See specification at https://datatracker.ietf.org/doc/html/rfc7946).
 
   /spec:
     get:

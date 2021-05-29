@@ -41,14 +41,14 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    /**
+    /** Returns all the properties within the bounding box of area
      * @param min Minimum price of an AirBnb
      * @param max Maximum price of an AirBnb
      * @param north Northern boundary to be considered
      * @param east Eastern boundary to be considered
      * @param south Southern boundary to be considered
      * @param west Western boundary to be considered
-     * @return A list of all the airbnb properties list in the database for New York @see {@link com.airbnb.eloquentelksbackend.entity.Property}.
+     * @return A list of all the airbnb properties {@link com.airbnb.eloquentelksbackend.entity.Property} list in the database for New York .
      */
     @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/airbnb")

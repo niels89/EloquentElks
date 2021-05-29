@@ -1,12 +1,13 @@
 import {Box} from "grommet";
 import {MapContainer, Marker, TileLayer, Tooltip, GeoJSON, useMapEvents} from "react-leaflet";
 import {airbnbLeafletIcon} from "./icons/airbnbLeafletIcon";
-import {attractionLeafletIcon} from "./icons/attractionLeafletIcon";
 import {getPois} from "../requests/getPois";
 import {useEffect, useState} from "react";
 import {airbnbGlowLeafletIcon} from "./icons/airbnbLeafletIconGlow";
 import {famousLeafletIcon} from "./icons/famousLeafletIcon";
 import {getFamous} from "../requests/getFamous";
+import {getAttractionByValue} from "../resources/attractions";
+import {poiLeafletIcon} from "./icons/poiLeafletIcon";
 
 
 const createMapBounds = map => {
@@ -48,8 +49,8 @@ export const MainMap = props => {
 
 
     const getFlyToZoom = () => {
-        if (map.getZoom() < 15) {
-            return 15
+        if (map.getZoom() < 17) {
+            return 17
         }
         return map.getZoom()
     }
@@ -58,7 +59,6 @@ export const MainMap = props => {
     const getColor = (d) => {
         // Color palette from https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
         let palette = ['#dadaeb', '#bcbddc', '#9e9ac8', '#807dba', '#6a51a3', '#54278f', '#3f007d']
-        // let palette = ['#011AFA','#00E596','#FFEB1C','#FF7700','#FF0000']
         let i
         for (i = 1; i <= palette.length; i++) {
             // values of the property are between 0 and 1
@@ -81,6 +81,16 @@ export const MainMap = props => {
     const handleAirBnBClick = async (event, airbnb) => {
         const {lat, lng} = event.latlng
         let pois = await getPois(lat, lng)
+
+        // Code to remove some unnecessary pois
+        // let parkingLotCount
+        // let bicycleRentalCount
+        // let renderedPois
+        //
+        // for (let poi in pois) {
+        //     if (poi.type == "bic"
+        // }
+        props.setImageNumber((props.imageNumber + 1)%5)
         props.setPois(pois)
         props.setShowInformation(true)
         props.setCurrentAirBnB(airbnb)
@@ -89,8 +99,8 @@ export const MainMap = props => {
     }
 
 
-    const onMapCreation = map => {
-        setMap(map)
+    const onMapCreation = currentMap => {
+        setMap(currentMap)
     }
 
     return (
@@ -99,7 +109,7 @@ export const MainMap = props => {
                           zoom={13}
                           scrollWheelZoom={true}
                           style={{height: '100%', zIndex: 0}}
-                          whenCreated={map => onMapCreation(map)}
+                          whenCreated={thisMap => onMapCreation(thisMap)}
             >
                 <ZoomListener setMapBounds={props.setMapBounds}/>
                 <TileLayer
@@ -125,14 +135,18 @@ export const MainMap = props => {
                     }
                 ) : null
                 }
-                {props.pois.map && props.pois.map((poi, index) => {
-                        return (
+                {props.pois.map && props.pois.slice(0, 100).map((poi, index) => {
+                    let info = getAttractionByValue(poi.type, '#ffffff', "12")
+                    if (info === undefined) {
+                        return null;
+                    }
+                    return (
                             <Marker key={"POI" + index}
                                     position={[poi.latitude, poi.longitude]}
-                                    icon={attractionLeafletIcon}
+                                    icon={poiLeafletIcon(info.icon, poi)}
                             >
                                 <Tooltip>
-                                    {poi.type}
+                                    {info.caption}: {poi.name}
                                 </Tooltip>
                             </Marker>
                         )

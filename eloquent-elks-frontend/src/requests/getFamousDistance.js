@@ -8,8 +8,7 @@ import {getVersion} from "../helpers/getVersion";
 export async function getFamousDistance(lat, lon) {
     let response = await fetch(`${getPOIDomain()}/api/${getVersion()}/poi/famous/distance?longitude=${lon}&latitude=${lat}`, {method: "GET"})
     if (response.ok) {
-        let data = await response.json()
-        return data
+        return await response.json()
     } else {
         console.log(response.error)
         alert('Something went wrong. Contact the developers')

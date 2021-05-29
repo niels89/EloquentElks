@@ -9,6 +9,23 @@ export const grommetTheme = {
             height: '20px',
         },
     },
+   text: {
+       "xxsmall": {
+           "size": "12px",
+           "height": "12px",
+       },
+   },
+    heading: {
+        level: {
+            "1": {
+                "font": {},
+                "xxsmall": {
+                    "size": "24px",
+                    "height": "24px",
+                },
+            }
+        },
+    },
     card: {
         container: {
             background: 'light-1',
