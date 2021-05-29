@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * Maps the contract to DTO object @see {@link com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTO}.
+ * Maps the contract to DTO object {@link com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTO}.
  */
 
 @Mapper
@@ -21,8 +21,8 @@ public interface DTOMapper {
 
     /**
      * Maps Property to PropertyFetchDTO
-     * @param property contract for airbnb @see {@link com.airbnb.eloquentelksbackend.entity.Property}
-     * @return PropertyFetchDTO after mapping as per the source and target @see {@link com.airbnb.eloquentelksbackend.DTO.DTOMapper}
+     * @param property contract for airbnb {@link com.airbnb.eloquentelksbackend.entity.Property}
+     * @return PropertyFetchDTO after mapping as per the source and target {@link com.airbnb.eloquentelksbackend.DTO.DTOMapper}
      */
     @Mapping(source = "name", target="name")
     @Mapping(source = "longitude", target="longitude")
@@ -34,8 +34,8 @@ public interface DTOMapper {
 
     /**
      * Maps list of Properties to List of PropertyFetchDTO
-     * @param properties list of properties @see{@link com.airbnb.eloquentelksbackend.entity.Property} to convert to list of PropertyFetchDTO @see{@link com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTO}
-     * @return list of PropertyFetchDTO @see{@link com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTO}
+     * @param properties list of {@link com.airbnb.eloquentelksbackend.entity.Property} to convert to list of {@link com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTO}
+     * @return list of {@link com.airbnb.eloquentelksbackend.DTO.PropertyFetchDTO}
      */
     List<PropertyFetchDTO> map(List<Property> properties);
 }
