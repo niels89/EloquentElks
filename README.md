@@ -18,9 +18,11 @@ For a current snapshot of our code quality metrics, please refer to the links be
 
 The easiest way to get the application up and running is to use our docker-compose.yml, which uses our [Docker Hub Images](https://hub.docker.com/search?q=niels89%2Feloquent-elks&type=image)
 
-All you need in order to get started is our [docker-compose.yml](./docker-compose.yml). 
+All you need in order to get started is our [docker-compose.yml](./docker-compose.yml), as well as the [db_folder_setup.sh](./db_folder_setup.sh) script. 
 
-After downloading it, put it into an empty folder of your choice and open a command line in the same folder.
+After downloading these two files, put them into an empty folder of your choice and open a command line in the same folder.
+
+First execute `bash db_folder_setup.sh`
 
 To get the application started, run the following command:
 `docker compose -f docker-compose.yml up -d`
@@ -30,10 +32,7 @@ Afterwards, open your browser and go to `http://localhost:3000` to access the ap
 To stop the entire application, run the following command:
 `docker compose -f docker-compose.yml down`
 
-If you decide to re-run docker compose up at a later point, remember to delete the generated database folder on your local system:
-`rm -rf eloquent-elks-airbnb-db`
-`rm -rf eloquent-elks-poi-db`
-`rm -rf eloquent-elks-poi-density-db`
+If you decide to re-run docker compose up at a later point, remember to rerun `bash db_folder_setup.sh`
 
 This ensures that the database folders are cleared, so you can start over with fresh databases.
 
