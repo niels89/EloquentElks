@@ -48,7 +48,7 @@ public class PropertyController {
      * @param east Eastern boundary to be considered
      * @param south Southern boundary to be considered
      * @param west Western boundary to be considered
-     * @return A list of all the airbnb properties list in the database for New York @see {@link com.airbnb.eloquentelksbackend.entity.Property}.
+     * @return A list of all the airbnb properties {@link com.airbnb.eloquentelksbackend.entity.Property} list in the database for New York .
      */
     @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/airbnb")
