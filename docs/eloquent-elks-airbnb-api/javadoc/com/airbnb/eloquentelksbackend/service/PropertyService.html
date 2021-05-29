@@ -154,7 +154,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.airbnb.eloquentelksbackend.repository.PropertyRepository)">PropertyService</a></span>&#8203;(<a href="../repository/PropertyRepository.html" title="interface in com.airbnb.eloquentelksbackend.repository">PropertyRepository</a>&nbsp;propertyRepository)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructor to autowire the propertyRepository</div>
+</td>
 </tr>
 </table>
 </li>
@@ -179,7 +181,9 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllProperties(com.airbnb.eloquentelksbackend.entity.BoundingBox,int,int)">getAllProperties</a></span>&#8203;(<a href="../entity/BoundingBox.html" title="class in com.airbnb.eloquentelksbackend.entity">BoundingBox</a>&nbsp;boundingBox,
                 int&nbsp;min,
                 int&nbsp;max)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Serivce to return the list of properties after fetching from the database.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -213,6 +217,11 @@ extends java.lang.Object</pre>
 <h4>PropertyService</h4>
 <pre>@Autowired
 public&nbsp;PropertyService&#8203;(<a href="../repository/PropertyRepository.html" title="interface in com.airbnb.eloquentelksbackend.repository">PropertyRepository</a>&nbsp;propertyRepository)</pre>
+<div class="block">Constructor to autowire the propertyRepository</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>propertyRepository</code> - </dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -234,6 +243,15 @@ public&nbsp;PropertyService&#8203;(<a href="../repository/PropertyRepository.htm
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../entity/Property.html" title="class in com.airbnb.eloquentelksbackend.entity">Property</a>&gt;&nbsp;getAllProperties&#8203;(<a href="../entity/BoundingBox.html" title="class in com.airbnb.eloquentelksbackend.entity">BoundingBox</a>&nbsp;boundingBox,
                                                  int&nbsp;min,
                                                  int&nbsp;max)</pre>
+<div class="block">Serivce to return the list of properties after fetching from the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>boundingBox</code> - coordinates of the <a href="../entity/BoundingBox.html" title="class in com.airbnb.eloquentelksbackend.entity"><code>BoundingBox</code></a>.</dd>
+<dd><code>min</code> - minimum price filter for the list of properties.</dd>
+<dd><code>max</code> - max price filter for the list of properties.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of <a href="../entity/Property.html" title="class in com.airbnb.eloquentelksbackend.entity"><code>Property</code></a></dd>
+</dl>
 </li>
 </ul>
 </li>
